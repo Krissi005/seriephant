@@ -6,6 +6,7 @@ import de.dhbw.ase.tracker.tracker.repository.GenreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.xml.bind.ValidationException;
 import java.util.List;
 
 @Service
@@ -58,14 +59,14 @@ public class GenreService {
               | |
               |_|
     */
-    public Genre updateGenre(Long id, GenreDTO genreDTO){
+    public Genre updateGenre(Long id, GenreDTO genreDTO) throws ValidationException {
         if(genreRepository.existsById(id)){
             Genre foundGenre = genreRepository.getById(id);
             foundGenre.updateFromDTO(genreDTO);
             genreRepository.save(foundGenre);
             return foundGenre;
         }
-        return null;
+        throw new ValidationException("Id is not known.");
     }
 
     /************************************************************************************************************************************/

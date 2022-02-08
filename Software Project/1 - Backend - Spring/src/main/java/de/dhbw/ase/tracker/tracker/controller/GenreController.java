@@ -6,6 +6,7 @@ import de.dhbw.ase.tracker.tracker.service.GenreService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.xml.bind.ValidationException;
 import java.util.List;
 
 @RestController
@@ -61,7 +62,7 @@ public class GenreController {
     */
 
     @PutMapping(value = "/update")
-    public Genre updateGenre(@RequestParam Long id, GenreDTO genreDTO){
+    public Genre updateGenre(@RequestParam Long id, GenreDTO genreDTO) throws ValidationException {
         return genreService.updateGenre(id, genreDTO);
     }
 
