@@ -28,4 +28,13 @@ public class Genre {
         this.title = title;
         this.description = description;
     }
+
+    public void updateFromDTO(GenreDTO genreDTO) {
+        if (genreDTO.getTitle() != null) {
+            this.title = genreDTO.getTitle();
+        }
+        if (genreDTO.getDescription() != null) {
+            this.description = genreDTO.getDescription();
+        }
+    }
 }
