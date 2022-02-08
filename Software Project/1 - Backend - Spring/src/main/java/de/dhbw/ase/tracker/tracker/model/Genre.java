@@ -1,6 +1,5 @@
 package de.dhbw.ase.tracker.tracker.model;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import de.dhbw.ase.tracker.tracker.model.listener.GenreListener;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,7 +17,7 @@ import javax.persistence.*;
 @EntityListeners(GenreListener.class)
 public class Genre {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @Column(name = "title")
     private String title;
