@@ -1,8 +1,12 @@
 package de.dhbw.ase.tracker.tracker.service;
 
+import de.dhbw.ase.tracker.tracker.helper.Checker;
+import de.dhbw.ase.tracker.tracker.helper.DTOMapper;
 import de.dhbw.ase.tracker.tracker.model.Episode;
 import de.dhbw.ase.tracker.tracker.model.EpisodeDTO;
+import de.dhbw.ase.tracker.tracker.model.Season;
 import de.dhbw.ase.tracker.tracker.repository.EpisodeRepository;
+import de.dhbw.ase.tracker.tracker.repository.SeasonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,12 +29,13 @@ public class EpisodeService {
         | |____| | |  __/ (_| | ||  __/
         \_____|_|  \___|\__,_|\__\___|
      */
-    public Episode saveEpisode(EpisodeDTO episodeDTO){
-        return saveEpisode(episodeDTO.getTitle(), episodeDTO.getEpisodeNumber());
+    public Episode saveEpisode(EpisodeDTO episodeDTO) throws ValidationException {
+        return saveEpisode(episodeDTO.getTitle(), episodeDTO.getEpisodeNumber(), episodeDTO.getSeasonId());
     }
 
-    public Episode saveEpisode(String title, Integer episodeNumber) {
-        Episode episodeToCreate = new Episode(title, episodeNumber);
+    public Episode saveEpisode(String title, Integer episodeNumber, Long seasonId) throws ValidationException {
+        Season season = Checker.getSeasonById(seasonId);
+        Episode episodeToCreate = new Episode(title, episodeNumber, season);
         episodeRepository.save(episodeToCreate);
         return episodeToCreate;
     }
@@ -44,7 +49,7 @@ public class EpisodeService {
         | | \ \  __/ (_| | (_| |
         |_|  \_\___|\__,_|\__,_|
     */
-    public List<Episode> getAllEpisodes(){
+    public List<Episode> getAllEpisodes() {
         return episodeRepository.findAll();
     }
 
@@ -59,10 +64,10 @@ public class EpisodeService {
               | |
               |_|
     */
-    public Episode updateEpisode(Long id, EpisodeDTO genreDTO) throws ValidationException {
-        if(episodeRepository.existsById(id)){
+    public Episode updateEpisode(Long id, EpisodeDTO episodeDTO) throws ValidationException {
+        if (episodeRepository.existsById(id)) {
             Episode foundEpisode = episodeRepository.getById(id);
-            foundEpisode.updateFromDTO(genreDTO);
+            DTOMapper.updateEpisodeFromDTO(foundEpisode, episodeDTO);
             episodeRepository.save(foundEpisode);
             return foundEpisode;
         }
@@ -78,7 +83,7 @@ public class EpisodeService {
         | |__| |  __/ |  __/ ||  __/
         |_____/ \___|_|\___|\__\___|
     */
-    public void deleteEpisode(Long id){
+    public void deleteEpisode(Long id) {
         episodeRepository.deleteById(id);
     }
     /************************************************************************************************************************************/

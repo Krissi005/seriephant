@@ -10,4 +10,5 @@ import java.io.Serializable;
 public class EpisodeDTO implements Serializable {
     private String title;
     private Integer episodeNumber;
+    private Long seasonId;
 }

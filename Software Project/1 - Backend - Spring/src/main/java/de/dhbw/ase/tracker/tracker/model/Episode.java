@@ -1,5 +1,6 @@
 package de.dhbw.ase.tracker.tracker.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -21,18 +22,14 @@ public class Episode {
     private String title;
     @Column(name = "episodeNumber")
     private Integer episodeNumber;
+    @ManyToOne
+    @JsonManagedReference
+    @JoinColumn(name="season_id", nullable = false)
+    private Season season;
 
-    public Episode(String title, int episodeNumber){
+    public Episode(String title, int episodeNumber, Season season){
         this.title = title;
         this.episodeNumber = episodeNumber;
-    }
-
-    public void updateFromDTO(EpisodeDTO episodeDTO) {
-        if (episodeDTO.getTitle() != null) {
-            this.title = episodeDTO.getTitle();
-        }
-        if (episodeDTO.getEpisodeNumber() != null) {
-            this.episodeNumber = episodeDTO.getEpisodeNumber();
-        }
+        this.season = season;
     }
 }
