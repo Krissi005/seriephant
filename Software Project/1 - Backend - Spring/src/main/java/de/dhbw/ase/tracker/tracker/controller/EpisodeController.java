@@ -25,13 +25,13 @@ public class EpisodeController {
         \_____|_|  \___|\__,_|\__\___|
      */
     @PostMapping(value = "/create")
-    public Episode createGenre(@RequestBody EpisodeDTO episodeDTO){
+    public Episode createEpisode(@RequestBody EpisodeDTO episodeDTO) throws ValidationException {
         return episodeService.saveEpisode(episodeDTO);
     }
 
-    @PostMapping(value="/new", params = {"title", "description"})
-        public Episode createGenre(@RequestParam String title, @RequestParam Integer episodeNumber){
-        return episodeService.saveEpisode(title, episodeNumber);
+    @PostMapping(value="/new", params = {"title", "episodeNumber", "seasonId"})
+        public Episode createEpisode(@RequestParam String title, @RequestParam Integer episodeNumber, @RequestParam Long seasonId) throws ValidationException {
+        return episodeService.saveEpisode(title, episodeNumber, seasonId);
     }
 
     /************************************************************************************************************************************/
@@ -45,7 +45,7 @@ public class EpisodeController {
     */
 
     @GetMapping(value = "/read")
-    public List<Episode> getAllGenres(){
+    public List<Episode> getAllEpisodes(){
         return episodeService.getAllEpisodes();
     }
 
