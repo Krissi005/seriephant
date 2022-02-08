@@ -1,0 +1,13 @@
+package de.dhbw.ase.tracker.tracker.model;
+
+import lombok.*;
+
+import java.io.Serializable;
+
+@Data
+@AllArgsConstructor
+@RequiredArgsConstructor
+public class EpisodeDTO implements Serializable {
+    private String title;
+    private Integer episodeNumber;
+}

@@ -1,6 +1,8 @@
 package de.dhbw.ase.tracker.tracker;
 
+import de.dhbw.ase.tracker.tracker.model.Episode;
 import de.dhbw.ase.tracker.tracker.model.Genre;
+import de.dhbw.ase.tracker.tracker.repository.EpisodeRepository;
 import de.dhbw.ase.tracker.tracker.repository.GenreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -16,6 +18,9 @@ public class DataInserter implements ApplicationListener<ApplicationReadyEvent> 
     @Autowired
     GenreRepository genreRepository;
 
+    @Autowired
+    EpisodeRepository episodeRepository;
+
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
         Genre genre = new Genre("Horror", "Löst Gefühle der Angst, des Schreckens und Verstörung aus.");
@@ -24,5 +29,10 @@ public class DataInserter implements ApplicationListener<ApplicationReadyEvent> 
         genreRepository.save(genre);
         genre = new Genre("Thriller", "Es wird eine Spannung erzeugt, die während des gesamten Handlungsverlaufs präsent ist.");
         genreRepository.save(genre);
+
+        Episode episode = new Episode("Rückkehr nach Smallville", 1);
+        episodeRepository.save(episode);
+        episode = new Episode("Seltsames Verschwinden", 2);
+        episodeRepository.save(episode);
     }
 }
