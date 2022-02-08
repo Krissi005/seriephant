@@ -1,11 +1,10 @@
 package de.dhbw.ase.tracker.tracker.controller;
 
 import de.dhbw.ase.tracker.tracker.model.Genre;
+import de.dhbw.ase.tracker.tracker.model.GenreDTO;
 import de.dhbw.ase.tracker.tracker.service.GenreService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,6 +23,15 @@ public class GenreController {
         | |____| | |  __/ (_| | ||  __/
         \_____|_|  \___|\__,_|\__\___|
      */
+    @PostMapping(value = "/create")
+    public Genre createGenre(@RequestBody GenreDTO genreDTO){
+        return genreService.saveGenre(genreDTO);
+    }
+
+    @PostMapping(value="/new", params = {"title", "description"})
+        public Genre createGenre(@RequestParam String title, @RequestParam String description){
+        return genreService.saveGenre(title, description);
+    }
 
     /************************************************************************************************************************************/
     /*
@@ -35,7 +43,7 @@ public class GenreController {
         |_|  \_\___|\__,_|\__,_|
     */
 
-    @GetMapping(value = "")
+    @GetMapping(value = "/read")
     public List<Genre> getAllGenres(){
         return genreService.getAllGenres();
     }
@@ -51,6 +59,12 @@ public class GenreController {
               | |
               |_|
     */
+
+    @PutMapping(value = "/update")
+    public Genre updateGenre(@RequestParam Long id, GenreDTO genreDTO){
+        return genreService.updateGenre(id, genreDTO);
+    }
+
     /************************************************************************************************************************************/
     /*
          _____       _      _
@@ -60,5 +74,9 @@ public class GenreController {
         | |__| |  __/ |  __/ ||  __/
         |_____/ \___|_|\___|\__\___|
     */
+    @DeleteMapping("/delete")
+    public void deleteGenre(@RequestParam Long id) {
+        genreService.deleteGenre(id);
+    }
     /************************************************************************************************************************************/
 }

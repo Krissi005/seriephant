@@ -1,6 +1,7 @@
 package de.dhbw.ase.tracker.tracker.service;
 
 import de.dhbw.ase.tracker.tracker.model.Genre;
+import de.dhbw.ase.tracker.tracker.model.GenreDTO;
 import de.dhbw.ase.tracker.tracker.repository.GenreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,15 @@ public class GenreService {
         | |____| | |  __/ (_| | ||  __/
         \_____|_|  \___|\__,_|\__\___|
      */
+    public Genre saveGenre(GenreDTO genreDTO){
+        return saveGenre(genreDTO.getTitle(), genreDTO.getDescription());
+    }
+
+    public Genre saveGenre(String title, String description) {
+        Genre genreToCreate = new Genre(title, description);
+        genreRepository.save(genreToCreate);
+        return genreToCreate;
+    }
 
     /************************************************************************************************************************************/
     /*
@@ -48,6 +58,16 @@ public class GenreService {
               | |
               |_|
     */
+    public Genre updateGenre(Long id, GenreDTO genreDTO){
+        if(genreRepository.existsById(id)){
+            Genre foundGenre = genreRepository.getById(id);
+            foundGenre.updateFromDTO(genreDTO);
+            genreRepository.save(foundGenre);
+            return foundGenre;
+        }
+        return null;
+    }
+
     /************************************************************************************************************************************/
     /*
          _____       _      _
@@ -57,5 +77,8 @@ public class GenreService {
         | |__| |  __/ |  __/ ||  __/
         |_____/ \___|_|\___|\__\___|
     */
+    public void deleteGenre(Long id){
+        genreRepository.deleteById(id);
+    }
     /************************************************************************************************************************************/
 }

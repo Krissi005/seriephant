@@ -1,12 +1,12 @@
 package de.dhbw.ase.tracker.tracker.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.*;
 
 import java.io.Serializable;
 
 @Data
 @AllArgsConstructor
+@RequiredArgsConstructor
 public class GenreDTO implements Serializable {
     private String title;
     private String description;

@@ -1,5 +1,6 @@
 package de.dhbw.ase.tracker.tracker.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import de.dhbw.ase.tracker.tracker.model.listener.GenreListener;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
