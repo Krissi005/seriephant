@@ -1,5 +1,6 @@
 package de.dhbw.ase.tracker.tracker.service;
 
+import de.dhbw.ase.tracker.tracker.helper.DTOMapper;
 import de.dhbw.ase.tracker.tracker.model.Genre;
 import de.dhbw.ase.tracker.tracker.model.GenreDTO;
 import de.dhbw.ase.tracker.tracker.repository.GenreRepository;
@@ -62,7 +63,7 @@ public class GenreService {
     public Genre updateGenre(Long id, GenreDTO genreDTO) throws ValidationException {
         if(genreRepository.existsById(id)){
             Genre foundGenre = genreRepository.getById(id);
-            foundGenre.updateFromDTO(genreDTO);
+            DTOMapper.updateGenreFromDTO(foundGenre, genreDTO);
             genreRepository.save(foundGenre);
             return foundGenre;
         }
@@ -81,5 +82,6 @@ public class GenreService {
     public void deleteGenre(Long id){
         genreRepository.deleteById(id);
     }
+
     /************************************************************************************************************************************/
 }
