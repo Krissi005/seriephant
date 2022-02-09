@@ -2,12 +2,9 @@ package de.dhbw.ase.tracker.tracker.service;
 
 import de.dhbw.ase.tracker.tracker.helper.Checker;
 import de.dhbw.ase.tracker.tracker.helper.DTOMapper;
-import de.dhbw.ase.tracker.tracker.model.Episode;
-import de.dhbw.ase.tracker.tracker.model.Season;
-import de.dhbw.ase.tracker.tracker.model.SeasonDTO;
-import de.dhbw.ase.tracker.tracker.model.Serie;
-import de.dhbw.ase.tracker.tracker.repository.EpisodeRepository;
+import de.dhbw.ase.tracker.tracker.model.*;
 import de.dhbw.ase.tracker.tracker.repository.SeasonRepository;
+import de.dhbw.ase.tracker.tracker.repository.SerieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,13 +12,13 @@ import javax.xml.bind.ValidationException;
 import java.util.List;
 
 @Service
-public class SeasonService {
+public class SerieService {
+
+    @Autowired
+    SerieRepository serieRepository;
 
     @Autowired
     SeasonRepository seasonRepository;
-
-    @Autowired
-    EpisodeRepository episodeRepository;
 
     /************************************************************************************************************************************/
 
@@ -33,15 +30,14 @@ public class SeasonService {
         | |____| | |  __/ (_| | ||  __/
         \_____|_|  \___|\__,_|\__\___|
      */
-    public Season saveSeason(SeasonDTO seasonDTO) throws ValidationException {
-        return saveSeason(seasonDTO.getSeasonNumber(), seasonDTO.getSerieId());
+    public Serie saveSerie(SerieDTO serieDTO) throws ValidationException {
+        return saveSerie(serieDTO.getTitle(), serieDTO.getDescription());
     }
 
-    public Season saveSeason(Integer seasonNumber, Long serieId) throws ValidationException {
-        Serie serie = Checker.getSerieById(serieId);
-        Season seasonToCreate = new Season(seasonNumber, serie);
-        seasonRepository.save(seasonToCreate);
-        return seasonToCreate;
+    public Serie saveSerie(String title, String description) {
+        Serie serieToCreate = new Serie(title, description);
+        serieRepository.save(serieToCreate);
+        return serieToCreate;
     }
 
     /************************************************************************************************************************************/
@@ -53,11 +49,11 @@ public class SeasonService {
         | | \ \  __/ (_| | (_| |
         |_|  \_\___|\__,_|\__,_|
     */
-    public List<Season> getAllSeasons() {
-        return seasonRepository.findAll();
+    public List<Serie> getAllSeries() {
+        return serieRepository.findAll();
     }
-    public List<Episode> getAllEpisodesOfSeason(Long id) {
-        return seasonRepository.findById(id).get().getEpisodes();
+    public List<Season> getAllSeasonsOfSerie(Long id) {
+        return serieRepository.findById(id).get().getSeasons();
     }
 
     /************************************************************************************************************************************/
@@ -71,12 +67,12 @@ public class SeasonService {
               | |
               |_|
     */
-    public Season updateSeason(Long id, SeasonDTO seasonDTO) throws ValidationException {
-        if (seasonRepository.existsById(id)) {
-            Season foundSeason = seasonRepository.getById(id);
-            DTOMapper.updateSeasonFromDTO(foundSeason, seasonDTO);
-            seasonRepository.save(foundSeason);
-            return foundSeason;
+    public Serie updateSerie(Long id, SerieDTO serieDTO) throws ValidationException {
+        if (serieRepository.existsById(id)) {
+            Serie foundSerie = serieRepository.getById(id);
+            DTOMapper.updateSerieFromDTO(foundSerie, serieDTO);
+            serieRepository.save(foundSerie);
+            return foundSerie;
         }
         throw new ValidationException("Id is not known.");
     }
@@ -90,15 +86,15 @@ public class SeasonService {
         | |__| |  __/ |  __/ ||  __/
         |_____/ \___|_|\___|\__\___|
     */
-    public void deleteSeason(Long id) {
-        seasonRepository.deleteById(id);
+    public void deleteSerie(Long id) {
+        serieRepository.deleteById(id);
     }
 
-    public void deleteSeasonWithAllEpisodes(Long id) {
-        for (Episode episode : seasonRepository.getById(id).getEpisodes()) {
-            episodeRepository.deleteById(episode.getId());
+    public void deleteSerieWithAllSeasons(Long id) {
+        for (Season season : serieRepository.getById(id).getSeasons()) {
+            seasonRepository.deleteById(season.getId());
         }
-        seasonRepository.deleteById(id);
+        serieRepository.deleteById(id);
     }
 
     /************************************************************************************************************************************/
