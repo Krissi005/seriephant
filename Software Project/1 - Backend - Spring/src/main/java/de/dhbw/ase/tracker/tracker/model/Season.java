@@ -22,8 +22,8 @@ public class Season {
     private Long id;
     @Column(name = "seasonNumber")
     private Integer seasonNumber;
-    @JsonBackReference
     @OneToMany(cascade = CascadeType.ALL, mappedBy="season")
+    @JsonBackReference
     private List<Episode> episodes;
     @ManyToOne
     @JsonManagedReference

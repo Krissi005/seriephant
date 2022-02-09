@@ -30,8 +30,8 @@ public class UserController {
         return userService.saveUser(userDTO);
     }
 
-    @PostMapping(value="/new", params = {"firstName", "lastName"})
-        public User createUser(@RequestParam String firstName, @RequestParam String lastName) throws ValidationException {
+    @PostMapping(value="/new", params = {"firstName"})
+        public User createUser(@RequestParam String firstName, @RequestParam(required = false) String lastName) throws ValidationException {
         return userService.saveUser(firstName, lastName);
     }
 
@@ -68,12 +68,12 @@ public class UserController {
     */
 
     @PutMapping(value = "/update")
-    public User updateUser(@RequestParam Long userId, UserDTO userDTO) throws ValidationException {
+    public User updateUser(@RequestParam Long userId, @RequestBody UserDTO userDTO) throws ValidationException {
         return userService.updateUser(userId, userDTO);
     }
 
     @PutMapping(value = "/updateEpisodes")
-    public User updateSeenEpisodesOfUser(@RequestParam Long userId, Long episodeId) throws ValidationException {
+    public User updateSeenEpisodesOfUser(@RequestParam Long userId, @RequestParam Long episodeId) throws ValidationException {
         return userService.updateSeenEpisodesOfUser(userId, episodeId);
     }
 

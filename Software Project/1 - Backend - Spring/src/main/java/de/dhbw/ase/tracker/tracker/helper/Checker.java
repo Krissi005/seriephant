@@ -40,37 +40,30 @@ public class Checker {
         Checker.userRepository = userRepositoryInitalize;
     }
 
-    public static void deleteSeenEpisodesOfUser(Long episodeId) {
-        Episode episode = episodeRepository.getById(episodeId);
-        for (User user : episode.getUsers()) {
-            user.notSeeEpsiode(episode);
-        }
-    }
-
-    public static Episode getEpisodeById(Long id) throws ValidationException {
-        if (id != null && episodeRepository.existsById(id)) {
-            return episodeRepository.getById(id);
+    public static Episode getEpisodeById(Long epsiodeId) throws ValidationException {
+        if (epsiodeId != null && episodeRepository.existsById(epsiodeId)) {
+            return episodeRepository.getById(epsiodeId);
         }
         throw new ValidationException("SeasonId is not known.");
     }
 
-    public static Genre getGenreById(Long id) throws ValidationException {
-        if (id != null && genreRepository.existsById(id)) {
-            return genreRepository.getById(id);
+    public static Genre getGenreById(Long genreId) throws ValidationException {
+        if (genreId != null && genreRepository.existsById(genreId)) {
+            return genreRepository.getById(genreId);
         }
         throw new ValidationException("SeasonId is not known.");
     }
 
-    public static Season getSeasonById(Long id) throws ValidationException {
-        if (id != null && seasonRepository.existsById(id)) {
-            return seasonRepository.getById(id);
+    public static Season getSeasonById(Long seasonId) throws ValidationException {
+        if (seasonId != null && seasonRepository.existsById(seasonId)) {
+            return seasonRepository.getById(seasonId);
         }
         throw new ValidationException("SeasonId is not known.");
     }
 
-    public static Serie getSerieById(Long id) throws ValidationException {
-        if (id != null && serieRepository.existsById(id)) {
-            return serieRepository.getById(id);
+    public static Serie getSerieById(Long serieId) throws ValidationException {
+        if (serieId != null && serieRepository.existsById(serieId)) {
+            return serieRepository.getById(serieId);
         }
         throw new ValidationException("SeasonId is not known.");
     }

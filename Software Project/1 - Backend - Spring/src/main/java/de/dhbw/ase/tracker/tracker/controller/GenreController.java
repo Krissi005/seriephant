@@ -30,8 +30,8 @@ public class GenreController {
         return genreService.saveGenre(genreDTO);
     }
 
-    @PostMapping(value="/new", params = {"title", "description"})
-        public Genre createGenre(@RequestParam String title, @RequestParam String description){
+    @PostMapping(value="/new", params = {"title"})
+        public Genre createGenre(@RequestParam String title, @RequestParam(required = false) String description){
         return genreService.saveGenre(title, description);
     }
 
@@ -51,7 +51,7 @@ public class GenreController {
     }
 
     @GetMapping(value = "/readAllSeries")
-    public List<Serie> getAllSeriesOfGenre(Long genreId){
+    public List<Serie> getAllSeriesOfGenre(@RequestParam Long genreId){
         return genreService.getAllSeriesOfGenre(genreId);
     }
 
@@ -68,7 +68,7 @@ public class GenreController {
     */
 
     @PutMapping(value = "/update")
-    public Genre updateGenre(@RequestParam Long genreId, GenreDTO genreDTO) throws ValidationException {
+    public Genre updateGenre(@RequestParam Long genreId, @RequestBody GenreDTO genreDTO) throws ValidationException {
         return genreService.updateGenre(genreId, genreDTO);
     }
 

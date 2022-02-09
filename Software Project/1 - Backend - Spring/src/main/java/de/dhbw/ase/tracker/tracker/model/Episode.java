@@ -28,7 +28,7 @@ public class Episode {
     @JsonManagedReference
     @JoinColumn(name="season_id", nullable = false)
     private Season season;
-    @ManyToMany(mappedBy = "seenEpisodes", cascade = { CascadeType.PERSIST })
+    @ManyToMany(mappedBy = "watchedEpisodes", cascade = { CascadeType.PERSIST })
     @JsonIgnoreProperties("seenEpisodes")
     private List<User> users = new ArrayList<>();
 
@@ -36,5 +36,10 @@ public class Episode {
         this.title = title;
         this.episodeNumber = episodeNumber;
         this.season = season;
+    }
+
+    @PreRemove
+    public void preRemove(){
+        users.forEach(user -> user.removeWatchedEpisode(this));
     }
 }

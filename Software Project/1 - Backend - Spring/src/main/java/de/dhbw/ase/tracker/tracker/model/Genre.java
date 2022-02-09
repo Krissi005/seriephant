@@ -25,8 +25,8 @@ public class Genre {
     private String title;
     @Column(name = "description")
     private String description;
-    @JsonBackReference
     @OneToMany(cascade = CascadeType.PERSIST, mappedBy="genre")
+    @JsonBackReference
     private List<Serie> series;
 
     public Genre(String title, String description){

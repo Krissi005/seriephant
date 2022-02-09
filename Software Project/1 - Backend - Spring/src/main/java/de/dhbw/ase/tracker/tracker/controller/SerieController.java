@@ -30,8 +30,8 @@ public class SerieController {
         return serieService.saveSerie(serieDTO);
     }
 
-    @PostMapping(value="/new", params = {"seasonNumber"})
-        public Serie createSerie(@RequestParam String title, @RequestParam String description, @RequestParam Long genreId) throws ValidationException {
+    @PostMapping(value="/new", params = {"title"})
+        public Serie createSerie(@RequestParam String title, @RequestParam(required = false) String description, @RequestParam(required = false) Long genreId) throws ValidationException {
         return serieService.saveSerie(title, description, genreId);
     }
 
@@ -68,7 +68,7 @@ public class SerieController {
     */
 
     @PutMapping(value = "/update")
-    public Serie updateSerie(@RequestParam Long serieId, SerieDTO serieDTO) throws ValidationException {
+    public Serie updateSerie(@RequestParam Long serieId, @RequestBody SerieDTO serieDTO) throws ValidationException {
         return serieService.updateSerie(serieId, serieDTO);
     }
 

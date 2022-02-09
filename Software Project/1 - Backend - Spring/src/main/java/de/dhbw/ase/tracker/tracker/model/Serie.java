@@ -28,8 +28,8 @@ public class Serie {
     @JsonManagedReference
     @JoinColumn(name="genre_id")
     private Genre genre;
-    @JsonBackReference
     @OneToMany(cascade = CascadeType.ALL, mappedBy="serie")
+    @JsonBackReference
     private List<Season> seasons;
 
     public Serie(String title, String description){

@@ -3,7 +3,6 @@ package de.dhbw.ase.tracker.tracker.service;
 import de.dhbw.ase.tracker.tracker.helper.Checker;
 import de.dhbw.ase.tracker.tracker.helper.DTOMapper;
 import de.dhbw.ase.tracker.tracker.model.Episode;
-import de.dhbw.ase.tracker.tracker.model.Season;
 import de.dhbw.ase.tracker.tracker.model.User;
 import de.dhbw.ase.tracker.tracker.model.UserDTO;
 import de.dhbw.ase.tracker.tracker.repository.UserRepository;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import javax.xml.bind.ValidationException;
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class UserService {
@@ -53,7 +51,7 @@ public class UserService {
         return userRepository.findAll();
     }
     public List<Episode> getAllEpisodesOfUser(Long userId) {
-        return userRepository.findById(userId).get().getSeenEpisodes();
+        return userRepository.findById(userId).get().getWatchedEpisodes();
     }
 
     /************************************************************************************************************************************/
@@ -80,7 +78,7 @@ public class UserService {
         Episode episode = Checker.getEpisodeById(episodeId);
         if (userRepository.existsById(userId)) {
             User foundUser = userRepository.getById(userId);
-            foundUser.seeEpisode(episode);
+            foundUser.watchEpisode(episode);
             userRepository.save(foundUser);
             return foundUser;
         }

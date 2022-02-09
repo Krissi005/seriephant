@@ -30,9 +30,9 @@ public class SeasonController {
         return seasonService.saveSeason(seasonDTO);
     }
 
-    @PostMapping(value="/new", params = {"seasonNumber"})
-        public Season createSeason(@RequestParam Integer seasonNumber, @RequestParam Long seasonId) throws ValidationException {
-        return seasonService.saveSeason(seasonNumber, seasonId);
+    @PostMapping(value="/new", params = {"seasonNumber", "serieId"})
+        public Season createSeason(@RequestParam Integer seasonNumber, @RequestParam Long serieId) throws ValidationException {
+        return seasonService.saveSeason(seasonNumber, serieId);
     }
 
     /************************************************************************************************************************************/
@@ -68,7 +68,7 @@ public class SeasonController {
     */
 
     @PutMapping(value = "/update")
-    public Season updateSeason(@RequestParam Long seasonId, SeasonDTO seasonDTO) throws ValidationException {
+    public Season updateSeason(@RequestParam Long seasonId, @RequestBody SeasonDTO seasonDTO) throws ValidationException {
         return seasonService.updateSeason(seasonId, seasonDTO);
     }
 

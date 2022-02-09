@@ -83,7 +83,6 @@ public class EpisodeService {
         |_____/ \___|_|\___|\__\___|
     */
     public void deleteEpisode(Long episodeId) {
-        Checker.deleteSeenEpisodesOfUser(episodeId);
         episodeRepository.deleteById(episodeId);
     }
     /************************************************************************************************************************************/

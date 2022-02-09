@@ -62,7 +62,7 @@ public class EpisodeController {
     */
 
     @PutMapping(value = "/update")
-    public Episode updateEpisode(@RequestParam Long episodeId, EpisodeDTO episodeDTO) throws ValidationException {
+    public Episode updateEpisode(@RequestParam Long episodeId, @RequestBody EpisodeDTO episodeDTO) throws ValidationException {
         return episodeService.updateEpisode(episodeId, episodeDTO);
     }
 
