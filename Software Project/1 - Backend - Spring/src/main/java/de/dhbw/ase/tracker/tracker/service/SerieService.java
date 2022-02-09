@@ -7,6 +7,7 @@ import de.dhbw.ase.tracker.tracker.repository.SeasonRepository;
 import de.dhbw.ase.tracker.tracker.repository.SerieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.xml.bind.ValidationException;
 import java.util.List;
@@ -31,11 +32,12 @@ public class SerieService {
         \_____|_|  \___|\__,_|\__\___|
      */
     public Serie saveSerie(SerieDTO serieDTO) throws ValidationException {
-        return saveSerie(serieDTO.getTitle(), serieDTO.getDescription());
+        return saveSerie(serieDTO.getTitle(), serieDTO.getDescription(), serieDTO.getGenreId());
     }
 
-    public Serie saveSerie(String title, String description) {
-        Serie serieToCreate = new Serie(title, description);
+    public Serie saveSerie(String title, String description, Long genreId) throws ValidationException {
+        Genre genre = Checker.getGenreById(genreId);
+        Serie serieToCreate = new Serie(title, description, genre);
         serieRepository.save(serieToCreate);
         return serieToCreate;
     }
@@ -52,6 +54,7 @@ public class SerieService {
     public List<Serie> getAllSeries() {
         return serieRepository.findAll();
     }
+
     public List<Season> getAllSeasonsOfSerie(Long id) {
         return serieRepository.findById(id).get().getSeasons();
     }

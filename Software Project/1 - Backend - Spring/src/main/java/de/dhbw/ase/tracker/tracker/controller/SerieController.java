@@ -31,8 +31,8 @@ public class SerieController {
     }
 
     @PostMapping(value="/new", params = {"seasonNumber"})
-        public Serie createSerie(@RequestParam String title, @RequestParam String description) throws ValidationException {
-        return serieService.saveSerie(title, description);
+        public Serie createSerie(@RequestParam String title, @RequestParam String description, @RequestParam Long genreId) throws ValidationException {
+        return serieService.saveSerie(title, description, genreId);
     }
 
     /************************************************************************************************************************************/

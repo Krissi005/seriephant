@@ -3,6 +3,7 @@ package de.dhbw.ase.tracker.tracker.service;
 import de.dhbw.ase.tracker.tracker.helper.DTOMapper;
 import de.dhbw.ase.tracker.tracker.model.Genre;
 import de.dhbw.ase.tracker.tracker.model.GenreDTO;
+import de.dhbw.ase.tracker.tracker.model.Serie;
 import de.dhbw.ase.tracker.tracker.repository.GenreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,7 +27,7 @@ public class GenreService {
         | |____| | |  __/ (_| | ||  __/
         \_____|_|  \___|\__,_|\__\___|
      */
-    public Genre saveGenre(GenreDTO genreDTO){
+    public Genre saveGenre(GenreDTO genreDTO) {
         return saveGenre(genreDTO.getTitle(), genreDTO.getDescription());
     }
 
@@ -45,8 +46,12 @@ public class GenreService {
         | | \ \  __/ (_| | (_| |
         |_|  \_\___|\__,_|\__,_|
     */
-    public List<Genre> getAllGenres(){
+    public List<Genre> getAllGenres() {
         return genreRepository.findAll();
+    }
+
+    public List<Serie> getAllSeriesOfGenre(Long genreId) {
+        return genreRepository.findById(genreId).get().getSeries();
     }
 
     /************************************************************************************************************************************/
@@ -61,7 +66,7 @@ public class GenreService {
               |_|
     */
     public Genre updateGenre(Long id, GenreDTO genreDTO) throws ValidationException {
-        if(genreRepository.existsById(id)){
+        if (genreRepository.existsById(id)) {
             Genre foundGenre = genreRepository.getById(id);
             DTOMapper.updateGenreFromDTO(foundGenre, genreDTO);
             genreRepository.save(foundGenre);
@@ -79,7 +84,7 @@ public class GenreService {
         | |__| |  __/ |  __/ ||  __/
         |_____/ \___|_|\___|\__\___|
     */
-    public void deleteGenre(Long id){
+    public void deleteGenre(Long id) {
         genreRepository.deleteById(id);
     }
 

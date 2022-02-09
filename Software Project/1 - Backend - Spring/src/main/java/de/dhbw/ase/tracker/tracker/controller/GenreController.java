@@ -2,6 +2,7 @@ package de.dhbw.ase.tracker.tracker.controller;
 
 import de.dhbw.ase.tracker.tracker.model.Genre;
 import de.dhbw.ase.tracker.tracker.model.GenreDTO;
+import de.dhbw.ase.tracker.tracker.model.Serie;
 import de.dhbw.ase.tracker.tracker.service.GenreService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -47,6 +48,11 @@ public class GenreController {
     @GetMapping(value = "/read")
     public List<Genre> getAllGenres(){
         return genreService.getAllGenres();
+    }
+
+    @GetMapping(value = "/readAllSeries")
+    public List<Serie> getAllSeriesOfGenre(Long genreId){
+        return genreService.getAllSeriesOfGenre(genreId);
     }
 
     /************************************************************************************************************************************/
