@@ -1,7 +1,9 @@
 package de.dhbw.ase.tracker.tracker.helper;
 
+import de.dhbw.ase.tracker.tracker.model.Genre;
 import de.dhbw.ase.tracker.tracker.model.Season;
 import de.dhbw.ase.tracker.tracker.model.Serie;
+import de.dhbw.ase.tracker.tracker.repository.GenreRepository;
 import de.dhbw.ase.tracker.tracker.repository.SeasonRepository;
 import de.dhbw.ase.tracker.tracker.repository.SerieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,17 +14,31 @@ import javax.xml.bind.ValidationException;
 
 @Component
 public class Checker {
+    static GenreRepository genreRepository;
     static SeasonRepository seasonRepository;
     static SerieRepository serieRepository;
 
     @Autowired
+    private GenreRepository genreRepositoryInitalize;
+
+    @Autowired
     private SeasonRepository seasonRepositoryInitalize;
+
+    @Autowired
     private SerieRepository serieRepositoryInitalize;
 
     @PostConstruct
     public void init() {
+        Checker.genreRepository = genreRepositoryInitalize;
         Checker.seasonRepository = seasonRepositoryInitalize;
         Checker.serieRepository = serieRepositoryInitalize;
+    }
+
+    public static Genre getGenreById(Long id) throws ValidationException {
+        if (id != null && genreRepository.existsById(id)) {
+            return genreRepository.getById(id);
+        }
+        throw new ValidationException("SeasonId is not known.");
     }
 
     public static Season getSeasonById(Long id) throws ValidationException {

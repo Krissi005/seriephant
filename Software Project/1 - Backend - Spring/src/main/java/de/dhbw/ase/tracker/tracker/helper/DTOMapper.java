@@ -92,11 +92,11 @@ public class DTOMapper {
     }
 
     public static SerieDTO convertSerieToDTO(Serie serie){
-        return new SerieDTO(serie.getTitle(), serie.getDescription());
+        return new SerieDTO(serie.getTitle(), serie.getDescription(), serie.getGenre().getId());
     }
 
     public static Serie convertDTOToSerie(SerieDTO serieDTO){
-        return new Serie(serieDTO.getTitle(), serieDTO.getDescription());
+        return new Serie(serieDTO.getTitle(), serieDTO.getDescription(), genreRepository.getById(serieDTO.getGenreId()));
     }
 
     public static void updateSerieFromDTO(Serie serie, SerieDTO serieDTO) {
@@ -105,6 +105,9 @@ public class DTOMapper {
         }
         if (serieDTO.getDescription() != null) {
             serie.setDescription(serieDTO.getDescription());
+        }
+        if (serieDTO.getGenreId() != null) {
+            serie.setGenre(genreRepository.getById(serieDTO.getGenreId()));
         }
     }
 }

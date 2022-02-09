@@ -12,4 +12,5 @@ import java.io.Serializable;
 public class SerieDTO implements Serializable {
     private String title;
     private String description;
+    private Long genreId;
 }
