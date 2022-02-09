@@ -1,12 +1,14 @@
 package de.dhbw.ase.tracker.tracker.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Table(name="episode")
 @Entity
@@ -26,6 +28,9 @@ public class Episode {
     @JsonManagedReference
     @JoinColumn(name="season_id", nullable = false)
     private Season season;
+    @ManyToMany(mappedBy = "seenEpisodes", cascade = { CascadeType.PERSIST })
+    @JsonIgnoreProperties("seenEpisodes")
+    private List<User> users = new ArrayList<>();
 
     public Episode(String title, Integer episodeNumber, Season season){
         this.title = title;
