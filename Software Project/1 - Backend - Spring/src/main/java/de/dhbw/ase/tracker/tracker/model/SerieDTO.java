@@ -5,12 +5,11 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 import java.io.Serializable;
-import java.util.List;
 
 @Data
 @AllArgsConstructor
 @RequiredArgsConstructor
-public class SeasonDTO implements Serializable {
-    private Integer seasonNumber;
-    private Long serieId;
+public class SerieDTO implements Serializable {
+    private String title;
+    private String description;
 }
