@@ -1,9 +1,9 @@
 package de.dhbw.ase.tracker.tracker.controller;
 
-import de.dhbw.ase.tracker.tracker.model.Episode;
 import de.dhbw.ase.tracker.tracker.model.Season;
-import de.dhbw.ase.tracker.tracker.model.SeasonDTO;
-import de.dhbw.ase.tracker.tracker.service.SeasonService;
+import de.dhbw.ase.tracker.tracker.model.Serie;
+import de.dhbw.ase.tracker.tracker.model.SerieDTO;
+import de.dhbw.ase.tracker.tracker.service.SerieService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,10 +11,10 @@ import javax.xml.bind.ValidationException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/season")
+@RequestMapping("/serie")
 @RequiredArgsConstructor
-public class SeasonController {
-    private final SeasonService seasonService;
+public class SerieController {
+    private final SerieService serieService;
     /************************************************************************************************************************************/
 
     /*
@@ -26,13 +26,13 @@ public class SeasonController {
         \_____|_|  \___|\__,_|\__\___|
      */
     @PostMapping(value = "/create")
-    public Season createSeason(@RequestBody SeasonDTO seasonDTO) throws ValidationException {
-        return seasonService.saveSeason(seasonDTO);
+    public Serie createSerie(@RequestBody SerieDTO serieDTO) throws ValidationException {
+        return serieService.saveSerie(serieDTO);
     }
 
     @PostMapping(value="/new", params = {"seasonNumber"})
-        public Season createSeason(@RequestParam Integer seasonNumber, @RequestParam Long seasonId) throws ValidationException {
-        return seasonService.saveSeason(seasonNumber, seasonId);
+        public Serie createSerie(@RequestParam String title, @RequestParam String description) throws ValidationException {
+        return serieService.saveSerie(title, description);
     }
 
     /************************************************************************************************************************************/
@@ -46,13 +46,13 @@ public class SeasonController {
     */
 
     @GetMapping(value = "/read")
-    public List<Season> getAllSeasons(){
-        return seasonService.getAllSeasons();
+    public List<Serie> getAllSeries(){
+        return serieService.getAllSeries();
     }
 
     @GetMapping(value = "/readEpisodes")
-    public List<Episode> getAllEpisodesOfSeason(@RequestParam Long id){
-        return seasonService.getAllEpisodesOfSeason(id);
+    public List<Season> getAllSeasonsOfSerie(@RequestParam Long id){
+        return serieService.getAllSeasonsOfSerie(id);
     }
 
     /************************************************************************************************************************************/
@@ -68,8 +68,8 @@ public class SeasonController {
     */
 
     @PutMapping(value = "/update")
-    public Season updateSeason(@RequestParam Long id, SeasonDTO seasonDTO) throws ValidationException {
-        return seasonService.updateSeason(id, seasonDTO);
+    public Serie updateSerie(@RequestParam Long id, SerieDTO serieDTO) throws ValidationException {
+        return serieService.updateSerie(id, serieDTO);
     }
 
     /************************************************************************************************************************************/
@@ -82,13 +82,13 @@ public class SeasonController {
         |_____/ \___|_|\___|\__\___|
     */
     @DeleteMapping("/delete")
-    public void deleteSeason(@RequestParam Long id) {
-        seasonService.deleteSeason(id);
+    public void deleteSerie(@RequestParam Long id) {
+        serieService.deleteSerie(id);
     }
 
-    @DeleteMapping("/deleteWithAllEpisodes")
-    public void deleteSeasonWithAllEpisodes(@RequestParam Long id) {
-        seasonService.deleteSeasonWithAllEpisodes(id);
+    @DeleteMapping("/deleteWithAllSeasons")
+    public void deleteSerieWithAllEpisodes(@RequestParam Long id) {
+        serieService.deleteSerieWithAllSeasons(id);
     }
 
     /************************************************************************************************************************************/
