@@ -17,7 +17,7 @@ import javax.persistence.*;
 public class Episode {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     @Column(name = "title")
     private String title;
     @Column(name = "episodeNumber")
@@ -27,7 +27,7 @@ public class Episode {
     @JoinColumn(name="season_id", nullable = false)
     private Season season;
 
-    public Episode(String title, int episodeNumber, Season season){
+    public Episode(String title, Integer episodeNumber, Season season){
         this.title = title;
         this.episodeNumber = episodeNumber;
         this.season = season;

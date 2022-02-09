@@ -51,8 +51,8 @@ public class SerieController {
     }
 
     @GetMapping(value = "/readEpisodes")
-    public List<Season> getAllSeasonsOfSerie(@RequestParam Long id){
-        return serieService.getAllSeasonsOfSerie(id);
+    public List<Season> getAllSeasonsOfSerie(@RequestParam Long serieId){
+        return serieService.getAllSeasonsOfSerie(serieId);
     }
 
     /************************************************************************************************************************************/
@@ -68,8 +68,8 @@ public class SerieController {
     */
 
     @PutMapping(value = "/update")
-    public Serie updateSerie(@RequestParam Long id, SerieDTO serieDTO) throws ValidationException {
-        return serieService.updateSerie(id, serieDTO);
+    public Serie updateSerie(@RequestParam Long serieId, SerieDTO serieDTO) throws ValidationException {
+        return serieService.updateSerie(serieId, serieDTO);
     }
 
     /************************************************************************************************************************************/
@@ -82,13 +82,13 @@ public class SerieController {
         |_____/ \___|_|\___|\__\___|
     */
     @DeleteMapping("/delete")
-    public void deleteSerie(@RequestParam Long id) {
-        serieService.deleteSerie(id);
+    public void deleteSerie(@RequestParam Long serieId) {
+        serieService.deleteSerie(serieId);
     }
 
     @DeleteMapping("/deleteWithAllSeasons")
-    public void deleteSerieWithAllEpisodes(@RequestParam Long id) {
-        serieService.deleteSerieWithAllSeasons(id);
+    public void deleteSerieWithAllEpisodes(@RequestParam Long serieId) {
+        serieService.deleteSerieWithAllSeasons(serieId);
     }
 
     /************************************************************************************************************************************/

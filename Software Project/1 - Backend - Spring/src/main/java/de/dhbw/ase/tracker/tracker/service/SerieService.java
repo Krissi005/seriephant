@@ -7,7 +7,6 @@ import de.dhbw.ase.tracker.tracker.repository.SeasonRepository;
 import de.dhbw.ase.tracker.tracker.repository.SerieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.xml.bind.ValidationException;
 import java.util.List;
@@ -55,8 +54,8 @@ public class SerieService {
         return serieRepository.findAll();
     }
 
-    public List<Season> getAllSeasonsOfSerie(Long id) {
-        return serieRepository.findById(id).get().getSeasons();
+    public List<Season> getAllSeasonsOfSerie(Long serieId) {
+        return serieRepository.findById(serieId).get().getSeasons();
     }
 
     /************************************************************************************************************************************/
@@ -70,9 +69,9 @@ public class SerieService {
               | |
               |_|
     */
-    public Serie updateSerie(Long id, SerieDTO serieDTO) throws ValidationException {
-        if (serieRepository.existsById(id)) {
-            Serie foundSerie = serieRepository.getById(id);
+    public Serie updateSerie(Long serieId, SerieDTO serieDTO) throws ValidationException {
+        if (serieRepository.existsById(serieId)) {
+            Serie foundSerie = serieRepository.getById(serieId);
             DTOMapper.updateSerieFromDTO(foundSerie, serieDTO);
             serieRepository.save(foundSerie);
             return foundSerie;
@@ -89,15 +88,15 @@ public class SerieService {
         | |__| |  __/ |  __/ ||  __/
         |_____/ \___|_|\___|\__\___|
     */
-    public void deleteSerie(Long id) {
-        serieRepository.deleteById(id);
+    public void deleteSerie(Long serieId) {
+        serieRepository.deleteById(serieId);
     }
 
-    public void deleteSerieWithAllSeasons(Long id) {
-        for (Season season : serieRepository.getById(id).getSeasons()) {
+    public void deleteSerieWithAllSeasons(Long serieId) {
+        for (Season season : serieRepository.getById(serieId).getSeasons()) {
             seasonRepository.deleteById(season.getId());
         }
-        serieRepository.deleteById(id);
+        serieRepository.deleteById(serieId);
     }
 
     /************************************************************************************************************************************/

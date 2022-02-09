@@ -19,14 +19,14 @@ import java.util.List;
 public class Serie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     @Column(name = "title")
     private String title;
     @Column(name = "description")
     private String description;
     @ManyToOne
     @JsonManagedReference
-    @JoinColumn(name="genre_id", nullable = true)
+    @JoinColumn(name="genre_id")
     private Genre genre;
     @JsonBackReference
     @OneToMany(cascade = CascadeType.ALL, mappedBy="serie")

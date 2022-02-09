@@ -56,8 +56,8 @@ public class SeasonService {
     public List<Season> getAllSeasons() {
         return seasonRepository.findAll();
     }
-    public List<Episode> getAllEpisodesOfSeason(Long id) {
-        return seasonRepository.findById(id).get().getEpisodes();
+    public List<Episode> getAllEpisodesOfSeason(Long seasonId) {
+        return seasonRepository.findById(seasonId).get().getEpisodes();
     }
 
     /************************************************************************************************************************************/
@@ -71,9 +71,9 @@ public class SeasonService {
               | |
               |_|
     */
-    public Season updateSeason(Long id, SeasonDTO seasonDTO) throws ValidationException {
-        if (seasonRepository.existsById(id)) {
-            Season foundSeason = seasonRepository.getById(id);
+    public Season updateSeason(Long seasonId, SeasonDTO seasonDTO) throws ValidationException {
+        if (seasonRepository.existsById(seasonId)) {
+            Season foundSeason = seasonRepository.getById(seasonId);
             DTOMapper.updateSeasonFromDTO(foundSeason, seasonDTO);
             seasonRepository.save(foundSeason);
             return foundSeason;
@@ -90,15 +90,15 @@ public class SeasonService {
         | |__| |  __/ |  __/ ||  __/
         |_____/ \___|_|\___|\__\___|
     */
-    public void deleteSeason(Long id) {
-        seasonRepository.deleteById(id);
+    public void deleteSeason(Long seasonId) {
+        seasonRepository.deleteById(seasonId);
     }
 
-    public void deleteSeasonWithAllEpisodes(Long id) {
-        for (Episode episode : seasonRepository.getById(id).getEpisodes()) {
+    public void deleteSeasonWithAllEpisodes(Long seasonId) {
+        for (Episode episode : seasonRepository.getById(seasonId).getEpisodes()) {
             episodeRepository.deleteById(episode.getId());
         }
-        seasonRepository.deleteById(id);
+        seasonRepository.deleteById(seasonId);
     }
 
     /************************************************************************************************************************************/

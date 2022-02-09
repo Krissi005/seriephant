@@ -63,9 +63,9 @@ public class EpisodeService {
               | |
               |_|
     */
-    public Episode updateEpisode(Long id, EpisodeDTO episodeDTO) throws ValidationException {
-        if (episodeRepository.existsById(id)) {
-            Episode foundEpisode = episodeRepository.getById(id);
+    public Episode updateEpisode(Long episodeId, EpisodeDTO episodeDTO) throws ValidationException {
+        if (episodeRepository.existsById(episodeId)) {
+            Episode foundEpisode = episodeRepository.getById(episodeId);
             DTOMapper.updateEpisodeFromDTO(foundEpisode, episodeDTO);
             episodeRepository.save(foundEpisode);
             return foundEpisode;
@@ -82,8 +82,8 @@ public class EpisodeService {
         | |__| |  __/ |  __/ ||  __/
         |_____/ \___|_|\___|\__\___|
     */
-    public void deleteEpisode(Long id) {
-        episodeRepository.deleteById(id);
+    public void deleteEpisode(Long episodeId) {
+        episodeRepository.deleteById(episodeId);
     }
     /************************************************************************************************************************************/
 }

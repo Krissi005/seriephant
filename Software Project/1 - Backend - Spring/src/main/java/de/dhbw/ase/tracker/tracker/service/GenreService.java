@@ -65,9 +65,9 @@ public class GenreService {
               | |
               |_|
     */
-    public Genre updateGenre(Long id, GenreDTO genreDTO) throws ValidationException {
-        if (genreRepository.existsById(id)) {
-            Genre foundGenre = genreRepository.getById(id);
+    public Genre updateGenre(Long genreId, GenreDTO genreDTO) throws ValidationException {
+        if (genreRepository.existsById(genreId)) {
+            Genre foundGenre = genreRepository.getById(genreId);
             DTOMapper.updateGenreFromDTO(foundGenre, genreDTO);
             genreRepository.save(foundGenre);
             return foundGenre;
@@ -84,8 +84,8 @@ public class GenreService {
         | |__| |  __/ |  __/ ||  __/
         |_____/ \___|_|\___|\__\___|
     */
-    public void deleteGenre(Long id) {
-        genreRepository.deleteById(id);
+    public void deleteGenre(Long genreId) {
+        genreRepository.deleteById(genreId);
     }
 
     /************************************************************************************************************************************/

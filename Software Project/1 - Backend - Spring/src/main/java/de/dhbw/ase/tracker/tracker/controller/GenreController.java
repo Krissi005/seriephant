@@ -68,8 +68,8 @@ public class GenreController {
     */
 
     @PutMapping(value = "/update")
-    public Genre updateGenre(@RequestParam Long id, GenreDTO genreDTO) throws ValidationException {
-        return genreService.updateGenre(id, genreDTO);
+    public Genre updateGenre(@RequestParam Long genreId, GenreDTO genreDTO) throws ValidationException {
+        return genreService.updateGenre(genreId, genreDTO);
     }
 
     /************************************************************************************************************************************/
@@ -82,8 +82,8 @@ public class GenreController {
         |_____/ \___|_|\___|\__\___|
     */
     @DeleteMapping("/delete")
-    public void deleteGenre(@RequestParam Long id) {
-        genreService.deleteGenre(id);
+    public void deleteGenre(@RequestParam Long genreId) {
+        genreService.deleteGenre(genreId);
     }
     /************************************************************************************************************************************/
 }

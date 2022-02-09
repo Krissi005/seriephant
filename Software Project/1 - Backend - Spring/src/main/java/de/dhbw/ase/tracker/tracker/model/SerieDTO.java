@@ -1,8 +1,6 @@
 package de.dhbw.ase.tracker.tracker.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 import java.io.Serializable;
 

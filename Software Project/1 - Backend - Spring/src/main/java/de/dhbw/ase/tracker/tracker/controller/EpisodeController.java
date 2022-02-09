@@ -62,8 +62,8 @@ public class EpisodeController {
     */
 
     @PutMapping(value = "/update")
-    public Episode updateEpisode(@RequestParam Long id, EpisodeDTO episodeDTO) throws ValidationException {
-        return episodeService.updateEpisode(id, episodeDTO);
+    public Episode updateEpisode(@RequestParam Long episodeId, EpisodeDTO episodeDTO) throws ValidationException {
+        return episodeService.updateEpisode(episodeId, episodeDTO);
     }
 
     /************************************************************************************************************************************/
@@ -76,8 +76,8 @@ public class EpisodeController {
         |_____/ \___|_|\___|\__\___|
     */
     @DeleteMapping("/delete")
-    public void deleteEpisode(@RequestParam Long id) {
-        episodeService.deleteEpisode(id);
+    public void deleteEpisode(@RequestParam Long episodeId) {
+        episodeService.deleteEpisode(episodeId);
     }
     /************************************************************************************************************************************/
 }

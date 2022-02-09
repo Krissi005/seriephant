@@ -19,7 +19,7 @@ import java.util.List;
 public class Season {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     @Column(name = "seasonNumber")
     private Integer seasonNumber;
     @JsonBackReference
@@ -30,7 +30,7 @@ public class Season {
     @JoinColumn(name="serie_id", nullable = false)
     private Serie serie;
 
-    public Season(int seasonNumber, Serie serie){
+    public Season(Integer seasonNumber, Serie serie){
         this.seasonNumber = seasonNumber;
         this.serie = serie;
     }
