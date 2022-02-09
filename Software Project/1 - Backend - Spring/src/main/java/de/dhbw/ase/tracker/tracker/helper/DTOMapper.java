@@ -4,6 +4,7 @@ import de.dhbw.ase.tracker.tracker.model.*;
 import de.dhbw.ase.tracker.tracker.repository.EpisodeRepository;
 import de.dhbw.ase.tracker.tracker.repository.GenreRepository;
 import de.dhbw.ase.tracker.tracker.repository.SeasonRepository;
+import de.dhbw.ase.tracker.tracker.repository.SerieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -14,6 +15,7 @@ public class DTOMapper {
     static GenreRepository genreRepository;
     static EpisodeRepository episodeRepository;
     static SeasonRepository seasonRepository;
+    static SerieRepository serieRepository;
 
     @Autowired
     private GenreRepository genreRepositoryInitalize;
@@ -24,11 +26,15 @@ public class DTOMapper {
     @Autowired
     private SeasonRepository seasonRepositoryInitalize;
 
+    @Autowired
+    private SerieRepository serieRepositoryInitalize;
+
     @PostConstruct
     public void init() {
         DTOMapper.genreRepository = genreRepositoryInitalize;
         DTOMapper.episodeRepository = episodeRepositoryInitalize;
         DTOMapper.seasonRepository = seasonRepositoryInitalize;
+        DTOMapper.serieRepository = serieRepositoryInitalize;
     }
 
     public static GenreDTO convertGenreToDTO(Genre genre){
@@ -68,20 +74,37 @@ public class DTOMapper {
         }
     }
 
-    public static SeasonDTO convertEpisodeToDTO(Season season){
-        return new SeasonDTO(season.getSeasonNumber(), season.getEpisodes());
+    public static SeasonDTO convertSeasonToDTO(Season season){
+        return new SeasonDTO(season.getSeasonNumber(), season.getSerie().getId());
     }
 
     public static Season convertDTOToSeason(SeasonDTO seasonDTO){
-        return new Season(seasonDTO.getSeasonNumber());
+        return new Season(seasonDTO.getSeasonNumber(), serieRepository.getById(seasonDTO.getSerieId()));
     }
 
     public static void updateSeasonFromDTO(Season season, SeasonDTO seasonDTO) {
         if (seasonDTO.getSeasonNumber() != null) {
             season.setSeasonNumber(seasonDTO.getSeasonNumber());
         }
-        if (seasonDTO.getEpisodes() != null) {
-            seasonDTO.setEpisodes(seasonDTO.getEpisodes());
+        if (seasonDTO.getSerieId() != null) {
+            season.setSerie(serieRepository.getById(seasonDTO.getSerieId()));
+        }
+    }
+
+    public static SerieDTO convertSerieToDTO(Serie serie){
+        return new SerieDTO(serie.getTitle(), serie.getDescription());
+    }
+
+    public static Serie convertDTOToSerie(SerieDTO serieDTO){
+        return new Serie(serieDTO.getTitle(), serieDTO.getDescription());
+    }
+
+    public static void updateSerieFromDTO(Serie serie, SerieDTO serieDTO) {
+        if (serieDTO.getTitle() != null) {
+            serie.setTitle(serieDTO.getTitle());
+        }
+        if (serieDTO.getDescription() != null) {
+            serie.setDescription(serieDTO.getDescription());
         }
     }
 }
