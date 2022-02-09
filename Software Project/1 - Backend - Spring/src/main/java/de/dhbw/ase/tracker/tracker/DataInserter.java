@@ -1,13 +1,7 @@
 package de.dhbw.ase.tracker.tracker;
 
-import de.dhbw.ase.tracker.tracker.model.Episode;
-import de.dhbw.ase.tracker.tracker.model.Genre;
-import de.dhbw.ase.tracker.tracker.model.Season;
-import de.dhbw.ase.tracker.tracker.model.Serie;
-import de.dhbw.ase.tracker.tracker.repository.EpisodeRepository;
-import de.dhbw.ase.tracker.tracker.repository.GenreRepository;
-import de.dhbw.ase.tracker.tracker.repository.SeasonRepository;
-import de.dhbw.ase.tracker.tracker.repository.SerieRepository;
+import de.dhbw.ase.tracker.tracker.model.*;
+import de.dhbw.ase.tracker.tracker.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
@@ -33,6 +27,9 @@ public class DataInserter implements ApplicationListener<ApplicationReadyEvent> 
 
     @Autowired
     SerieRepository serieRepository;
+
+    @Autowired
+    UserRepository userRepository;
 
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
@@ -61,5 +58,10 @@ public class DataInserter implements ApplicationListener<ApplicationReadyEvent> 
         episodeRepository.save(episode2);
         Episode episode3 = new Episode("Erbe", 2, season2);
         episodeRepository.save(episode3);
+
+        User user = new User("Pascal", "E");
+        userRepository.save(user);
+        User user1 = new User("Krissi", "A");
+        userRepository.save(user1);
     }
 }
