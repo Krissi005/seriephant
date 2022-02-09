@@ -6,7 +6,6 @@ import de.dhbw.ase.tracker.tracker.model.Episode;
 import de.dhbw.ase.tracker.tracker.model.EpisodeDTO;
 import de.dhbw.ase.tracker.tracker.model.Season;
 import de.dhbw.ase.tracker.tracker.repository.EpisodeRepository;
-import de.dhbw.ase.tracker.tracker.repository.SeasonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

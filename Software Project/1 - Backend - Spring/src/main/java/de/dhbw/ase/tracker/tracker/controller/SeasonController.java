@@ -85,5 +85,11 @@ public class SeasonController {
     public void deleteSeason(@RequestParam Long id) {
         seasonService.deleteSeason(id);
     }
+
+    @DeleteMapping("/deleteWithAllEpisodes")
+    public void deleteSeasonWithAllEpisodes(@RequestParam Long id) {
+        seasonService.deleteSeasonWithAllEpisodes(id);
+    }
+
     /************************************************************************************************************************************/
 }
