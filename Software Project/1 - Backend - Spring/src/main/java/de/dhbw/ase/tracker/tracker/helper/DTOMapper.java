@@ -31,10 +31,10 @@ public class DTOMapper {
 
     @PostConstruct
     public void init() {
-        DTOMapper.genreRepository = genreRepositoryInitalize;
-        DTOMapper.episodeRepository = episodeRepositoryInitalize;
-        DTOMapper.seasonRepository = seasonRepositoryInitalize;
-        DTOMapper.serieRepository = serieRepositoryInitalize;
+        genreRepository = genreRepositoryInitalize;
+        episodeRepository = episodeRepositoryInitalize;
+        seasonRepository = seasonRepositoryInitalize;
+        serieRepository = serieRepositoryInitalize;
     }
 
     public static GenreDTO convertGenreToDTO(Genre genre){
@@ -108,6 +108,23 @@ public class DTOMapper {
         }
         if (serieDTO.getGenreId() != null) {
             serie.setGenre(genreRepository.getById(serieDTO.getGenreId()));
+        }
+    }
+
+    public static UserDTO convertUserToDTO(User user){
+        return new UserDTO(user.getFirstName(), user.getLastName());
+    }
+
+    public static User convertDTOToUser(UserDTO userDTO){
+        return new User(userDTO.getFirstName(), userDTO.getLastName());
+    }
+
+    public static void updateUserFromDTO(User user, UserDTO userDTO) {
+        if (userDTO.getFirstName() != null) {
+            user.setFirstName(userDTO.getFirstName());
+        }
+        if (userDTO.getLastName() != null) {
+            user.setLastName(userDTO.getLastName());
         }
     }
 }
