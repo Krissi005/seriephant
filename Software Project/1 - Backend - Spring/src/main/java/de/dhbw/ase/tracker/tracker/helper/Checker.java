@@ -67,4 +67,11 @@ public class Checker {
         }
         throw new ValidationException("SeasonId is not known.");
     }
+
+    public static User getUserById(Long userId) throws ValidationException {
+        if (userId != null && userRepository.existsById(userId)) {
+            return userRepository.getById(userId);
+        }
+        throw new ValidationException("SeasonId is not known.");
+    }
 }

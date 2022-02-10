@@ -67,5 +67,6 @@ public class DataInserter implements ApplicationListener<ApplicationReadyEvent> 
         user.watchEpisode(episode1);
         user.watchEpisode(episode2);
         userRepository.save(user);
+
     }
 }
