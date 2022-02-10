@@ -1,5 +1,6 @@
 package de.dhbw.ase.tracker.tracker.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,11 +28,14 @@ public class User{
     @ManyToMany(cascade = { CascadeType.ALL })
     @JsonIgnoreProperties("users")
     @JoinTable(
-            name = "user_episode",
+            name = "user_episode_ranking",
             joinColumns = { @JoinColumn(name = "user_id", referencedColumnName = "id") },
             inverseJoinColumns = { @JoinColumn(name = "episode_id", referencedColumnName = "id") }
     )
     List<Episode> watchedEpisodes = new ArrayList<>();
+    @OneToMany(mappedBy = "user")
+    @JsonBackReference
+    List<EpisodeRating> ratings;
 
     public User(String firstName, String lastName) {
         this.firstName = firstName;

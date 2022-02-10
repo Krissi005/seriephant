@@ -31,6 +31,9 @@ public class Episode {
     @ManyToMany(mappedBy = "watchedEpisodes", cascade = { CascadeType.PERSIST })
     @JsonIgnoreProperties("seenEpisodes")
     private List<User> users = new ArrayList<>();
+    @OneToMany(mappedBy = "episode")
+    @JsonBackReference
+    List<EpisodeRating> ratings;
 
     public Episode(String title, Integer episodeNumber, Season season){
         this.title = title;
