@@ -10,11 +10,15 @@ import javax.xml.bind.ValidationException;
 
 @Component
 public class Checker {
+    static ActorRepository actorRepository;
     static EpisodeRepository episodeRepository;
     static GenreRepository genreRepository;
     static SeasonRepository seasonRepository;
     static SerieRepository serieRepository;
     static UserRepository userRepository;
+
+    @Autowired
+    private ActorRepository actorRepositoryInitialize;
 
     @Autowired
     private EpisodeRepository episodeRepositoryInitalize;
@@ -33,6 +37,7 @@ public class Checker {
 
     @PostConstruct
     public void init() {
+        Checker.actorRepository = actorRepositoryInitialize;
         Checker.episodeRepository = episodeRepositoryInitalize;
         Checker.genreRepository = genreRepositoryInitalize;
         Checker.seasonRepository = seasonRepositoryInitalize;
@@ -71,6 +76,13 @@ public class Checker {
     public static User getUserById(Long userId) throws ValidationException {
         if (userId != null && userRepository.existsById(userId)) {
             return userRepository.getById(userId);
+        }
+        throw new ValidationException("SeasonId is not known.");
+    }
+
+    public static Actor getActorById(Long actorId) throws ValidationException {
+        if (actorId != null && actorRepository.existsById(actorId)) {
+            return actorRepository.getById(actorId);
         }
         throw new ValidationException("SeasonId is not known.");
     }

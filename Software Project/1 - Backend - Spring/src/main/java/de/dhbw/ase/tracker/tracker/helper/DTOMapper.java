@@ -127,4 +127,21 @@ public class DTOMapper {
             user.setLastName(userDTO.getLastName());
         }
     }
+
+    public static ActorDTO convertActorToDTO(Actor actor){
+        return new ActorDTO(actor.getFirstName(), actor.getLastName());
+    }
+
+    public static Actor convertDTOToActor(ActorDTO actorDTO){
+        return new Actor(actorDTO.getFirstName(), actorDTO.getLastName());
+    }
+
+    public static void updateActorFromDTO(Actor actor, ActorDTO actorDTO) {
+        if (actorDTO.getFirstName() != null) {
+            actor.setFirstName(actorDTO.getFirstName());
+        }
+        if (actorDTO.getLastName() != null) {
+            actor.setLastName(actorDTO.getLastName());
+        }
+    }
 }
