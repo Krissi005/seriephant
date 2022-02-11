@@ -1,6 +1,7 @@
 package de.dhbw.ase.tracker.tracker.controller;
 
 import de.dhbw.ase.tracker.tracker.model.Episode;
+import de.dhbw.ase.tracker.tracker.model.EpisodeRating;
 import de.dhbw.ase.tracker.tracker.model.User;
 import de.dhbw.ase.tracker.tracker.model.UserDTO;
 import de.dhbw.ase.tracker.tracker.service.UserService;
@@ -26,12 +27,12 @@ public class UserController {
         \_____|_|  \___|\__,_|\__\___|
      */
     @PostMapping(value = "/create")
-    public User createUser(@RequestBody UserDTO userDTO) throws ValidationException {
+    public User createUser(@RequestBody UserDTO userDTO) {
         return userService.saveUser(userDTO);
     }
 
     @PostMapping(value="/new", params = {"firstName"})
-        public User createUser(@RequestParam String firstName, @RequestParam(required = false) String lastName) throws ValidationException {
+        public User createUser(@RequestParam String firstName, @RequestParam(required = false) String lastName) {
         return userService.saveUser(firstName, lastName);
     }
 
@@ -53,6 +54,11 @@ public class UserController {
     @GetMapping(value = "/readEpisodes")
     public List<Episode> getAllEpisodesOfUser(@RequestParam Long userId){
         return userService.getAllEpisodesOfUser(userId);
+    }
+
+    @GetMapping(value = "/readRatings")
+    public List<EpisodeRating> getAllRatingsOfUser(@RequestParam Long userId){
+        return userService.getAllRatingsOfUser(userId);
     }
 
     /************************************************************************************************************************************/

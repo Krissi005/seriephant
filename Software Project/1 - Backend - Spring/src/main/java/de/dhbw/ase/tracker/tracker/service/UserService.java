@@ -3,6 +3,7 @@ package de.dhbw.ase.tracker.tracker.service;
 import de.dhbw.ase.tracker.tracker.helper.Checker;
 import de.dhbw.ase.tracker.tracker.helper.DTOMapper;
 import de.dhbw.ase.tracker.tracker.model.Episode;
+import de.dhbw.ase.tracker.tracker.model.EpisodeRating;
 import de.dhbw.ase.tracker.tracker.model.User;
 import de.dhbw.ase.tracker.tracker.model.UserDTO;
 import de.dhbw.ase.tracker.tracker.repository.UserRepository;
@@ -28,11 +29,11 @@ public class UserService {
         | |____| | |  __/ (_| | ||  __/
         \_____|_|  \___|\__,_|\__\___|
      */
-    public User saveUser(UserDTO userDTO) throws ValidationException {
+    public User saveUser(UserDTO userDTO) {
         return saveUser(userDTO.getFirstName(), userDTO.getLastName());
     }
 
-    public User saveUser(String firstName, String lastName) throws ValidationException {
+    public User saveUser(String firstName, String lastName) {
         User userToCreate = new User(firstName, lastName);
         userRepository.save(userToCreate);
         return userToCreate;
@@ -50,8 +51,13 @@ public class UserService {
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
+
     public List<Episode> getAllEpisodesOfUser(Long userId) {
         return userRepository.findById(userId).get().getWatchedEpisodes();
+    }
+
+    public List<EpisodeRating> getAllRatingsOfUser(Long userId) {
+        return userRepository.findById(userId).get().getRatings();
     }
 
     /************************************************************************************************************************************/
@@ -74,6 +80,7 @@ public class UserService {
         }
         throw new ValidationException("Id is not known.");
     }
+
     public User updateSeenEpisodesOfUser(Long userId, Long episodeId) throws ValidationException {
         Episode episode = Checker.getEpisodeById(episodeId);
         if (userRepository.existsById(userId)) {
