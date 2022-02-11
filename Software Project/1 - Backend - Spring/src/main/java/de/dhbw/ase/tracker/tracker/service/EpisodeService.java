@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.xml.bind.ValidationException;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 @Service
@@ -29,12 +31,12 @@ public class EpisodeService {
         \_____|_|  \___|\__,_|\__\___|
      */
     public Episode saveEpisode(EpisodeDTO episodeDTO) throws ValidationException {
-        return saveEpisode(episodeDTO.getTitle(), episodeDTO.getEpisodeNumber(), episodeDTO.getSeasonId());
+        return saveEpisode(episodeDTO.getTitle(), episodeDTO.getReleaseDate(), episodeDTO.getEpisodeNumber(), episodeDTO.getSeasonId());
     }
 
-    public Episode saveEpisode(String title, Integer episodeNumber, Long seasonId) throws ValidationException {
+    public Episode saveEpisode(String title, Date releaseDate, Integer episodeNumber, Long seasonId) throws ValidationException {
         Season season = Checker.getSeasonById(seasonId);
-        Episode episodeToCreate = new Episode(title, episodeNumber, season);
+        Episode episodeToCreate = new Episode(title,releaseDate,  episodeNumber, season);
         episodeRepository.save(episodeToCreate);
         return episodeToCreate;
     }

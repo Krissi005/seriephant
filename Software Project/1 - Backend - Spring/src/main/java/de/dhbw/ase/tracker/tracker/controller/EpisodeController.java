@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.xml.bind.ValidationException;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -30,8 +31,8 @@ public class EpisodeController {
     }
 
     @PostMapping(value="/new", params = {"title", "episodeNumber", "seasonId"})
-        public Episode createEpisode(@RequestParam String title, @RequestParam Integer episodeNumber, @RequestParam Long seasonId) throws ValidationException {
-        return episodeService.saveEpisode(title, episodeNumber, seasonId);
+        public Episode createEpisode(@RequestParam String title, @RequestParam("date") Date releaseDate, @RequestParam Integer episodeNumber, @RequestParam Long seasonId) throws ValidationException {
+        return episodeService.saveEpisode(title, releaseDate, episodeNumber, seasonId);
     }
 
     /************************************************************************************************************************************/

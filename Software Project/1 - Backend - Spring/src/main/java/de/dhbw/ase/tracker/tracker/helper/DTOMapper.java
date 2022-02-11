@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.text.ParseException;
 
 @Component
 public class DTOMapper {
@@ -55,16 +56,19 @@ public class DTOMapper {
     }
 
     public static EpisodeDTO convertEpisodeToDTO(Episode episode){
-        return new EpisodeDTO(episode.getTitle(), episode.getEpisodeNumber(), episode.getSeason().getId());
+        return new EpisodeDTO(episode.getTitle(), episode.getReleaseDate(), episode.getEpisodeNumber(), episode.getSeason().getId());
     }
 
-    public static Episode convertDTOToEpisode(EpisodeDTO episodeDTO){
-        return new Episode(episodeDTO.getTitle(), episodeDTO.getEpisodeNumber(), seasonRepository.getById(episodeDTO.getSeasonId()));
+    public static Episode convertDTOToEpisode(EpisodeDTO episodeDTO) throws ParseException {
+        return new Episode(episodeDTO.getTitle(), episodeDTO.getReleaseDate(), episodeDTO.getEpisodeNumber(), seasonRepository.getById(episodeDTO.getSeasonId()));
     }
 
     public static void updateEpisodeFromDTO(Episode episode, EpisodeDTO episodeDTO) {
         if (episodeDTO.getTitle() != null) {
             episode.setTitle(episodeDTO.getTitle());
+        }
+        if (episodeDTO.getReleaseDate() != null) {
+            episode.setReleaseDate(episodeDTO.getReleaseDate());
         }
         if (episodeDTO.getEpisodeNumber() != null) {
             episode.setEpisodeNumber(episodeDTO.getEpisodeNumber());

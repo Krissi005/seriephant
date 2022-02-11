@@ -2,15 +2,19 @@ package de.dhbw.ase.tracker.tracker;
 
 import de.dhbw.ase.tracker.tracker.model.*;
 import de.dhbw.ase.tracker.tracker.repository.*;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.*;
+import java.util.Date;
 
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE)
@@ -51,12 +55,11 @@ public class DataInserter implements ApplicationListener<ApplicationReadyEvent> 
 
         Season season1 = new Season(1, serie);
         seasonRepository.save(season1);
-
-        Episode episode1 = new Episode("Rückkehr nach Smallville", 1, season1);
+        Episode episode1 = new Episode("Rückkehr nach Smallville", new GregorianCalendar(2021,Calendar.FEBRUARY, 23).getTime(), 1, season1);
         episodeRepository.save(episode1);
-        Episode episode2 = new Episode("Seltsames Verschwinden", 3, season1);
+        Episode episode2 = new Episode("Seltsames Verschwinden", new GregorianCalendar(2021,Calendar.MARCH, 9).getTime(), 3, season1);
         episodeRepository.save(episode2);
-        Episode episode3 = new Episode("Erbe", 2, season2);
+        Episode episode3 = new Episode("Erbe", new GregorianCalendar(2021,Calendar.MARCH, 2).getTime(), 2, season2);
         episodeRepository.save(episode3);
 
         User user = new User("Pascal", "E");
