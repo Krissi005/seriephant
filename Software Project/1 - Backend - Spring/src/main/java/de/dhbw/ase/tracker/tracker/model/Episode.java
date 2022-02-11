@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Table(name="episode")
@@ -29,11 +30,14 @@ public class Episode {
     @JoinColumn(name="season_id", nullable = false)
     private Season season;
     @ManyToMany(mappedBy = "watchedEpisodes", cascade = { CascadeType.PERSIST })
-    @JsonIgnoreProperties("seenEpisodes")
+    @JsonIgnoreProperties("watchedEpisodes")
     private List<User> users = new ArrayList<>();
     @OneToMany(mappedBy = "episode")
     @JsonBackReference
     List<EpisodeRating> ratings;
+    @ManyToMany(mappedBy = "playedInEpisodes", cascade = { CascadeType.PERSIST })
+    @JsonIgnoreProperties("playedInEpisodes")
+    private List<Actor> actors = new ArrayList<>();
 
     public Episode(String title, Integer episodeNumber, Season season){
         this.title = title;
