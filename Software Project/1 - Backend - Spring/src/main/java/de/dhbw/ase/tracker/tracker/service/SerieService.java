@@ -58,6 +58,10 @@ public class SerieService {
         return serieRepository.findById(serieId).get().getSeasons();
     }
 
+    public List<Serie> getSeriesByTitleAndAndReleaseYear(String title, Integer releaseYear) {
+        return serieRepository.getSeriesByTitleAndAndReleaseYear(title, releaseYear);
+    }
+
     /************************************************************************************************************************************/
     /*
          _    _           _       _

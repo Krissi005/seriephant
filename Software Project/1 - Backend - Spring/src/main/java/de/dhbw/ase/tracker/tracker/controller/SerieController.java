@@ -50,9 +50,14 @@ public class SerieController {
         return serieService.getAllSeries();
     }
 
-    @GetMapping(value = "/readEpisodes")
+    @GetMapping(value = "/readSeasons")
     public List<Season> getAllSeasonsOfSerie(@RequestParam Long serieId){
         return serieService.getAllSeasonsOfSerie(serieId);
+    }
+
+    @GetMapping(value = "/readSerieByNameAndReleaseYear")
+    public List<Serie> getSeriesByTitleAndAndReleaseYear(@RequestParam String title, @RequestParam Integer releaseYear){
+        return serieService.getSeriesByTitleAndAndReleaseYear(title, releaseYear);
     }
 
     /************************************************************************************************************************************/

@@ -24,6 +24,8 @@ public class Serie {
     private String title;
     @Column(name = "description")
     private String description;
+    @Column(name = "releaseYear")
+    private Integer releaseYear;
     @ManyToOne
     @JsonManagedReference
     @JoinColumn(name="genre_id")
@@ -33,13 +35,21 @@ public class Serie {
     private List<Season> seasons;
 
     public Serie(String title, String description){
-        this.title = title;
-        this.description = description;
+        new Serie(title,description,null, null);
+    }
+
+    public Serie(String title, String description, Integer releaseYear){
+       new Serie(title,description, releaseYear, null);
     }
 
     public Serie(String title, String description, Genre genre){
+        new Serie(title, description, null, genre);
+    }
+
+    public Serie(String title, String description, Integer releaseYear, Genre genre){
         this.title = title;
         this.description = description;
+        this.releaseYear = releaseYear;
         this.genre = genre;
     }
 }

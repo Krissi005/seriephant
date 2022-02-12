@@ -4,6 +4,8 @@ import de.dhbw.ase.tracker.tracker.model.Serie;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 
 @Transactional
 public interface SerieRepository extends JpaRepository<Serie, Long> {
@@ -14,6 +16,7 @@ public interface SerieRepository extends JpaRepository<Serie, Long> {
     /**
      * READ
      **/
+    List<Serie> getSeriesByTitleAndAndReleaseYear(String title, Integer releaseYear);
 
     /** UPDATE **/
 

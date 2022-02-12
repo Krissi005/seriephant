@@ -47,7 +47,7 @@ public class DataInserter implements ApplicationListener<ApplicationReadyEvent> 
         Serie serie1 = new Serie("Supergirl", "Supergirl ist eine US-amerikanische Science-Fiction-Fernsehserie, die auf der gleichnamigen Figur von DC Comics basiert.");
         serieRepository.save(serie1);
 
-        Serie serie = new Serie("Superman & Lois", "Superman & Lois ist eine US-amerikanische Science-Fiction-Fernsehserie, die auf den gleichnamigen Figuren, Superman und Lois Lane, aus den DC Comics basiert.", genre2);
+        Serie serie = new Serie("Superman & Lois", "Superman & Lois ist eine US-amerikanische Science-Fiction-Fernsehserie, die auf den gleichnamigen Figuren, Superman und Lois Lane, aus den DC Comics basiert.", 2021, genre2);
         serieRepository.save(serie);
 
         Season season2 = new Season(2, serie);
