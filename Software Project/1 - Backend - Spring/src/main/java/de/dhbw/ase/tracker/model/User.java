@@ -34,7 +34,7 @@ public class User{
     )
     List<Episode> watchedEpisodes = new ArrayList<>();
     @OneToMany(mappedBy = "user")
-    @JsonBackReference
+    @JsonIgnoreProperties("user")
     List<EpisodeRating> ratings;
 
     public User(String firstName, String lastName) {

@@ -29,14 +29,14 @@ public class Episode {
     @Column(name = "episodeNumber")
     private Integer episodeNumber;
     @ManyToOne
-    @JsonManagedReference
+    @JsonIgnoreProperties("episodes")
     @JoinColumn(name = "season_id", nullable = false)
     private Season season;
     @ManyToMany(mappedBy = "watchedEpisodes", cascade = {CascadeType.PERSIST})
     @JsonIgnoreProperties("watchedEpisodes")
     private List<User> users = new ArrayList<>();
     @OneToMany(mappedBy = "episode")
-    @JsonBackReference
+    @JsonIgnoreProperties("episode")
     List<EpisodeRating> ratings;
     @ManyToMany(mappedBy = "playedInEpisodes", cascade = {CascadeType.PERSIST})
     @JsonIgnoreProperties("playedInEpisodes")

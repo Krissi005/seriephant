@@ -1,5 +1,6 @@
 package de.dhbw.ase.tracker.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,13 +22,13 @@ public class EpisodeRating {
 
     @ManyToOne
     @MapsId("userId")
-    @JsonManagedReference
+    @JsonIgnoreProperties("ratings")
     @JoinColumn(name = "user_id")
     User user;
 
     @ManyToOne
     @MapsId("episodeId")
-    @JsonManagedReference
+    @JsonIgnoreProperties("ratings")
     @JoinColumn(name = "episode_id")
     Episode episode;
 

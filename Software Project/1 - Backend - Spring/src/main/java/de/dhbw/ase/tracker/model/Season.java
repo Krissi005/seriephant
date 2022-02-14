@@ -1,6 +1,7 @@
 package de.dhbw.ase.tracker.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,10 +24,10 @@ public class Season {
     @Column(name = "seasonNumber")
     private Integer seasonNumber;
     @OneToMany(cascade = CascadeType.ALL, mappedBy="season")
-    @JsonBackReference
+    @JsonIgnoreProperties("season")
     private List<Episode> episodes;
     @ManyToOne
-    @JsonManagedReference
+    @JsonIgnoreProperties("seasons")
     @JoinColumn(name="serie_id", nullable = false)
     private Serie serie;
 

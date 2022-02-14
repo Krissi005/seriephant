@@ -1,6 +1,7 @@
 package de.dhbw.ase.tracker.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import de.dhbw.ase.tracker.model.listener.GenreListener;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Table(name="genre")
@@ -26,12 +28,13 @@ public class Genre {
     @Column(name = "description")
     private String description;
     @OneToMany(cascade = CascadeType.PERSIST, mappedBy="genre")
-    @JsonBackReference
+    @JsonIgnoreProperties("genre")
     private List<Serie> series;
 
     public Genre(String title, String description){
         this.title = title;
         this.description = description;
+        this.series = new ArrayList<>();
     }
 
     @PreRemove
