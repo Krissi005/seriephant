@@ -28,12 +28,12 @@ public class GenreServiceTest {
     @InjectMocks
     GenreService genreService;
 
-    private String genreTitle = "genreTitle";
-    private String newGenreTitle = "newGenreTitle";
-    private String genreDescription = "genreDescription";
-    private String newGenreDescritpion = "newGenreDescription";
+    private final String genreTitle = "genreTitle";
+    private final String newGenreTitle = "newGenreTitle";
+    private final String genreDescription = "genreDescription";
+    private final String newGenreDescritpion = "newGenreDescription";
 
-    private Long genreId = 52L;
+    private final Long genreId = 52L;
 
     @Test
     void saveGenreFromDTO() {
