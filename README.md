@@ -71,14 +71,14 @@ To get a local copy up and running follow these simple example steps.
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/Krissi005/AdvancedSoftwareEngineering.git
+   git clone https://github.com/Krissi005/seriephant.git
    ```
 2. Navigate in the Folder /1 - Backend - Spring/
 3. Download the needed Maven Dependencys to run the Project
    ```sh
    mvn install
    ```
-4. Start the Backend in your IDE by Executing the main Method in the Class 'TrackerApplication.java'
+4. Start the Backend in your IDE by Executing the main Method in the Class 'SeriephantApplication.java'
 
 ### Installation - Frontend
 
