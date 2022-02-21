@@ -3,7 +3,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/Krissi005/AdvancedSoftwareEngineering">
+  <a href="https://github.com/Krissi005/seriephant">
     <img src="Documentation/logo.png" alt="Logo" height="384">
   </a>
 
@@ -100,6 +100,6 @@ TBD
 <!-- CONTACT -->
 ## Contact
 
-Project Link: [https://github.com/Krissi005/AdvancedSoftwareEngineering](https://github.com/Krissi005/AdvancedSoftwareEngineering)
+Project Link: [https://github.com/Krissi005/seriephant](https://github.com/Krissi005/seriephant)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
