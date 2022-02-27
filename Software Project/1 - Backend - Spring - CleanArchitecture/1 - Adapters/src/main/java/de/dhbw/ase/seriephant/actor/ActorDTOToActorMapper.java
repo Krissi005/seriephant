@@ -13,6 +13,9 @@ public class ActorDTOToActorMapper implements Function<ActorDTO, Actor> {
     }
 
     private Actor map(ActorDTO actorDTO) {
+        if (actorDTO == null) {
+            return null;
+        }
         return new Actor(
                 actorDTO.getId(),
                 actorDTO.getFirstName(),

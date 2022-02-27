@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -28,8 +29,9 @@ public class EpisodeToEpisodeDTOMapper implements Function<Episode, EpisodeDTO> 
     }
 
     private EpisodeDTO map(Episode episode) {
-        List<ActorDTO> actorDTOs = episode.getActors() == null ? null : episode.getActors()
+        List<ActorDTO> actorDTOs = episode.getActors()
                 .stream()
+                .filter(Objects::nonNull)
                 .map(this.actorToActorDTOMapper::apply)
                 .collect(Collectors.toList());
 

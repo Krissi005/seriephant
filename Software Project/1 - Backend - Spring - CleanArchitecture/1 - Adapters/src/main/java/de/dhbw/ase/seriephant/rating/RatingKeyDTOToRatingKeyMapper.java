@@ -13,6 +13,9 @@ public class RatingKeyDTOToRatingKeyMapper implements Function<RatingKeyDTO, Rat
     }
 
     private RatingKey map(RatingKeyDTO ratingKeyDTO) {
+        if (ratingKeyDTO == null) {
+            return null;
+        }
         return new RatingKey(
                 ratingKeyDTO.getUserId(),
                 ratingKeyDTO.getEpisodeId()

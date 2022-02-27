@@ -1,8 +1,8 @@
 package de.dhbw.ase.seriephant.rating;
 
-import de.dhbw.ase.seriephant.domain.episode.EpisodeRepository;
 import de.dhbw.ase.seriephant.domain.rating.Rating;
-import de.dhbw.ase.seriephant.domain.user.UserRepository;
+import de.dhbw.ase.seriephant.episode.EpisodeDTOToEpisodeMapper;
+import de.dhbw.ase.seriephant.user.UserDTOToUserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -11,14 +11,14 @@ import java.util.function.Function;
 @Component
 public class RatingDTOToRatingMapper implements Function<RatingDTO, Rating> {
     private final RatingKeyDTOToRatingKeyMapper ratingKeyDTOToRatingKeyMapper;
-    private final UserRepository userRepository;
-    private final EpisodeRepository episodeRepository;
+    private final UserDTOToUserMapper userDTOToUserMapper;
+    private final EpisodeDTOToEpisodeMapper episodeDTOToEpisodeMapper;
 
     @Autowired
-    public RatingDTOToRatingMapper(RatingKeyDTOToRatingKeyMapper ratingKeyDTOToRatingKeyMapper, UserRepository userRepository, EpisodeRepository episodeRepository) {
+    public RatingDTOToRatingMapper(RatingKeyDTOToRatingKeyMapper ratingKeyDTOToRatingKeyMapper, UserDTOToUserMapper userDTOToUserMapper, EpisodeDTOToEpisodeMapper episodeDTOToEpisodeMapper) {
         this.ratingKeyDTOToRatingKeyMapper = ratingKeyDTOToRatingKeyMapper;
-        this.userRepository = userRepository;
-        this.episodeRepository = episodeRepository;
+        this.userDTOToUserMapper = userDTOToUserMapper;
+        this.episodeDTOToEpisodeMapper = episodeDTOToEpisodeMapper;
     }
 
     @Override
@@ -27,10 +27,14 @@ public class RatingDTOToRatingMapper implements Function<RatingDTO, Rating> {
     }
 
     private Rating map(RatingDTO ratingDTO) {
+        if (ratingDTO == null) {
+            return null;
+        }
+
         return new Rating(
                 this.ratingKeyDTOToRatingKeyMapper.apply(ratingDTO.getRatingKeyDTO()),
-                this.userRepository.getById(ratingDTO.getUserDTO().getId()),
-                this.episodeRepository.getById(ratingDTO.getEpisodeDTO().getId()),
+                this.userDTOToUserMapper.apply(ratingDTO.getUserDTO()),
+                this.episodeDTOToEpisodeMapper.apply(ratingDTO.getEpisodeDTO()),
                 ratingDTO.getRating()
         );
     }

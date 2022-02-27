@@ -30,8 +30,11 @@ public class ActorApplicationService {
         | |____| | |  __/ (_| | ||  __/
         \_____|_|  \___|\__,_|\__\___|
      */
-    public Actor saveActor(Actor actor) {
-        return this.actorRepository.save(actor);
+    public Actor saveActor(Actor actor) throws ValidationException {
+        if (actor != null && (actor.getId() == null || !this.actorRepository.existsById(actor.getId()))) {
+            return this.actorRepository.save(actor);
+        }
+        throw new ValidationException("Actor is not valid.");
     }
 
     public Actor saveActor(String firstName, String lastName) {
@@ -71,7 +74,7 @@ public class ActorApplicationService {
               |_|
     */
     public Actor updateActor(Actor actor) throws ValidationException {
-        if (this.actorRepository.existsById(actor.getId())) {
+        if (actor != null && actor.getId() != null && this.actorRepository.existsById(actor.getId())) {
             Actor foundActor = this.actorRepository.getById(actor.getId());
             foundActor.setFirstName(actor.getFirstName());
             foundActor.setLastName(actor.getLastName());
@@ -115,7 +118,9 @@ public class ActorApplicationService {
         |_____/ \___|_|\___|\__\___|
     */
     public void deleteActor(Long actorId) {
-        this.actorRepository.deleteById(actorId);
+        if (this.actorRepository.existsById(actorId)) {
+            this.actorRepository.deleteById(actorId);
+        }
     }
 
     /************************************************************************************************************************************/

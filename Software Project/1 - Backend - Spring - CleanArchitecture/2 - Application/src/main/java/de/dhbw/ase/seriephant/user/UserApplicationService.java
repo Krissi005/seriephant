@@ -1,5 +1,6 @@
 package de.dhbw.ase.seriephant.user;
 
+import de.dhbw.ase.seriephant.domain.episode.Episode;
 import de.dhbw.ase.seriephant.domain.episode.EpisodeRepository;
 import de.dhbw.ase.seriephant.domain.user.User;
 import de.dhbw.ase.seriephant.domain.user.UserRepository;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.xml.bind.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -31,8 +33,17 @@ public class UserApplicationService {
         | |____| | |  __/ (_| | ||  __/
         \_____|_|  \___|\__,_|\__\___|
      */
-    public User saveUser(User user) {
-        return this.userRepository.save(user);
+    public User saveUser(User user) throws ValidationException {
+        if (user != null && (user.getId() == null || !this.userRepository.existsById(user.getId()))) {
+            if (user.getWatchedEpisodes() != null) {
+                user.setWatchedEpisodes(new ArrayList<>());
+                for (Episode episode : user.getWatchedEpisodes()) {
+                    this.updateSeenEpisodesOfUser(user.getId(), episode.getId());
+                }
+            }
+            return this.userRepository.save(user);
+        }
+        throw new ValidationException("User is not valid.");
     }
 
     public User saveUser(String firstName, String lastName) {
@@ -72,10 +83,17 @@ public class UserApplicationService {
               |_|
     */
     public User updateUser(User user) throws ValidationException {
-        if (this.userRepository.existsById(user.getId())) {
+        if (user != null && user.getId() != null && this.episodeRepository.existsById(user.getId())) {
             User foundUser = this.userRepository.getById(user.getId());
-            this.userRepository.save(foundUser);
-            return foundUser;
+            if (user.getWatchedEpisodes() != null) {
+                for (Episode episode : foundUser.getWatchedEpisodes()) {
+                    this.removePlayedInEpisodesOfActor(user.getId(), episode.getId());
+                }
+                for (Episode episode : user.getWatchedEpisodes()) {
+                    this.updateSeenEpisodesOfUser(user.getId(), episode.getId());
+                }
+            }
+            return this.userRepository.save(foundUser);
         }
         throw new ValidationException("Id of User is not known.");
     }
@@ -116,7 +134,9 @@ public class UserApplicationService {
         |_____/ \___|_|\___|\__\___|
     */
     public void deleteUser(Long userId) {
-        this.userRepository.deleteById(userId);
+        if (this.userRepository.existsById(userId)) {
+            this.userRepository.deleteById(userId);
+        }
     }
 
     /************************************************************************************************************************************/

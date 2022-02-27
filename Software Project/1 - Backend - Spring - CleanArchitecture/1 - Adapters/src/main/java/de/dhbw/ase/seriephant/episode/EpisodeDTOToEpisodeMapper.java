@@ -1,36 +1,27 @@
 package de.dhbw.ase.seriephant.episode;
 
-import de.dhbw.ase.seriephant.actor.ActorDTO;
+import de.dhbw.ase.seriephant.actor.ActorDTOToActorMapper;
 import de.dhbw.ase.seriephant.domain.actor.Actor;
-import de.dhbw.ase.seriephant.domain.actor.ActorRepository;
 import de.dhbw.ase.seriephant.domain.episode.Episode;
-import de.dhbw.ase.seriephant.domain.rating.RatingRepository;
-import de.dhbw.ase.seriephant.domain.season.SeasonRepository;
-import de.dhbw.ase.seriephant.domain.user.UserRepository;
-import de.dhbw.ase.seriephant.rating.RatingKeyDTOToRatingKeyMapper;
+import de.dhbw.ase.seriephant.season.SeasonDTOToSeasonMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Component
 public class EpisodeDTOToEpisodeMapper implements Function<EpisodeDTO, Episode> {
-    private final SeasonRepository seasonRepository;
-    private final UserRepository userRepository;
-    private final RatingRepository ratingRepository;
-    private final ActorRepository actorRepository;
-    private final RatingKeyDTOToRatingKeyMapper ratingKeyDTOToRatingKeyMapper;
+    private final SeasonDTOToSeasonMapper seasonDTOToSeasonMapper;
+    private final ActorDTOToActorMapper actorDTOToActorMapper;
 
     @Autowired
-    public EpisodeDTOToEpisodeMapper(SeasonRepository seasonRepository, UserRepository userRepository, RatingRepository ratingRepository, ActorRepository actorRepository, RatingKeyDTOToRatingKeyMapper ratingKeyDTOToRatingKeyMapper) {
-        this.seasonRepository = seasonRepository;
-        this.userRepository = userRepository;
-        this.ratingRepository = ratingRepository;
-        this.actorRepository = actorRepository;
-        this.ratingKeyDTOToRatingKeyMapper = ratingKeyDTOToRatingKeyMapper;
+    public EpisodeDTOToEpisodeMapper(SeasonDTOToSeasonMapper seasonDTOToSeasonMapper, ActorDTOToActorMapper actorDTOToActorMapper) {
+        this.seasonDTOToSeasonMapper = seasonDTOToSeasonMapper;
+        this.actorDTOToActorMapper = actorDTOToActorMapper;
     }
 
     @Override
@@ -39,11 +30,13 @@ public class EpisodeDTOToEpisodeMapper implements Function<EpisodeDTO, Episode> 
     }
 
     private Episode map(EpisodeDTO episodeDTO) {
-
-        List<Actor> actors = episodeDTO.getActorDTOs() == null ? null : episodeDTO.getActorDTOs()
+        if (episodeDTO == null) {
+            return null;
+        }
+        List<Actor> actors = episodeDTO.getActorDTOs()
                 .stream()
-                .map(ActorDTO::getId)
-                .map(this.actorRepository::getById)
+                .filter(Objects::nonNull)
+                .map(this.actorDTOToActorMapper::apply)
                 .collect(Collectors.toList());
 
         return new Episode(
@@ -51,7 +44,7 @@ public class EpisodeDTOToEpisodeMapper implements Function<EpisodeDTO, Episode> 
                 episodeDTO.getTitle(),
                 LocalDate.parse(episodeDTO.getReleaseDate()),
                 episodeDTO.getEpisodeNumber(),
-                this.seasonRepository.getById(episodeDTO.getSeasonDTO().getId()),
+                this.seasonDTOToSeasonMapper.apply(episodeDTO.getSeasonDTO()),
                 actors
         );
     }

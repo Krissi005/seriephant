@@ -13,6 +13,9 @@ public class GenreDTOToGenreMapper implements Function<GenreDTO, Genre> {
     }
 
     private Genre map(GenreDTO genreDTO) {
+        if (genreDTO == null) {
+            return null;
+        }
         return new Genre(
                 genreDTO.getId(),
                 genreDTO.getTitle(),

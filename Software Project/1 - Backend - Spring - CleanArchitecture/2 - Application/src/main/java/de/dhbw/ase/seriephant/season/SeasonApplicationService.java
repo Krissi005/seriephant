@@ -35,7 +35,17 @@ public class SeasonApplicationService {
         \_____|_|  \___|\__,_|\__\___|
      */
     public Season saveSeason(Season season) throws ValidationException {
-        return this.seasonRepository.save(season);
+        if (season != null &&
+                (season.getId() == null || !this.seasonRepository.existsById(season.getId()))) {
+            if (season.getSerie() != null &&
+                    season.getSerie().getId() != null &&
+                    this.serieRepository.existsById(season.getSerie().getId())) {
+                season.setSerie(this.serieRepository.getById(season.getSerie().getId()));
+                return this.seasonRepository.save(season);
+            }
+            throw new ValidationException("Serie is not correct.");
+        }
+        throw new ValidationException("Season is not valid.");
     }
 
     public Season saveSeason(Integer seasonNumber, Long serieId) throws ValidationException {
@@ -78,11 +88,13 @@ public class SeasonApplicationService {
               |_|
     */
     public Season updateSeason(Season season) throws ValidationException {
-        if (this.seasonRepository.existsById(season.getId())) {
+        if (season != null && season.getId() != null && this.seasonRepository.existsById(season.getId())) {
             Season foundSeason = this.seasonRepository.getById(season.getId());
             foundSeason.setSeasonNumber(season.getSeasonNumber());
-            foundSeason.setSerie(season.getSerie());
-            return this.seasonRepository.save(foundSeason);
+            if (season.getSerie() != null && season.getSerie().getId() != null && this.serieRepository.existsById(season.getSerie().getId())) {
+                foundSeason.setSerie(this.serieRepository.getById(season.getSerie().getId()));
+            }
+            return this.seasonRepository.save(season);
         }
         throw new ValidationException("Id of Season is not known.");
     }
@@ -97,14 +109,18 @@ public class SeasonApplicationService {
         |_____/ \___|_|\___|\__\___|
     */
     public void deleteSeason(Long seasonId) {
-        this.seasonRepository.deleteById(seasonId);
+        if (this.seasonRepository.existsById(seasonId)) {
+            this.seasonRepository.deleteById(seasonId);
+        }
     }
 
     public void deleteSeasonWithAllEpisodes(Long seasonId) {
-        for (Episode episode : this.seasonRepository.getById(seasonId).getEpisodes()) {
-            this.episodeRepository.deleteById(episode.getId());
+        if (this.seasonRepository.existsById(seasonId)) {
+            for (Episode episode : this.seasonRepository.getById(seasonId).getEpisodes()) {
+                this.episodeRepository.deleteById(episode.getId());
+            }
+            this.seasonRepository.deleteById(seasonId);
         }
-        this.seasonRepository.deleteById(seasonId);
     }
 
     /************************************************************************************************************************************/

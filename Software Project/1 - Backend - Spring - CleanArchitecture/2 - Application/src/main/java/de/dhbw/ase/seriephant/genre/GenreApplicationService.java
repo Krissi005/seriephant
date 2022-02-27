@@ -27,8 +27,11 @@ public class GenreApplicationService {
         | |____| | |  __/ (_| | ||  __/
         \_____|_|  \___|\__,_|\__\___|
      */
-    public Genre saveGenre(Genre genre) {
-        return this.genreRepository.save(genre);
+    public Genre saveGenre(Genre genre) throws ValidationException {
+        if (genre != null && (genre.getId() == null || !this.genreRepository.existsById(genre.getId()))) {
+            return this.genreRepository.save(genre);
+        }
+        throw new ValidationException("Genre is not valid.");
     }
 
     public Genre saveGenre(String title, String description) {
@@ -68,7 +71,7 @@ public class GenreApplicationService {
               |_|
     */
     public Genre updateGenre(Genre genre) throws ValidationException {
-        if (this.genreRepository.existsById(genre.getId())) {
+        if (genre != null && genre.getId() != null && this.genreRepository.existsById(genre.getId())) {
             Genre foundGenre = this.genreRepository.getById(genre.getId());
             foundGenre.setTitle(genre.getTitle());
             foundGenre.setDescription(genre.getDescription());
@@ -87,7 +90,9 @@ public class GenreApplicationService {
         |_____/ \___|_|\___|\__\___|
     */
     public void deleteGenre(Long genreId) {
-        this.genreRepository.deleteById(genreId);
+        if (this.genreRepository.existsById(genreId)) {
+            this.genreRepository.deleteById(genreId);
+        }
     }
 
     /************************************************************************************************************************************/

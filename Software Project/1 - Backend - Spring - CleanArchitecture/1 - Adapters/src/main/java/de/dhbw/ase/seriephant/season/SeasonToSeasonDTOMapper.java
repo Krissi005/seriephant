@@ -25,7 +25,7 @@ public class SeasonToSeasonDTOMapper implements Function<Season, SeasonDTO> {
         return new SeasonDTO(
                 season.getId(),
                 season.getSeasonNumber(),
-                season.getSerie() == null ? null : this.serieToSerieDTOMapper.apply(season.getSerie())
+                this.serieToSerieDTOMapper.apply(season.getSerie())
         );
     }
 }

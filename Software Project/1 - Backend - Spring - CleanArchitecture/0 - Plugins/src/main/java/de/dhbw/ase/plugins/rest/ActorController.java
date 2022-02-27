@@ -37,7 +37,7 @@ public class ActorController {
         \_____|_|  \___|\__,_|\__\___|
      */
     @PostMapping(value = "/create")
-    public ActorDTO createActor(@RequestBody ActorDTO actor) {
+    public ActorDTO createActor(@RequestBody ActorDTO actor) throws ValidationException {
         return this.actorToActorDTOMapper.apply(this.actorApplicationService.saveActor(this.actorDTOToActorMapper.apply(actor)));
     }
 

@@ -37,7 +37,7 @@ public class GenreController {
         \_____|_|  \___|\__,_|\__\___|
      */
     @PostMapping(value = "/create")
-    public GenreDTO createGenre(@RequestBody GenreDTO genreDTO) {
+    public GenreDTO createGenre(@RequestBody GenreDTO genreDTO) throws ValidationException {
         return this.genreToGenreDTOMapper.apply(this.genreApplicationService.saveGenre(this.genreDTOToGenreMapper.apply(genreDTO)));
     }
 

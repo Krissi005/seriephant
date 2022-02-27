@@ -10,13 +10,13 @@ import java.util.function.Function;
 
 @Component
 public class RatingToRatingDTOMapper implements Function<Rating, RatingDTO> {
-    private final RatingKeyToRatingKeyDTOMapper episodeRatingKeyDTOToEpisodeRatingKeyMapper;
+    private final RatingKeyToRatingKeyDTOMapper ratingKeyToRatingKeyDTOMapper;
     private final UserToUserDTOMapper userToUserDTOMapper;
     private final EpisodeToEpisodeDTOMapper episodeToEpisodeDTOMapper;
 
     @Autowired
-    public RatingToRatingDTOMapper(RatingKeyToRatingKeyDTOMapper episodeRatingKeyDTOToEpisodeRatingKeyMapper, UserToUserDTOMapper userToUserDTOMapper, EpisodeToEpisodeDTOMapper episodeToEpisodeDTOMapper) {
-        this.episodeRatingKeyDTOToEpisodeRatingKeyMapper = episodeRatingKeyDTOToEpisodeRatingKeyMapper;
+    public RatingToRatingDTOMapper(RatingKeyToRatingKeyDTOMapper ratingKeyToRatingKeyDTOMapper, UserToUserDTOMapper userToUserDTOMapper, EpisodeToEpisodeDTOMapper episodeToEpisodeDTOMapper) {
+        this.ratingKeyToRatingKeyDTOMapper = ratingKeyToRatingKeyDTOMapper;
         this.userToUserDTOMapper = userToUserDTOMapper;
         this.episodeToEpisodeDTOMapper = episodeToEpisodeDTOMapper;
     }
@@ -28,7 +28,7 @@ public class RatingToRatingDTOMapper implements Function<Rating, RatingDTO> {
 
     private RatingDTO map(Rating rating) {
         return new RatingDTO(
-                this.episodeRatingKeyDTOToEpisodeRatingKeyMapper.apply(rating.getId()),
+                this.ratingKeyToRatingKeyDTOMapper.apply(rating.getId()),
                 this.userToUserDTOMapper.apply(rating.getUser()),
                 this.episodeToEpisodeDTOMapper.apply(rating.getEpisode()),
                 rating.getRating()

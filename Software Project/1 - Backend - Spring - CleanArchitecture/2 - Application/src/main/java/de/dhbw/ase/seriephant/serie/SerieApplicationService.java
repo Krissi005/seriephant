@@ -35,10 +35,18 @@ public class SerieApplicationService {
         \_____|_|  \___|\__,_|\__\___|
      */
     public Serie saveSerie(Serie serie) throws ValidationException {
-        return this.serieRepository.save(serie);
+        if (serie != null && (serie.getId() == null || !this.serieRepository.existsById(serie.getId()))) {
+            if (serie.getGenre() != null && serie.getGenre().getId() != null && this.genreRepository.existsById(serie.getGenre().getId())) {
+                serie.setGenre(this.genreRepository.getById(serie.getGenre().getId()));
+            } else {
+                serie.setGenre(null);
+            }
+            return this.serieRepository.save(serie);
+        }
+        throw new ValidationException("Serie is not valid.");
     }
 
-    public Serie saveSerie(String title, String description, Integer releaseYear) throws ValidationException {
+    public Serie saveSerie(String title, String description, Integer releaseYear) {
         Serie serieToCreate = new Serie(title, description, releaseYear);
         return this.serieRepository.save(serieToCreate);
     }
@@ -64,7 +72,7 @@ public class SerieApplicationService {
         if (this.serieRepository.existsById(serieId)) {
             return this.serieRepository.getById(serieId);
         }
-        throw new ValidationException("Id is not known.");
+        throw new ValidationException("Id of Serie is not known.");
     }
 
     public List<Serie> getAllSeries() {
@@ -87,15 +95,17 @@ public class SerieApplicationService {
               |_|
     */
     public Serie updateSerie(Serie serie) throws ValidationException {
-        if (this.serieRepository.existsById(serie.getId())) {
+        if (serie != null && serie.getId() != null && this.serieRepository.existsById(serie.getId())) {
             Serie foundSerie = this.serieRepository.getById(serie.getId());
             foundSerie.setTitle(serie.getTitle());
             foundSerie.setDescription(serie.getDescription());
             foundSerie.setReleaseYear(serie.getReleaseYear());
-            foundSerie.setGenre(serie.getGenre());
+            if (serie.getGenre() != null && serie.getGenre().getId() != null && this.genreRepository.existsById(serie.getGenre().getId())) {
+                foundSerie.setGenre(this.genreRepository.getById(serie.getGenre().getId()));
+            }
             return this.serieRepository.save(foundSerie);
         }
-        throw new ValidationException("Id is not known.");
+        throw new ValidationException("Id of Serie is not known.");
     }
 
     /************************************************************************************************************************************/
@@ -108,14 +118,18 @@ public class SerieApplicationService {
         |_____/ \___|_|\___|\__\___|
     */
     public void deleteSerie(Long serieId) {
-        this.serieRepository.deleteById(serieId);
+        if (this.serieRepository.existsById(serieId)) {
+            this.serieRepository.deleteById(serieId);
+        }
     }
 
     public void deleteSerieWithAllSeasons(Long serieId) {
-        for (Season season : this.serieRepository.getById(serieId).getSeasons()) {
-            this.seasonRepository.deleteById(season.getId());
+        if (this.serieRepository.existsById(serieId)) {
+            for (Season season : this.serieRepository.getById(serieId).getSeasons()) {
+                this.seasonRepository.deleteById(season.getId());
+            }
+            this.serieRepository.deleteById(serieId);
         }
-        this.serieRepository.deleteById(serieId);
     }
 
     /************************************************************************************************************************************/

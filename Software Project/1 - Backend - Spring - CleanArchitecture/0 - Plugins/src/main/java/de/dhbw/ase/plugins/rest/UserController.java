@@ -36,7 +36,7 @@ public class UserController {
         \_____|_|  \___|\__,_|\__\___|
      */
     @PostMapping(value = "/create")
-    public UserDTO createUser(@RequestBody UserDTO user) {
+    public UserDTO createUser(@RequestBody UserDTO user) throws ValidationException {
         return this.userToUserDTOMapper.apply(this.userApplicationService.saveUser(this.userDTOToUserMapper.apply(user)));
     }
 
