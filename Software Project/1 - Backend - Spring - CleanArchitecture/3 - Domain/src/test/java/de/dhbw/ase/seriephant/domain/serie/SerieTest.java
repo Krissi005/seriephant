@@ -23,7 +23,7 @@ class SerieTest {
 
     @BeforeEach
     public void init() {
-        this.serie = new Serie(SERIE_TITLE, SERIE_DESCRIPTION, SERIE_RELEASE_YEAR, GENRE);
+        this.serie = new Serie(SERIE_ID, SERIE_TITLE, SERIE_DESCRIPTION, SERIE_RELEASE_YEAR, GENRE);
     }
 
     @Test

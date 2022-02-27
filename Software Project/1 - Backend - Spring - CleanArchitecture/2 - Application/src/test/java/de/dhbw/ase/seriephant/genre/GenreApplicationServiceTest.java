@@ -2,6 +2,7 @@ package de.dhbw.ase.seriephant.genre;
 
 import de.dhbw.ase.seriephant.domain.genre.Genre;
 import de.dhbw.ase.seriephant.domain.genre.GenreRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -12,7 +13,6 @@ import javax.xml.bind.ValidationException;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
@@ -33,8 +33,15 @@ class GenreApplicationServiceTest {
     private static final String GENRE_DESCRIPTION = "genreDescription";
     private static final String NEW_GENRE_DESCRIPTION = "newGenreDescription";
 
+    private Genre testGenre;
+
+    @BeforeEach
+    public void init() {
+        this.testGenre = new Genre(GENRE_TITLE, GENRE_DESCRIPTION);
+    }
+
     @Test
-    void saveGenreFromDTO() {
+    void saveGenreFromDTO() throws ValidationException {
         Genre genre = new Genre(GENRE_TITLE, GENRE_DESCRIPTION);
 
         doReturn(genre).when(this.genreRepository).save(genre);
@@ -42,7 +49,7 @@ class GenreApplicationServiceTest {
 
         verify(this.genreRepository, times(1)).save(any(Genre.class));
 
-        assertThat(createdGenre).isEqualTo(genre);
+        assertEquals(genre, createdGenre);
     }
 
     @Test
