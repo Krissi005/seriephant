@@ -7,50 +7,50 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class GenreTest {
 
-    private final Long GENRE_ID = 52L;
-    private final Long NEW_GENRE_ID = 69L;
-    private final String GENRE_TITLE = "genreTitle";
-    private final String NEW_GENRE_TITLE = "newGenreTitle";
-    private final String GENRE_DESCRIPTION = "genreDescription";
-    private final String NEW_GENRE_DESCRIPTION = "newGenreDescription";
+    private static final Long GENRE_ID = 52L;
+    private static final Long NEW_GENRE_ID = 69L;
+    private static final String GENRE_TITLE = "genreTitle";
+    private static final String NEW_GENRE_TITLE = "newGenreTitle";
+    private static final String GENRE_DESCRIPTION = "genreDescription";
+    private static final String NEW_GENRE_DESCRIPTION = "newGenreDescription";
 
     private Genre testGenre;
 
     @BeforeEach
     public void init() {
-        this.testGenre = new Genre(this.GENRE_ID, this.GENRE_TITLE, this.GENRE_DESCRIPTION);
+        this.testGenre = new Genre(GENRE_ID, GENRE_TITLE, GENRE_DESCRIPTION);
     }
 
     @Test
     void getId() {
-        assertEquals(this.GENRE_ID, this.testGenre.getId());
+        assertEquals(GENRE_ID, this.testGenre.getId());
     }
 
     @Test
     void getTitle() {
-        assertEquals(this.GENRE_TITLE, this.testGenre.getTitle());
+        assertEquals(GENRE_TITLE, this.testGenre.getTitle());
     }
 
     @Test
     void getDescription() {
-        assertEquals(this.GENRE_DESCRIPTION, this.testGenre.getDescription());
+        assertEquals(GENRE_DESCRIPTION, this.testGenre.getDescription());
     }
 
     @Test
     void setId() {
-        this.testGenre.setId(this.NEW_GENRE_ID);
-        assertEquals(this.NEW_GENRE_ID, this.testGenre.getId());
+        this.testGenre.setId(NEW_GENRE_ID);
+        assertEquals(NEW_GENRE_ID, this.testGenre.getId());
     }
 
     @Test
     void setTitle() {
-        this.testGenre.setTitle(this.NEW_GENRE_TITLE);
-        assertEquals(this.NEW_GENRE_TITLE, this.testGenre.getTitle());
+        this.testGenre.setTitle(NEW_GENRE_TITLE);
+        assertEquals(NEW_GENRE_TITLE, this.testGenre.getTitle());
     }
 
     @Test
     void setDescription() {
-        this.testGenre.setDescription(this.NEW_GENRE_DESCRIPTION);
-        assertEquals(this.NEW_GENRE_DESCRIPTION, this.testGenre.getDescription());
+        this.testGenre.setDescription(NEW_GENRE_DESCRIPTION);
+        assertEquals(NEW_GENRE_DESCRIPTION, this.testGenre.getDescription());
     }
 }
