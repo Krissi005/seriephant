@@ -85,6 +85,8 @@ public class UserApplicationService {
     public User updateUser(User user) throws ValidationException {
         if (user != null && user.getId() != null && this.episodeRepository.existsById(user.getId())) {
             User foundUser = this.userRepository.getById(user.getId());
+            foundUser.setFirstName(user.getFirstName());
+            foundUser.setLastName(user.getLastName());
             if (user.getWatchedEpisodes() != null) {
                 for (Episode episode : foundUser.getWatchedEpisodes()) {
                     this.removePlayedInEpisodesOfActor(user.getId(), episode.getId());

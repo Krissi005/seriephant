@@ -41,8 +41,13 @@ public class Episode {
     @OneToMany(mappedBy = "episode")
     @JsonIgnoreProperties("episode")
     List<Rating> ratings;
-    @ManyToMany(mappedBy = "playedInEpisodes", cascade = {CascadeType.PERSIST})
+    @ManyToMany(cascade = {CascadeType.ALL})
     @JsonIgnoreProperties("playedInEpisodes")
+    @JoinTable(
+            name = "actor_episode",
+            joinColumns = {@JoinColumn(name = "episode_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "actor_id", referencedColumnName = "id")}
+    )
     private List<Actor> actors = new ArrayList<>();
 
     public Episode(String title, LocalDate releaseDate, Integer episodeNumber, Season season) {
@@ -64,5 +69,13 @@ public class Episode {
     @PreRemove
     public void preRemove() {
         this.users.forEach(user -> user.removeWatchedEpisode(this));
+    }
+
+    public void addActor(Actor actor) {
+        this.actors.add(actor);
+    }
+
+    public void removeActor(Actor actor) {
+        this.actors.remove(actor);
     }
 }

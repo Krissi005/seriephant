@@ -101,14 +101,13 @@ public class EpisodeApplicationService {
             foundEpisode.setTitle(episode.getTitle());
             foundEpisode.setReleaseDate(episode.getReleaseDate());
             foundEpisode.setEpisodeNumber(episode.getEpisodeNumber());
-            List<Actor> actors = new ArrayList<>();
             if (episode.getActors() != null) {
-                episode.getActors().forEach(actor -> {
-                    if (this.actorRepository.existsById(actor.getId())) {
-                        actors.add(actor);
-                    }
-                });
-                foundEpisode.setActors(actors);
+                for (Actor actor : foundEpisode.getActors()) {
+                    episode.removeActor(actor);
+                }
+                for (Actor actor : episode.getActors()) {
+                    episode.addActor(actor);
+                }
             }
             if (episode.getSeason() != null && episode.getSeason().getId() != null && this.seasonRepository.existsById(episode.getSeason().getId())) {
                 foundEpisode.setSeason(this.seasonRepository.getById(episode.getSeason().getId()));
@@ -117,7 +116,30 @@ public class EpisodeApplicationService {
             throw new ValidationException("Season is not valid.");
         }
         throw new ValidationException("Episode is not valid.");
+    }
 
+    public Episode addActor(Long episodeId, Long actorId) throws ValidationException {
+        if (this.episodeRepository.existsById(episodeId)) {
+            if (this.actorRepository.existsById(actorId)) {
+                Episode foundEpisode = this.episodeRepository.getById(episodeId);
+                foundEpisode.addActor(this.actorRepository.getById(actorId));
+                return this.episodeRepository.save(foundEpisode);
+            }
+            throw new ValidationException("Id of Actor is not known.");
+        }
+        throw new ValidationException("Id of Episode is not known.");
+    }
+
+    public Episode removeActor(Long episodeId, Long actorId) throws ValidationException {
+        if (this.episodeRepository.existsById(episodeId)) {
+            if (this.actorRepository.existsById(actorId)) {
+                Episode foundEpisode = this.episodeRepository.getById(episodeId);
+                foundEpisode.removeActor(this.actorRepository.getById(actorId));
+                return this.episodeRepository.save(foundEpisode);
+            }
+            throw new ValidationException("Id of Actor is not known.");
+        }
+        throw new ValidationException("Id of Episode is not known.");
     }
 
     /************************************************************************************************************************************/

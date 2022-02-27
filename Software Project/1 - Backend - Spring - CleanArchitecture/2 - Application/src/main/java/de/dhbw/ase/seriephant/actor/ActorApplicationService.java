@@ -83,31 +83,6 @@ public class ActorApplicationService {
         throw new ValidationException("Id of Actor is not known.");
     }
 
-    public Actor updatePlayedInEpisodesOfActor(Long actorId, Long episodeId) throws ValidationException {
-        if (this.actorRepository.existsById(actorId)) {
-            if (this.episodeRepository.existsById(episodeId)) {
-                Actor foundActor = this.actorRepository.getById(actorId);
-                foundActor.playInEpisode(this.episodeRepository.getById(episodeId));
-                return this.actorRepository.save(foundActor);
-            }
-            throw new ValidationException("Id of Episode is not known.");
-        }
-        throw new ValidationException("Id of Actor is not known.");
-    }
-
-    public Actor removePlayedInEpisodesOfActor(Long actorId, Long episodeId) throws ValidationException {
-        if (this.actorRepository.existsById(actorId)) {
-            if (this.episodeRepository.existsById(episodeId)) {
-                Actor foundActor = this.actorRepository.getById(actorId);
-                foundActor.removePlayedInEpisode(this.episodeRepository.getById(episodeId));
-                this.actorRepository.save(foundActor);
-                return foundActor;
-            }
-            throw new ValidationException("Id of Episode is not known.");
-        }
-        throw new ValidationException("Id of Actor is not known.");
-    }
-
     /************************************************************************************************************************************/
     /*
          _____       _      _

@@ -1,5 +1,7 @@
 package de.dhbw.ase.seriephant;
 
+import de.dhbw.ase.seriephant.domain.actor.Actor;
+import de.dhbw.ase.seriephant.domain.actor.ActorRepository;
 import de.dhbw.ase.seriephant.domain.episode.Episode;
 import de.dhbw.ase.seriephant.domain.episode.EpisodeRepository;
 import de.dhbw.ase.seriephant.domain.genre.Genre;
@@ -38,6 +40,9 @@ public class DataInserter implements ApplicationListener<ApplicationReadyEvent> 
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    ActorRepository actorRepository;
+
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
         Genre genre1 = new Genre("Horror", "Löst Gefühle der Angst, des Schreckens und Verstörung aus.");
@@ -73,6 +78,12 @@ public class DataInserter implements ApplicationListener<ApplicationReadyEvent> 
         user.watchEpisode(episode1);
         user.watchEpisode(episode2);
         this.userRepository.save(user);
+
+        Actor actor = new Actor("Melissa", "Benoist");
+        this.actorRepository.save(actor);
+
+        episode1.addActor(actor);
+        this.episodeRepository.save(episode1);
 
     }
 }

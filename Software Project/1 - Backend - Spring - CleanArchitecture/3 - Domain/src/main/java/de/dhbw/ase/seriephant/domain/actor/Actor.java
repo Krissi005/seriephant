@@ -25,13 +25,8 @@ public class Actor {
     private String firstName;
     @Column(name = "lastname")
     private String lastName;
-    @ManyToMany(cascade = {CascadeType.ALL})
+    @ManyToMany(mappedBy = "actors", cascade = {CascadeType.PERSIST})
     @JsonIgnoreProperties("actors")
-    @JoinTable(
-            name = "actor_episode",
-            joinColumns = {@JoinColumn(name = "actor_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "episode_id", referencedColumnName = "id")}
-    )
     List<Episode> playedInEpisodes = new ArrayList<>();
 
     public Actor(String firstName, String lastName) {
@@ -43,13 +38,5 @@ public class Actor {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-    }
-
-    public void playInEpisode(Episode episode) {
-        this.playedInEpisodes.add(episode);
-    }
-
-    public void removePlayedInEpisode(Episode episode) {
-        this.playedInEpisodes.remove(episode);
     }
 }

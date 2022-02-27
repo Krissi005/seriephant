@@ -84,16 +84,6 @@ public class ActorController {
         return this.actorToActorDTOMapper.apply(this.actorApplicationService.updateActor(this.actorDTOToActorMapper.apply(actor)));
     }
 
-    @PutMapping(value = "/updateEpisodes")
-    public ActorDTO updateSeenEpisodesOfActor(@RequestParam Long actorId, @RequestParam Long episodeId) throws ValidationException {
-        return this.actorToActorDTOMapper.apply(this.actorApplicationService.updatePlayedInEpisodesOfActor(actorId, episodeId));
-    }
-
-    @PutMapping(value = "/removeEpisode")
-    public ActorDTO removePlayedInEpisodesOfActor(@RequestParam Long actorId, @RequestParam Long episodeId) throws ValidationException {
-        return this.actorToActorDTOMapper.apply(this.actorApplicationService.removePlayedInEpisodesOfActor(actorId, episodeId));
-    }
-
     /************************************************************************************************************************************/
     /*
          _____       _      _
