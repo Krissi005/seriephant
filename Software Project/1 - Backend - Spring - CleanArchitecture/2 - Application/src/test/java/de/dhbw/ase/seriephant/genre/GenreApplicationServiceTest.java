@@ -19,7 +19,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class GenreServiceTest {
+class GenreApplicationServiceTest {
 
     @Mock
     GenreRepository genreRepository;
@@ -27,16 +27,15 @@ public class GenreServiceTest {
     @InjectMocks
     GenreApplicationService genreApplicationService;
 
-    private final String genreTitle = "genreTitle";
-    private final String newGenreTitle = "newGenreTitle";
-    private final String genreDescription = "genreDescription";
-    private final String newGenreDescription = "newGenreDescription";
-
-    private final Long genreId = 52L;
+    private static final Long GENRE_ID = 52L;
+    private static final String GENRE_TITLE = "genreTitle";
+    private static final String NEW_GENRE_TITLE = "newGenreTitle";
+    private static final String GENRE_DESCRIPTION = "genreDescription";
+    private static final String NEW_GENRE_DESCRIPTION = "newGenreDescription";
 
     @Test
     void saveGenreFromDTO() {
-        Genre genre = new Genre(this.genreTitle, this.genreDescription);
+        Genre genre = new Genre(GENRE_TITLE, GENRE_DESCRIPTION);
 
         doReturn(genre).when(this.genreRepository).save(genre);
         Genre createdGenre = this.genreApplicationService.saveGenre(genre);
@@ -48,10 +47,10 @@ public class GenreServiceTest {
 
     @Test
     void saveGenre() {
-        Genre genre = new Genre(this.genreTitle, this.genreDescription);
+        Genre genre = new Genre(GENRE_TITLE, GENRE_DESCRIPTION);
 
         doReturn(genre).when(this.genreRepository).save(any(Genre.class));
-        Genre createdGenre = this.genreApplicationService.saveGenre(this.genreTitle, this.genreDescription);
+        Genre createdGenre = this.genreApplicationService.saveGenre(GENRE_TITLE, GENRE_DESCRIPTION);
 
         verify(this.genreRepository, times(1)).save(any(Genre.class));
 
@@ -60,15 +59,15 @@ public class GenreServiceTest {
 
     @Test
     void getGenreByIdSuccessful() throws ValidationException {
-        Genre expectedGenre = new Genre(this.genreId, "Title1", "Description1");
+        Genre expectedGenre = new Genre(GENRE_ID, NEW_GENRE_TITLE, NEW_GENRE_DESCRIPTION);
 
-        doReturn(true).when(this.genreRepository).existsById(this.genreId);
-        doReturn(expectedGenre).when(this.genreRepository).getById(this.genreId);
+        doReturn(true).when(this.genreRepository).existsById(GENRE_ID);
+        doReturn(expectedGenre).when(this.genreRepository).getById(GENRE_ID);
 
-        Genre actualGenre = this.genreApplicationService.getGenreById(this.genreId);
+        Genre actualGenre = this.genreApplicationService.getGenreById(GENRE_ID);
 
-        verify(this.genreRepository, times(1)).existsById(this.genreId);
-        verify(this.genreRepository, times(1)).getById(this.genreId);
+        verify(this.genreRepository, times(1)).existsById(GENRE_ID);
+        verify(this.genreRepository, times(1)).getById(GENRE_ID);
 
         assertEquals(expectedGenre, actualGenre);
     }
@@ -76,9 +75,9 @@ public class GenreServiceTest {
     @Test
     void getGenreByIdFailed() throws ValidationException {
 
-        Exception ex = assertThrows(ValidationException.class, () -> this.genreApplicationService.getGenreById(this.genreId));
+        Exception ex = assertThrows(ValidationException.class, () -> this.genreApplicationService.getGenreById(GENRE_ID));
 
-        verify(this.genreRepository, times(1)).existsById(this.genreId);
+        verify(this.genreRepository, times(1)).existsById(GENRE_ID);
 
         assertEquals("Id of Genre is not known.", ex.getMessage());
     }
@@ -102,16 +101,16 @@ public class GenreServiceTest {
 
     @Test
     void updateGenreSuccessful() throws ValidationException {
-        Genre genre = new Genre(this.genreId, this.genreTitle, this.genreDescription);
-        Genre newGenre = new Genre(this.genreId, this.newGenreTitle, this.newGenreDescription);
+        Genre genre = new Genre(GENRE_ID, GENRE_TITLE, GENRE_DESCRIPTION);
+        Genre newGenre = new Genre(GENRE_ID, NEW_GENRE_TITLE, NEW_GENRE_DESCRIPTION);
 
-        doReturn(true).when(this.genreRepository).existsById(this.genreId);
-        doReturn(genre).when(this.genreRepository).getById(this.genreId);
+        doReturn(true).when(this.genreRepository).existsById(GENRE_ID);
+        doReturn(genre).when(this.genreRepository).getById(GENRE_ID);
         doReturn(genre).when(this.genreRepository).save(genre);
 
         Genre updatedGenre = this.genreApplicationService.updateGenre(newGenre);
 
-        verify(this.genreRepository, times(1)).existsById(this.genreId);
+        verify(this.genreRepository, times(1)).existsById(GENRE_ID);
         verify(this.genreRepository, times(1)).save(any(Genre.class));
 
         assertEquals(updatedGenre.getTitle(), newGenre.getTitle());
@@ -120,11 +119,11 @@ public class GenreServiceTest {
 
     @Test
     void updateGenreFailed() {
-        Genre genre = new Genre(this.genreId, this.newGenreTitle, this.newGenreDescription);
+        Genre genre = new Genre(GENRE_ID, NEW_GENRE_TITLE, NEW_GENRE_DESCRIPTION);
 
         Exception ex = assertThrows(ValidationException.class, () -> this.genreApplicationService.updateGenre(genre));
 
-        verify(this.genreRepository, times(1)).existsById(this.genreId);
+        verify(this.genreRepository, times(1)).existsById(GENRE_ID);
         verify(this.genreRepository, times(0)).save(any(Genre.class));
 
         assertEquals("Id of Genre is not known.", ex.getMessage());
@@ -132,8 +131,8 @@ public class GenreServiceTest {
 
     @Test
     void deleteGenre() {
-        this.genreApplicationService.deleteGenre(this.genreId);
+        this.genreApplicationService.deleteGenre(GENRE_ID);
 
-        verify(this.genreRepository, times(1)).deleteById(this.genreId);
+        verify(this.genreRepository, times(1)).deleteById(GENRE_ID);
     }
 }
