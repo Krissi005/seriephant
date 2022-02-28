@@ -87,17 +87,21 @@ public class UserApplicationService {
             User foundUser = this.userRepository.getById(user.getId());
             foundUser.setFirstName(user.getFirstName());
             foundUser.setLastName(user.getLastName());
-            if (user.getWatchedEpisodes() != null) {
-                for (Episode episode : foundUser.getWatchedEpisodes()) {
-                    this.removePlayedInEpisodesOfActor(user.getId(), episode.getId());
-                }
-                for (Episode episode : user.getWatchedEpisodes()) {
-                    this.updateSeenEpisodesOfUser(user.getId(), episode.getId());
-                }
-            }
+            this.updateWatchedEpisodes(user, foundUser);
             return this.userRepository.save(foundUser);
         }
         throw new ValidationException("Id of User is not known.");
+    }
+
+    private void updateWatchedEpisodes(User user, User foundUser) throws ValidationException {
+        if (user.getWatchedEpisodes() != null) {
+            for (Episode episode : foundUser.getWatchedEpisodes()) {
+                this.removeSeenEpisodeOfUser(user.getId(), episode.getId());
+            }
+            for (Episode episode : user.getWatchedEpisodes()) {
+                this.updateSeenEpisodesOfUser(user.getId(), episode.getId());
+            }
+        }
     }
 
     public User updateSeenEpisodesOfUser(Long userId, Long episodeId) throws ValidationException {
@@ -113,7 +117,7 @@ public class UserApplicationService {
 
     }
 
-    public User removePlayedInEpisodesOfActor(Long userId, Long episodeId) throws ValidationException {
+    public User removeSeenEpisodeOfUser(Long userId, Long episodeId) throws ValidationException {
         if (this.userRepository.existsById(userId)) {
             if (this.episodeRepository.existsById(episodeId)) {
                 User foundUser = this.userRepository.getById(userId);
