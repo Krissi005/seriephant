@@ -88,6 +88,11 @@ public class UserController {
         return this.userToUserDTOMapper.apply(this.userApplicationService.updateSeenEpisodesOfUser(userId, episodeId));
     }
 
+    @PutMapping(value = "/removeEpisodes")
+    public UserDTO removeSeenEpisodesOfUser(@RequestParam Long userId, @RequestParam Long episodeId) throws ValidationException {
+        return this.userToUserDTOMapper.apply(this.userApplicationService.removeSeenEpisodeOfUser(userId, episodeId));
+    }
+
     /************************************************************************************************************************************/
     /*
          _____       _      _
