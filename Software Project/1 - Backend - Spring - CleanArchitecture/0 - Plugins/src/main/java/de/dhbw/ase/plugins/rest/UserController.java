@@ -11,6 +11,7 @@ import javax.xml.bind.ValidationException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -54,7 +55,7 @@ public class UserController {
         | | \ \  __/ (_| | (_| |
         |_|  \_\___|\__,_|\__,_|
     */
-    @GetMapping(value = "/readById")
+    @GetMapping(value = "/readById", params = {"userId"})
     public UserDTO getUserById(@RequestParam Long userId) throws ValidationException {
         return this.userToUserDTOMapper.apply(this.userApplicationService.getUserById(userId));
     }
@@ -103,7 +104,7 @@ public class UserController {
         |_____/ \___|_|\___|\__\___|
     */
     @DeleteMapping("/delete")
-    public void deleteUser(@RequestParam Long userId) {
+    public void deleteUser(@RequestParam Long userId) throws ValidationException {
         this.userApplicationService.deleteUser(userId);
     }
 

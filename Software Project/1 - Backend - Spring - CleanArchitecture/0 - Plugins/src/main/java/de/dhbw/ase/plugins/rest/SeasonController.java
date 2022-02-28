@@ -11,7 +11,7 @@ import javax.xml.bind.ValidationException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/season")
 public class SeasonController {
@@ -94,12 +94,12 @@ public class SeasonController {
         |_____/ \___|_|\___|\__\___|
     */
     @DeleteMapping("/delete")
-    public void deleteSeason(@RequestParam Long seasonId) {
+    public void deleteSeason(@RequestParam Long seasonId) throws ValidationException {
         this.seasonApplicationService.deleteSeason(seasonId);
     }
 
     @DeleteMapping("/deleteWithAllEpisodes")
-    public void deleteSeasonWithAllEpisodes(@RequestParam Long seasonId) {
+    public void deleteSeasonWithAllEpisodes(@RequestParam Long seasonId) throws ValidationException {
         this.seasonApplicationService.deleteSeasonWithAllEpisodes(seasonId);
     }
 

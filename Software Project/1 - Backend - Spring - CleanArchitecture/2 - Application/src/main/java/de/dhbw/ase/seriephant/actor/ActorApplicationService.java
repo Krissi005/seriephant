@@ -92,9 +92,11 @@ public class ActorApplicationService {
         | |__| |  __/ |  __/ ||  __/
         |_____/ \___|_|\___|\__\___|
     */
-    public void deleteActor(Long actorId) {
+    public void deleteActor(Long actorId) throws ValidationException {
         if (this.actorRepository.existsById(actorId)) {
             this.actorRepository.deleteById(actorId);
+        } else {
+            throw new ValidationException("Id of Actor is not known.");
         }
     }
 

@@ -7,7 +7,7 @@ import javax.xml.bind.ValidationException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/episodeRating")
 public class RatingController {

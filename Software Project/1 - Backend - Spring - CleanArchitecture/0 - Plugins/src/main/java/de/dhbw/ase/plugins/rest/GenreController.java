@@ -11,7 +11,7 @@ import javax.xml.bind.ValidationException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/genre")
 public class GenreController {
@@ -95,7 +95,7 @@ public class GenreController {
         |_____/ \___|_|\___|\__\___|
     */
     @DeleteMapping(value = "/delete", params = {"genreId"})
-    public void deleteGenre(@RequestParam Long genreId) {
+    public void deleteGenre(@RequestParam Long genreId) throws ValidationException {
         this.genreApplicationService.deleteGenre(genreId);
     }
     /************************************************************************************************************************************/

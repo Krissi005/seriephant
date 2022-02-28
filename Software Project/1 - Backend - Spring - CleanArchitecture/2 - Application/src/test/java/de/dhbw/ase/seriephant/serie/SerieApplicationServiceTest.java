@@ -156,23 +156,23 @@ class SerieApplicationServiceTest {
 
     @Test
     void updateSerieSuccessfull() throws ValidationException {
-        Serie serie = new Serie(SERIE_ID, SERIE_TITLE, SERIE_DESCRIPTION, SERIE_RELEASE_YEAR, GENRE);
         Serie newSerie = new Serie(SERIE_ID, NEW_SERIE_TITLE, NEW_SERIE_DESCRIPTION, NEW_SERIE_RELEASE_YEAR, GENRE);
 
         doReturn(true).when(this.serieRepository).existsById(SERIE_ID);
-        doReturn(serie).when(this.serieRepository).getById(SERIE_ID);
-        doReturn(serie).when(this.serieRepository).save(serie);
+        doReturn(this.serie).when(this.serieRepository).getById(SERIE_ID);
+        doReturn(newSerie).when(this.serieRepository).save(any(Serie.class));
 
         Serie updatedSerie = this.serieApplicationService.updateSerie(newSerie);
 
         verify(this.serieRepository, times(1)).existsById(SERIE_ID);
+        verify(this.serieRepository, times(1)).getById(SERIE_ID);
         verify(this.serieRepository, times(1)).save(any(Serie.class));
 
-        assertEquals(updatedSerie.getTitle(), newSerie.getTitle());
-        assertEquals(updatedSerie.getDescription(), newSerie.getDescription());
-        assertEquals(updatedSerie.getReleaseYear(), newSerie.getReleaseYear());
-        assertEquals(updatedSerie.getDescription(), newSerie.getDescription());
-        assertEquals(updatedSerie.getGenre(), newSerie.getGenre());
+        assertEquals(newSerie.getTitle(), updatedSerie.getTitle());
+        assertEquals(newSerie.getDescription(), updatedSerie.getDescription());
+        assertEquals(newSerie.getReleaseYear(), updatedSerie.getReleaseYear());
+        assertEquals(newSerie.getDescription(), updatedSerie.getDescription());
+        assertEquals(newSerie.getGenre(), updatedSerie.getGenre());
     }
 
     @Test
@@ -188,7 +188,8 @@ class SerieApplicationServiceTest {
     }
 
     @Test
-    void deleteSerie() {
+    void deleteSerie() throws ValidationException {
+        doReturn(true).when(this.serieRepository).existsById(SERIE_ID);
         this.serieApplicationService.deleteSerie(SERIE_ID);
 
         verify(this.serieRepository, times(1)).deleteById(SERIE_ID);
@@ -196,7 +197,8 @@ class SerieApplicationServiceTest {
     }
 
     @Test
-    void deleteSerieWithAllSeasons() {
+    void deleteSerieWithAllSeasons() throws ValidationException {
+        doReturn(true).when(this.serieRepository).existsById(SERIE_ID);
         doReturn(this.serie).when(this.serieRepository).getById(SERIE_ID);
 
         this.serieApplicationService.deleteSerieWithAllSeasons(SERIE_ID);

@@ -117,18 +117,22 @@ public class SerieApplicationService {
         | |__| |  __/ |  __/ ||  __/
         |_____/ \___|_|\___|\__\___|
     */
-    public void deleteSerie(Long serieId) {
+    public void deleteSerie(Long serieId) throws ValidationException {
         if (this.serieRepository.existsById(serieId)) {
             this.serieRepository.deleteById(serieId);
+        } else {
+            throw new ValidationException("Id of Serie is not known.");
         }
     }
 
-    public void deleteSerieWithAllSeasons(Long serieId) {
+    public void deleteSerieWithAllSeasons(Long serieId) throws ValidationException {
         if (this.serieRepository.existsById(serieId)) {
             for (Season season : this.serieRepository.getById(serieId).getSeasons()) {
                 this.seasonRepository.deleteById(season.getId());
             }
             this.serieRepository.deleteById(serieId);
+        } else {
+            throw new ValidationException("Id of Serie is not known.");
         }
     }
 

@@ -13,7 +13,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/episode")
 public class EpisodeController {
@@ -106,7 +106,7 @@ public class EpisodeController {
         |_____/ \___|_|\___|\__\___|
     */
     @DeleteMapping("/delete")
-    public void deleteEpisode(@RequestParam Long episodeId) {
+    public void deleteEpisode(@RequestParam Long episodeId) throws ValidationException {
         this.episodeApplicationService.deleteEpisode(episodeId);
     }
     /************************************************************************************************************************************/

@@ -139,9 +139,11 @@ public class UserApplicationService {
         | |__| |  __/ |  __/ ||  __/
         |_____/ \___|_|\___|\__\___|
     */
-    public void deleteUser(Long userId) {
+    public void deleteUser(Long userId) throws ValidationException {
         if (this.userRepository.existsById(userId)) {
             this.userRepository.deleteById(userId);
+        } else {
+            throw new ValidationException("Id of User is not known.");
         }
     }
 

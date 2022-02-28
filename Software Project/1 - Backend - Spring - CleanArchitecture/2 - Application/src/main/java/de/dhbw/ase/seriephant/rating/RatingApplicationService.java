@@ -125,8 +125,9 @@ public class RatingApplicationService {
             Rating rating = this.ratingRepository.getById(new RatingKey(userId, episodeId));
             rating.setRating(null);
             this.ratingRepository.save(rating);
+        } else {
+            throw new ValidationException("Id of Rating is not known.");
         }
-        throw new ValidationException("Episode is not watched yet.");
     }
     /************************************************************************************************************************************/
 }

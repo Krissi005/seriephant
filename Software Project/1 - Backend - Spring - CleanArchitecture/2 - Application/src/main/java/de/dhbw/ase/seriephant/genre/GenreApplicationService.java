@@ -89,9 +89,11 @@ public class GenreApplicationService {
         | |__| |  __/ |  __/ ||  __/
         |_____/ \___|_|\___|\__\___|
     */
-    public void deleteGenre(Long genreId) {
+    public void deleteGenre(Long genreId) throws ValidationException {
         if (this.genreRepository.existsById(genreId)) {
             this.genreRepository.deleteById(genreId);
+        } else {
+            throw new ValidationException("Id of Genre is not known.");
         }
     }
 

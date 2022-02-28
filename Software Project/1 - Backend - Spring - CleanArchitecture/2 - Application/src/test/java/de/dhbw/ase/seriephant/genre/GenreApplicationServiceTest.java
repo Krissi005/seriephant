@@ -37,7 +37,7 @@ class GenreApplicationServiceTest {
 
     @BeforeEach
     public void init() {
-        this.testGenre = new Genre(GENRE_TITLE, GENRE_DESCRIPTION);
+        this.testGenre = new Genre(GENRE_ID, GENRE_TITLE, GENRE_DESCRIPTION);
     }
 
     @Test
@@ -108,27 +108,27 @@ class GenreApplicationServiceTest {
 
     @Test
     void updateGenreSuccessful() throws ValidationException {
-        Genre genre = new Genre(GENRE_ID, GENRE_TITLE, GENRE_DESCRIPTION);
         Genre newGenre = new Genre(GENRE_ID, NEW_GENRE_TITLE, NEW_GENRE_DESCRIPTION);
 
         doReturn(true).when(this.genreRepository).existsById(GENRE_ID);
-        doReturn(genre).when(this.genreRepository).getById(GENRE_ID);
-        doReturn(genre).when(this.genreRepository).save(genre);
+        doReturn(this.testGenre).when(this.genreRepository).getById(GENRE_ID);
+        doReturn(this.testGenre).when(this.genreRepository).save(this.testGenre);
 
         Genre updatedGenre = this.genreApplicationService.updateGenre(newGenre);
 
         verify(this.genreRepository, times(1)).existsById(GENRE_ID);
         verify(this.genreRepository, times(1)).save(any(Genre.class));
 
-        assertEquals(updatedGenre.getTitle(), newGenre.getTitle());
-        assertEquals(updatedGenre.getDescription(), newGenre.getDescription());
+        assertEquals(newGenre.getTitle(), updatedGenre.getTitle());
+        assertEquals(newGenre.getDescription(), updatedGenre.getDescription());
     }
 
     @Test
     void updateGenreFailed() {
-        Genre genre = new Genre(GENRE_ID, NEW_GENRE_TITLE, NEW_GENRE_DESCRIPTION);
 
-        Exception ex = assertThrows(ValidationException.class, () -> this.genreApplicationService.updateGenre(genre));
+        doReturn(false).when(this.genreRepository).existsById(GENRE_ID);
+
+        Exception ex = assertThrows(ValidationException.class, () -> this.genreApplicationService.updateGenre(this.testGenre));
 
         verify(this.genreRepository, times(1)).existsById(GENRE_ID);
         verify(this.genreRepository, times(0)).save(any(Genre.class));
@@ -137,7 +137,8 @@ class GenreApplicationServiceTest {
     }
 
     @Test
-    void deleteGenre() {
+    void deleteGenre() throws ValidationException {
+        doReturn(true).when(this.genreRepository).existsById(GENRE_ID);
         this.genreApplicationService.deleteGenre(GENRE_ID);
 
         verify(this.genreRepository, times(1)).deleteById(GENRE_ID);

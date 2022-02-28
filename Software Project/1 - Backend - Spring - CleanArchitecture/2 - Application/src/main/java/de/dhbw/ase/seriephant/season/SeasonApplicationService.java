@@ -108,18 +108,22 @@ public class SeasonApplicationService {
         | |__| |  __/ |  __/ ||  __/
         |_____/ \___|_|\___|\__\___|
     */
-    public void deleteSeason(Long seasonId) {
+    public void deleteSeason(Long seasonId) throws ValidationException {
         if (this.seasonRepository.existsById(seasonId)) {
             this.seasonRepository.deleteById(seasonId);
+        } else {
+            throw new ValidationException("Id of Season is not known.");
         }
     }
 
-    public void deleteSeasonWithAllEpisodes(Long seasonId) {
+    public void deleteSeasonWithAllEpisodes(Long seasonId) throws ValidationException {
         if (this.seasonRepository.existsById(seasonId)) {
             for (Episode episode : this.seasonRepository.getById(seasonId).getEpisodes()) {
                 this.episodeRepository.deleteById(episode.getId());
             }
             this.seasonRepository.deleteById(seasonId);
+        } else {
+            throw new ValidationException("Id of Season is not known.");
         }
     }
 

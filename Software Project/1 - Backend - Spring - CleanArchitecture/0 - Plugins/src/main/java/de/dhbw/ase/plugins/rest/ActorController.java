@@ -11,7 +11,7 @@ import javax.xml.bind.ValidationException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/actor")
 public class ActorController {
@@ -94,7 +94,7 @@ public class ActorController {
         |_____/ \___|_|\___|\__\___|
     */
     @DeleteMapping("/delete")
-    public void deleteActor(@RequestParam Long actorId) {
+    public void deleteActor(@RequestParam Long actorId) throws ValidationException {
         this.actorApplicationService.deleteActor(actorId);
     }
 
