@@ -58,7 +58,7 @@ public class RatingApplicationService {
         if (!this.episodeRepository.existsById(episodeId)) {
             throw new ValidationException("Id of Episode is not known.");
         }
-        
+
         rating.setUser(this.userRepository.getById(userId));
         rating.setEpisode(this.episodeRepository.getById(episodeId));
 
@@ -90,6 +90,13 @@ public class RatingApplicationService {
             return this.ratingRepository.getById(ratingId);
         }
         throw new ValidationException("Id of Rating is not known.");
+    }
+
+    public List<Rating> getRatingByUserId(Long userId) throws ValidationException {
+        if (this.userRepository.existsById(userId)) {
+            return this.ratingRepository.getByUser(this.userRepository.getById(userId));
+        }
+        throw new ValidationException("User is not valid.");
     }
 
     public List<Rating> getAllEpisodeRatings() {

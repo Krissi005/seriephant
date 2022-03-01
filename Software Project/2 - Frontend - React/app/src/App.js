@@ -11,6 +11,10 @@ import {
 import {Users} from "./components/user/Users";
 import {CreateUser} from "./components/user/CreateUser";
 import {EditUser} from "./components/user/EditUser";
+import {SerieTable} from "./components/serie/SerieTable";
+import {SeasonTable} from "./components/season/SeasonTable";
+import {EpisodeTable} from "./components/episode/EpisodeTable";
+import {RatingTable} from "./components/rating/RatingTable";
 
 class App extends React.Component {
     state = {
@@ -65,7 +69,15 @@ class App extends React.Component {
                                                              choose={this.chooseUser} edit={this.edit}/>}/>
                         <Route path="/createUser" element={<CreateUser/>}/>
                         <Route path="/editUser/:userId" element ={<EditUser/>}/>
-                        </Routes>
+                        <Route path="/series" element={<SerieTable userProfile={this.state.choosedUserProfile}
+                                                                   onClick={this.chooseUser}/>}/>
+                        <Route path="/seasons" element={<SeasonTable userProfile={this.state.choosedUserProfile}
+                                                                     onClick={this.chooseUser}/>}/>
+                        <Route path="/allEpisodes" element={<EpisodeTable userProfile={this.state.choosedUserProfile}
+                                                                          onClick={this.chooseUser}/>}/>
+                        <Route path="/rating" element={<RatingTable userProfile={this.state.choosedUserProfile}
+                                                                    onClick={this.chooseUser}/>}/>
+                    </Routes>
                 </Router>
             </div>
         )
