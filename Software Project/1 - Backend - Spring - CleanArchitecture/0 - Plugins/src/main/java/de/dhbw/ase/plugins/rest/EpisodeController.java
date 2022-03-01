@@ -62,6 +62,14 @@ public class EpisodeController {
         return this.episodeToEpisodeDTOMapper.apply(this.episodeApplicationService.getEpisodeById(episodeId));
     }
 
+    @GetMapping(value = "/readByUserId", params = "userId")
+    public List<EpisodeDTO> getEpisodByUserId(@RequestParam Long userId) throws ValidationException {
+        return this.episodeApplicationService.getEpisodeByUserId(userId)
+                .stream()
+                .map(this.episodeToEpisodeDTOMapper::apply)
+                .collect(Collectors.toList());
+    }
+
     @GetMapping(value = "/read")
     public List<EpisodeDTO> getAllEpisodes() {
         return this.episodeApplicationService.getAllEpisodes()

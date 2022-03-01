@@ -36,29 +36,34 @@ public class RatingApplicationService {
         \_____|_|  \___|\__,_|\__\___|
      */
     public Rating saveEpisodeRating(Rating rating) throws ValidationException {
-        if (rating != null) {
-            if (rating.getId() != null && this.ratingRepository.existsById(rating.getId())) {
-                return this.createRatingByUserAndEpisode(rating, rating.getId().getUserId(), rating.getId().getEpisodeId());
-            } else if (rating.getUser() != null && rating.getUser().getId() != null &&
-                    rating.getEpisode() != null && rating.getEpisode().getId() != null
-                    && this.ratingRepository.existsById(new RatingKey(rating.getUser().getId(), rating.getEpisode().getId()))) {
-                return this.createRatingByUserAndEpisode(rating, rating.getUser().getId(), rating.getEpisode().getId());
-            }
-            throw new ValidationException("Episode is not watched yet.");
+        if (rating == null) {
+            throw new ValidationException("Rating is not valid.");
         }
-        throw new ValidationException("Rating is not valid.");
+
+        if (rating.getId() != null && this.ratingRepository.existsById(rating.getId())) {
+            return this.createRatingByUserAndEpisode(rating, rating.getId().getUserId(), rating.getId().getEpisodeId());
+        } else if (rating.getUser() != null && rating.getUser().getId() != null &&
+                rating.getEpisode() != null && rating.getEpisode().getId() != null
+                && this.ratingRepository.existsById(new RatingKey(rating.getUser().getId(), rating.getEpisode().getId()))) {
+            return this.createRatingByUserAndEpisode(rating, rating.getUser().getId(), rating.getEpisode().getId());
+        }
+        throw new ValidationException("Episode is not watched yet.");
     }
 
     private Rating createRatingByUserAndEpisode(Rating rating, Long userId, Long episodeId) throws ValidationException {
-        if (this.userRepository.existsById(userId)) {
-            rating.setUser(this.userRepository.getById(userId));
-            if (this.episodeRepository.existsById(episodeId)) {
-                rating.setEpisode(this.episodeRepository.getById(episodeId));
-                return this.ratingRepository.save(rating);
-            }
+        if (!this.userRepository.existsById(userId)) {
+            throw new ValidationException("Id of User is not known.");
+        }
+
+        if (!this.episodeRepository.existsById(episodeId)) {
             throw new ValidationException("Id of Episode is not known.");
         }
-        throw new ValidationException("Id of User is not known.");
+        
+        rating.setUser(this.userRepository.getById(userId));
+        rating.setEpisode(this.episodeRepository.getById(episodeId));
+
+        return this.ratingRepository.save(rating);
+
     }
 
     public Rating saveEpisodeRating(Long userId, Long episodeId, Integer rating) throws ValidationException {

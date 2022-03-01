@@ -25,7 +25,6 @@ public class SeasonDTO {
     @JsonProperty("seasonNumber")
     private Integer seasonNumber;
     @JsonProperty("serie")
-    @JsonIgnoreProperties("genre")
     private SerieDTO serieDTO;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();

@@ -24,7 +24,7 @@ public class RatingBridge implements RatingRepository {
 
     @Override
     public Rating save(Rating rating) {
-        return this.springDataRatingRepository.save(rating);
+        return this.springDataRatingRepository.saveAndFlush(rating);
     }
 
     @Override

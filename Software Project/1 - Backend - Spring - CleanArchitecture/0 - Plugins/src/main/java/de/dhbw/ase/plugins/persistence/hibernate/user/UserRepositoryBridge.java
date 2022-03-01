@@ -23,7 +23,7 @@ public class UserRepositoryBridge implements UserRepository {
 
     @Override
     public User save(User user) {
-        return this.springDataUserRepository.save(user);
+        return this.springDataUserRepository.saveAndFlush(user);
     }
 
     @Override

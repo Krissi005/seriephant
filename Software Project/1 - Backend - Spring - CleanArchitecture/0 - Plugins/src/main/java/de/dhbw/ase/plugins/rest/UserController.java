@@ -41,8 +41,8 @@ public class UserController {
         return this.userToUserDTOMapper.apply(this.userApplicationService.saveUser(this.userDTOToUserMapper.apply(user)));
     }
 
-    @PostMapping(value = "/new", params = {"firstName"})
-    public UserDTO createUser(@RequestParam String firstName, @RequestParam(required = false) String lastName) {
+    @PostMapping(value = "/new", params = {"firstName", "lastName"})
+    public UserDTO createUser(@RequestParam String firstName, @RequestParam(required = false) String lastName) throws ValidationException {
         return this.userToUserDTOMapper.apply(this.userApplicationService.saveUser(firstName, lastName));
     }
 

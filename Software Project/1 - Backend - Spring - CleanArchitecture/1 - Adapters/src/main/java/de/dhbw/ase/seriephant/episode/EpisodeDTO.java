@@ -34,7 +34,6 @@ public class EpisodeDTO {
     @JsonProperty("episodeNumber")
     private Integer episodeNumber;
     @JsonProperty("season")
-    @JsonIgnoreProperties("serie")
     private SeasonDTO seasonDTO;
     @JsonProperty("actors")
     private List<ActorDTO> actorDTOs = null;

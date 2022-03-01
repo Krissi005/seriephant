@@ -34,7 +34,7 @@ public class UserApplicationService {
         \_____|_|  \___|\__,_|\__\___|
      */
     public User saveUser(User user) throws ValidationException {
-        if (user != null && (user.getId() == null || !this.userRepository.existsById(user.getId()))) {
+        if (user != null && (user.getId() == null || !this.userRepository.existsById(user.getId())) && !user.getFirstName().equals("")) {
             if (user.getWatchedEpisodes() != null) {
                 user.setWatchedEpisodes(new ArrayList<>());
                 for (Episode episode : user.getWatchedEpisodes()) {
@@ -46,9 +46,12 @@ public class UserApplicationService {
         throw new ValidationException("User is not valid.");
     }
 
-    public User saveUser(String firstName, String lastName) {
-        User userToCreate = new User(firstName, lastName);
-        return this.userRepository.save(userToCreate);
+    public User saveUser(String firstName, String lastName) throws ValidationException {
+        if (!firstName.equals("")) {
+            User userToCreate = new User(firstName, lastName);
+            return this.userRepository.save(userToCreate);
+        }
+        throw new ValidationException("First name is empty.");
     }
 
     /************************************************************************************************************************************/
@@ -83,7 +86,7 @@ public class UserApplicationService {
               |_|
     */
     public User updateUser(User user) throws ValidationException {
-        if (user != null && user.getId() != null && this.episodeRepository.existsById(user.getId())) {
+        if (user != null && user.getId() != null && this.userRepository.existsById(user.getId())) {
             User foundUser = this.userRepository.getById(user.getId());
             foundUser.setFirstName(user.getFirstName());
             foundUser.setLastName(user.getLastName());
@@ -94,7 +97,7 @@ public class UserApplicationService {
     }
 
     private void updateWatchedEpisodes(User user, User foundUser) throws ValidationException {
-        if (user.getWatchedEpisodes() != null) {
+        if (user.getWatchedEpisodes() != null && !user.getWatchedEpisodes().isEmpty()) {
             for (Episode episode : foundUser.getWatchedEpisodes()) {
                 this.removeSeenEpisodeOfUser(user.getId(), episode.getId());
             }

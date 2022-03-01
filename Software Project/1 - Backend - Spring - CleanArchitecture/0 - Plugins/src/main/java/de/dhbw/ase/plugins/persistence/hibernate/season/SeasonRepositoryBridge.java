@@ -23,7 +23,7 @@ public class SeasonRepositoryBridge implements SeasonRepository {
 
     @Override
     public Season save(Season season) {
-        return this.springDataSeasonRepository.save(season);
+        return this.springDataSeasonRepository.saveAndFlush(season);
     }
 
     @Override

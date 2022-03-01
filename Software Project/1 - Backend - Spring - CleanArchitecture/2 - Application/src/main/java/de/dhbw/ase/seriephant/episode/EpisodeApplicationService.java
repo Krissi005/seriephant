@@ -5,6 +5,7 @@ import de.dhbw.ase.seriephant.domain.actor.ActorRepository;
 import de.dhbw.ase.seriephant.domain.episode.Episode;
 import de.dhbw.ase.seriephant.domain.episode.EpisodeRepository;
 import de.dhbw.ase.seriephant.domain.season.SeasonRepository;
+import de.dhbw.ase.seriephant.domain.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,12 +19,14 @@ public class EpisodeApplicationService {
     private final EpisodeRepository episodeRepository;
     private final SeasonRepository seasonRepository;
     private final ActorRepository actorRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    private EpisodeApplicationService(EpisodeRepository episodeRepository, SeasonRepository seasonRepository, ActorRepository actorRepository) {
+    private EpisodeApplicationService(EpisodeRepository episodeRepository, SeasonRepository seasonRepository, ActorRepository actorRepository, UserRepository userRepository) {
         this.episodeRepository = episodeRepository;
         this.seasonRepository = seasonRepository;
         this.actorRepository = actorRepository;
+        this.userRepository = userRepository;
     }
 
     /************************************************************************************************************************************/
@@ -84,6 +87,13 @@ public class EpisodeApplicationService {
         throw new ValidationException("Id of Episode is not known.");
     }
 
+    public List<Episode> getEpisodeByUserId(Long userId) throws ValidationException {
+        if (this.userRepository.existsById(userId)) {
+            return this.episodeRepository.getEpisodesByUsersEquals(this.userRepository.getById(userId));
+        }
+        throw new ValidationException("Id of User is not known.");
+    }
+
     public List<Episode> getAllEpisodes() {
         return this.episodeRepository.findAll();
     }
@@ -105,7 +115,7 @@ public class EpisodeApplicationService {
             foundEpisode.setTitle(episode.getTitle());
             foundEpisode.setReleaseDate(episode.getReleaseDate());
             foundEpisode.setEpisodeNumber(episode.getEpisodeNumber());
-            if (episode.getActors() != null) {
+            if (episode.getActors() != null && !episode.getActors().isEmpty()) {
                 for (Actor actor : foundEpisode.getActors()) {
                     episode.removeActor(actor);
                 }

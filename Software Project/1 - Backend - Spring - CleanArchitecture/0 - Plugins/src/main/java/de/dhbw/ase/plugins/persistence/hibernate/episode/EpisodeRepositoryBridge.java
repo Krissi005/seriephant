@@ -2,6 +2,7 @@ package de.dhbw.ase.plugins.persistence.hibernate.episode;
 
 import de.dhbw.ase.seriephant.domain.episode.Episode;
 import de.dhbw.ase.seriephant.domain.episode.EpisodeRepository;
+import de.dhbw.ase.seriephant.domain.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -23,12 +24,17 @@ public class EpisodeRepositoryBridge implements EpisodeRepository {
 
     @Override
     public Episode save(Episode episodeToCreate) {
-        return this.springDataEpisodeRepository.save(episodeToCreate);
+        return this.springDataEpisodeRepository.saveAndFlush(episodeToCreate);
     }
 
     @Override
     public Episode getById(Long episodeId) {
         return this.springDataEpisodeRepository.getById(episodeId);
+    }
+
+    @Override
+    public List<Episode> getEpisodesByUsersEquals(User user) {
+        return this.springDataEpisodeRepository.getEpisodesByUsersEquals(user);
     }
 
     @Override

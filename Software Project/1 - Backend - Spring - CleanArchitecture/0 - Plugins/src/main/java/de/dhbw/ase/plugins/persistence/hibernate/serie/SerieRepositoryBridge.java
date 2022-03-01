@@ -23,7 +23,7 @@ public class SerieRepositoryBridge implements SerieRepository {
 
     @Override
     public Serie save(Serie serie) {
-        return this.springDataSerieRepository.save(serie);
+        return this.springDataSerieRepository.saveAndFlush(serie);
     }
 
     @Override

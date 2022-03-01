@@ -1,6 +1,7 @@
 package de.dhbw.ase.plugins.persistence.hibernate.episode;
 
 import de.dhbw.ase.seriephant.domain.episode.Episode;
+import de.dhbw.ase.seriephant.domain.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,6 +17,8 @@ public interface SpringDataEpisodeRepository extends JpaRepository<Episode, Long
      * READ
      **/
     Episode getById(Long episodeId);
+
+    List<Episode> getEpisodesByUsersEquals(User user);
 
     List<Episode> getEpisodesByTitle(String title);
 

@@ -23,7 +23,7 @@ public class GenreRepositoryBridge implements GenreRepository {
 
     @Override
     public Genre save(Genre genre) {
-        return this.springDataGenreRepository.save(genre);
+        return this.springDataGenreRepository.saveAndFlush(genre);
     }
 
     @Override

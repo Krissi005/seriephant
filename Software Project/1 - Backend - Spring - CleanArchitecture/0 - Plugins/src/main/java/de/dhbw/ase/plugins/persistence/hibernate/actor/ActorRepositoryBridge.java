@@ -23,7 +23,7 @@ public class ActorRepositoryBridge implements ActorRepository {
 
     @Override
     public Actor save(Actor actorToCreate) {
-        return this.springDataActorRepository.save(actorToCreate);
+        return this.springDataActorRepository.saveAndFlush(actorToCreate);
     }
 
     @Override

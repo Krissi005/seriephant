@@ -1,5 +1,7 @@
 package de.dhbw.ase.seriephant.domain.episode;
 
+import de.dhbw.ase.seriephant.domain.user.User;
+
 import java.util.List;
 
 public interface EpisodeRepository {
@@ -17,6 +19,8 @@ public interface EpisodeRepository {
      **/
 
     Episode getById(Long episodeId);
+
+    List<Episode> getEpisodesByUsersEquals(User byId);
 
     List<Episode> getEpisodesByTitle(String title);
 

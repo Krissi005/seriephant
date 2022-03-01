@@ -5,6 +5,7 @@ import de.dhbw.ase.seriephant.domain.season.Season;
 import de.dhbw.ase.seriephant.domain.season.SeasonRepository;
 import de.dhbw.ase.seriephant.domain.serie.Serie;
 import de.dhbw.ase.seriephant.domain.serie.SerieRepository;
+import de.dhbw.ase.seriephant.domain.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,12 +17,14 @@ public class SerieApplicationService {
     private final SeasonRepository seasonRepository;
     private final SerieRepository serieRepository;
     private final GenreRepository genreRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    public SerieApplicationService(SeasonRepository seasonRepository, SerieRepository serieRepository, GenreRepository genreRepository) {
+    public SerieApplicationService(SeasonRepository seasonRepository, SerieRepository serieRepository, GenreRepository genreRepository, UserRepository userRepository) {
         this.seasonRepository = seasonRepository;
         this.serieRepository = serieRepository;
         this.genreRepository = genreRepository;
+        this.userRepository = userRepository;
     }
 
     /************************************************************************************************************************************/
