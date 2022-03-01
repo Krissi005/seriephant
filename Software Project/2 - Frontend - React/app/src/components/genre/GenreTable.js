@@ -3,7 +3,7 @@ import {useTable} from 'react-table'
 import axios from "axios";
 import Button from "../Button";
 
-export const SeasonTable = ({userProfile}) => {
+export const GenreTable = ({userProfile}) => {
 
     const columnDefs = [
         {
@@ -11,36 +11,22 @@ export const SeasonTable = ({userProfile}) => {
             accessor: "id"
         },
         {
-            Header: 'Serie',
-            accessor: "serie.title"
+            Header: 'Title',
+            accessor: "title"
         },
         {
-            Header: 'Season Number',
-            accessor: "seasonNumber"
+            Header: 'Description',
+            accessor: "description"
         }
     ];
 
     const [rowData, setRowData] = useState([]);
 
-    function uniqByKeepOne(data, key) {
-        return [
-            ...new Map(
-                data.map(x => [key(x), x.season])
-            ).values()]
-    }
-
     useEffect(() => {
-        if (userProfile == null) {
-            axios.get("http://localhost:8080/season/read").then(
+            axios.get("http://localhost:8080/genre/read").then(
                 res => {
                     setRowData(res.data);
                 });
-        } else {
-            axios.get("http://localhost:8080/episode/readByUserId", {params: {userId: userProfile.id}}).then(
-                res => {
-                    setRowData(uniqByKeepOne(res.data, it => it.season.id));
-                })
-        }
     }, []);
 
     const columns = useMemo(() => columnDefs, []);
@@ -63,7 +49,7 @@ export const SeasonTable = ({userProfile}) => {
     }
 
     return (<div>
-            <Button id={"create"} text={"Create Season"} buttonType={"btn-success"}/>
+            <Button id={"create"} text={"Create Episode"} buttonType={"btn-success"}/>
             <table className={"table table-striped text-center"} {...getTableProps()}>
                 <thead>
                 {headerGroups.map((headerGroup) => (

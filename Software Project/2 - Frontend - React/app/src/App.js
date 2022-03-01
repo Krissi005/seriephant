@@ -8,18 +8,20 @@ import {
     Route,
     Routes
 } from "react-router-dom";
-import {Users} from "./components/user/Users";
-import {CreateUser} from "./components/user/CreateUser";
-import {EditUser} from "./components/user/EditUser";
 import {SerieTable} from "./components/serie/SerieTable";
 import {SeasonTable} from "./components/season/SeasonTable";
+import {Users} from "./components/user/Users";
+import {GenreTable} from "./components/genre/GenreTable";
+import {ActorTable} from "./components/actor/ActorTable";
+import {CreateUser} from "./components/user/CreateUser";
+import {EditUser} from "./components/user/EditUser";
 import {EpisodeTable} from "./components/episode/EpisodeTable";
 import {RatingTable} from "./components/rating/RatingTable";
 
 class App extends React.Component {
     state = {
         userProfiles: [],
-        choosedUserProfile: null
+        chosenUserProfile: null
     }
 
     setRowData = (rowData) => {
@@ -40,7 +42,7 @@ class App extends React.Component {
     }
 
     chooseUser = (event, userProfile, directory) => {
-        this.setState({choosedUserProfile: userProfile});
+        this.setState({chosenUserProfile: userProfile});
     }
 
     edit = (event, userProfile, directory) => {
@@ -48,7 +50,7 @@ class App extends React.Component {
     }
 
     reset = (event) => {
-        this.setState({choosedUserProfile: null});
+        this.setState({chosenUserProfile: null});
     }
 
     componentDidMount() {
@@ -63,20 +65,24 @@ class App extends React.Component {
         return (
             <div className="App">
                 <Router>
-                    <Header choosedUser={this.state.choosedUserProfile} reset={this.reset}/>
+                    <Header choosedUser={this.state.chosenUserProfile} reset={this.reset}/>
                     <Routes>
-                        <Route path="/users" element={<Users userProfile={this.state.choosedUserProfile} reset={this.reset}
+                        <Route path="/users" element={<Users userProfile={this.state.chosenUserProfile} reset={this.reset}
                                                              choose={this.chooseUser} edit={this.edit}/>}/>
                         <Route path="/createUser" element={<CreateUser/>}/>
                         <Route path="/editUser/:userId" element ={<EditUser/>}/>
-                        <Route path="/series" element={<SerieTable userProfile={this.state.choosedUserProfile}
+                        <Route path="/series" element={<SerieTable userProfile={this.state.chosenUserProfile}
                                                                    onClick={this.chooseUser}/>}/>
-                        <Route path="/seasons" element={<SeasonTable userProfile={this.state.choosedUserProfile}
+                        <Route path="/seasons" element={<SeasonTable userProfile={this.state.chosenUserProfile}
                                                                      onClick={this.chooseUser}/>}/>
-                        <Route path="/allEpisodes" element={<EpisodeTable userProfile={this.state.choosedUserProfile}
+                        <Route path="/allEpisodes" element={<EpisodeTable userProfile={this.state.chosenUserProfile}
                                                                           onClick={this.chooseUser}/>}/>
-                        <Route path="/rating" element={<RatingTable userProfile={this.state.choosedUserProfile}
+                        <Route path="/rating" element={<RatingTable userProfile={this.state.chosenUserProfile}
                                                                     onClick={this.chooseUser}/>}/>
+                        <Route path="/genres" element={<GenreTable userProfile={this.state.chosenUserProfile}
+                                                                   onClick={this.chooseUser}/>}/>
+                        <Route path="/actors" element={<ActorTable userProfile={this.state.chosenUserProfile}
+                                                                   onClick={this.chooseUser}/>}/>
                     </Routes>
                 </Router>
             </div>
