@@ -4,7 +4,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/Krissi005/seriephant">
-    <img src="Documentation/logo.png" alt="Logo" height="384">
+    <img src="Documentation/seriephant_short.png" alt="Logo" height="384">
   </a>
 
   <p align="center">
