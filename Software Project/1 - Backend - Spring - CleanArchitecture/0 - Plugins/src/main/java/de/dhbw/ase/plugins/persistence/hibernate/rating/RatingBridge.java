@@ -3,6 +3,7 @@ package de.dhbw.ase.plugins.persistence.hibernate.rating;
 import de.dhbw.ase.seriephant.domain.rating.Rating;
 import de.dhbw.ase.seriephant.domain.rating.RatingKey;
 import de.dhbw.ase.seriephant.domain.rating.RatingRepository;
+import de.dhbw.ase.seriephant.domain.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -30,6 +31,11 @@ public class RatingBridge implements RatingRepository {
     @Override
     public Rating getById(RatingKey ratingKey) {
         return this.springDataRatingRepository.getById(ratingKey);
+    }
+
+    @Override
+    public List<Rating> getByUser(User user) {
+        return this.springDataRatingRepository.getByUser(user);
     }
 
     @Override

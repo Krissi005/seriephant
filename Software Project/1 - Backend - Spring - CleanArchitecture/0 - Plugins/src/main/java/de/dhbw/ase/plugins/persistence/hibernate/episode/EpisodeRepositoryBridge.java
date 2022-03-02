@@ -38,6 +38,11 @@ public class EpisodeRepositoryBridge implements EpisodeRepository {
     }
 
     @Override
+    public List<Episode> getEpisodesByUserNotEquals(Long userId) {
+        return this.springDataEpisodeRepository.getEpisodesByUsersIsNullOrUsersIsNot(userId);
+    }
+
+    @Override
     public List<Episode> getEpisodesByTitle(String title) {
         return this.springDataEpisodeRepository.getEpisodesByTitle(title);
     }

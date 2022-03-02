@@ -94,6 +94,13 @@ public class EpisodeApplicationService {
         throw new ValidationException("Id of User is not known.");
     }
 
+    public List<Episode> getEpisodeNotByUserId(Long userId) throws ValidationException {
+        if (this.userRepository.existsById(userId)) {
+            return this.episodeRepository.getEpisodesByUserNotEquals(userId);
+        }
+        throw new ValidationException("Id of User is not known.");
+    }
+
     public List<Episode> getAllEpisodes() {
         return this.episodeRepository.findAll();
     }

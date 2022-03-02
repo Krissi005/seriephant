@@ -84,14 +84,24 @@ public class UserController {
         return this.userToUserDTOMapper.apply(this.userApplicationService.updateUser(this.userDTOToUserMapper.apply(user)));
     }
 
-    @PutMapping(value = "/updateEpisodes")
-    public UserDTO updateSeenEpisodesOfUser(@RequestParam Long userId, @RequestParam Long episodeId) throws ValidationException {
+    @PutMapping(value = "/updateEpisode", params = {"userId", "episodeId"})
+    public UserDTO updateSeenEpisodeOfUser(@RequestParam Long userId, @RequestParam Long episodeId) throws ValidationException {
         return this.userToUserDTOMapper.apply(this.userApplicationService.updateSeenEpisodesOfUser(userId, episodeId));
     }
 
-    @PutMapping(value = "/removeEpisodes")
-    public UserDTO removeSeenEpisodesOfUser(@RequestParam Long userId, @RequestParam Long episodeId) throws ValidationException {
+    @PutMapping(value = "/updateEpisodes")
+    public UserDTO updateSeenEpisodesOfUser(@RequestBody UserDTO user) throws ValidationException {
+        return this.userToUserDTOMapper.apply(this.userApplicationService.updateSeenEpisodesOfUser(this.userDTOToUserMapper.apply(user)));
+    }
+
+    @PutMapping(value = "/removeEpisode", params = {"userId", "episodeId"})
+    public UserDTO removeSeenEpisodeOfUser(@RequestParam Long userId, @RequestParam Long episodeId) throws ValidationException {
         return this.userToUserDTOMapper.apply(this.userApplicationService.removeSeenEpisodeOfUser(userId, episodeId));
+    }
+
+    @PutMapping(value = "/removeEpisodes")
+    public UserDTO removeSeenEpisodesOfUser(@RequestBody UserDTO user) throws ValidationException {
+        return this.userToUserDTOMapper.apply(this.userApplicationService.removeSeenEpisodeOfUser(this.userDTOToUserMapper.apply(user)));
     }
 
     /************************************************************************************************************************************/

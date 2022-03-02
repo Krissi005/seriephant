@@ -63,8 +63,16 @@ public class EpisodeController {
     }
 
     @GetMapping(value = "/readByUserId", params = "userId")
-    public List<EpisodeDTO> getEpisodByUserId(@RequestParam Long userId) throws ValidationException {
+    public List<EpisodeDTO> getEpisodeByUserId(@RequestParam Long userId) throws ValidationException {
         return this.episodeApplicationService.getEpisodeByUserId(userId)
+                .stream()
+                .map(this.episodeToEpisodeDTOMapper::apply)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping(value = "/readNotByUserId", params = "userId")
+    public List<EpisodeDTO> getEpisodeNotByUserId(@RequestParam Long userId) throws ValidationException {
+        return this.episodeApplicationService.getEpisodeNotByUserId(userId)
                 .stream()
                 .map(this.episodeToEpisodeDTOMapper::apply)
                 .collect(Collectors.toList());

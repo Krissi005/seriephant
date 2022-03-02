@@ -59,6 +59,7 @@ public class RatingApplicationService {
             throw new ValidationException("Id of Episode is not known.");
         }
 
+        rating.setId(new RatingKey(userId, episodeId));
         rating.setUser(this.userRepository.getById(userId));
         rating.setEpisode(this.episodeRepository.getById(episodeId));
 

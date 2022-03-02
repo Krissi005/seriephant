@@ -120,6 +120,32 @@ public class UserApplicationService {
 
     }
 
+    public User updateSeenEpisodesOfUser(User user) throws ValidationException {
+        if (user == null && user.getId() == null) {
+            throw new ValidationException("User is not valid.");
+        }
+
+        if (user.getWatchedEpisodes() == null) {
+            if (user.getWatchedEpisodes().get(0).getId() == null) {
+                throw new ValidationException("Episode is not valid.");
+            }
+        }
+
+        Long userId = user.getId();
+        Long episodeId = user.getWatchedEpisodes().get(0).getId();
+
+        if (this.userRepository.existsById(userId)) {
+            if (this.episodeRepository.existsById(episodeId)) {
+                User foundUser = this.userRepository.getById(userId);
+                foundUser.watchEpisode(this.episodeRepository.getById(episodeId));
+                return this.userRepository.save(foundUser);
+            }
+            throw new ValidationException("Id of Episode is not known.");
+        }
+        throw new ValidationException("Id of User is not known.");
+
+    }
+
     public User removeSeenEpisodeOfUser(Long userId, Long episodeId) throws ValidationException {
         if (this.userRepository.existsById(userId)) {
             if (this.episodeRepository.existsById(episodeId)) {
@@ -131,6 +157,31 @@ public class UserApplicationService {
             throw new ValidationException("Id of Episode is not known.");
         }
         throw new ValidationException("Id of Actor is not known.");
+    }
+
+    public User removeSeenEpisodeOfUser(User user) throws ValidationException {
+        if (user == null && user.getId() == null) {
+            throw new ValidationException("User is not valid.");
+        }
+
+        if (user.getWatchedEpisodes() == null) {
+            if (user.getWatchedEpisodes().get(0).getId() == null) {
+                throw new ValidationException("Episode is not valid.");
+            }
+        }
+
+        Long userId = user.getId();
+        Long episodeId = user.getWatchedEpisodes().get(0).getId();
+
+        if (this.userRepository.existsById(userId)) {
+            if (this.episodeRepository.existsById(episodeId)) {
+                User foundUser = this.userRepository.getById(userId);
+                foundUser.removeWatchedEpisode(this.episodeRepository.getById(episodeId));
+                return this.userRepository.save(foundUser);
+            }
+            throw new ValidationException("Id of Episode is not known.");
+        }
+        throw new ValidationException("Id of User is not known.");
     }
 
     /************************************************************************************************************************************/

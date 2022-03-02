@@ -27,7 +27,7 @@ public class RatingDTO {
     @JsonProperty("user")
     @JsonIgnoreProperties({"watchedEpisodes"})
     private UserDTO userDTO;
-    @JsonIgnoreProperties({"actors", "season"})
+    @JsonIgnoreProperties({"actors"})
     @JsonProperty("episode")
     private EpisodeDTO episodeDTO;
     @JsonProperty("rating")

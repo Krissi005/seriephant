@@ -20,7 +20,9 @@ public interface EpisodeRepository {
 
     Episode getById(Long episodeId);
 
-    List<Episode> getEpisodesByUsersEquals(User byId);
+    List<Episode> getEpisodesByUsersEquals(User user);
+
+    List<Episode> getEpisodesByUserNotEquals(Long userId);
 
     List<Episode> getEpisodesByTitle(String title);
 

@@ -1,5 +1,7 @@
 package de.dhbw.ase.seriephant.domain.rating;
 
+import de.dhbw.ase.seriephant.domain.user.User;
+
 import java.util.List;
 
 public interface RatingRepository {
@@ -17,6 +19,8 @@ public interface RatingRepository {
      **/
 
     Rating getById(RatingKey ratingKey);
+
+    List<Rating> getByUser(User byId);
 
     List<Rating> findAll();
 

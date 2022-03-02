@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
-@RequestMapping("/episodeRating")
+@RequestMapping("/rating")
 public class RatingController {
     private final RatingApplicationService ratingApplicationService;
     private final RatingDTOToRatingMapper episodeRatingDTOToRatingMapper;
@@ -55,6 +55,12 @@ public class RatingController {
     @GetMapping(value = "/readById")
     public RatingDTO getRatingById(@RequestParam Long userId, @RequestParam Long episodeId) throws ValidationException {
         return this.ratingToRatingDTOMapper.apply(this.ratingApplicationService.getRatingById(this.ratingKeyDTOToRatingKeyMapper.apply(new RatingKeyDTO(userId, episodeId))));
+    }
+
+    @GetMapping(value = "/readByUserId")
+    public List<RatingDTO> getRatingByUserId(@RequestParam Long userId) throws ValidationException {
+        return this.ratingApplicationService.getRatingByUserId(userId).stream().map(this.ratingToRatingDTOMapper::apply)
+                .collect(Collectors.toList());
     }
 
     @GetMapping(value = "/read")
