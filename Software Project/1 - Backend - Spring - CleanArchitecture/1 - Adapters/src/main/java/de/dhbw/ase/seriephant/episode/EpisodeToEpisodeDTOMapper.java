@@ -29,7 +29,7 @@ public class EpisodeToEpisodeDTOMapper implements Function<Episode, EpisodeDTO> 
     }
 
     private EpisodeDTO map(Episode episode) {
-        List<ActorDTO> actorDTOs = episode.getActors()
+        List<ActorDTO> actorDTOs = episode.getActors() == null ? null : episode.getActors()
                 .stream()
                 .filter(Objects::nonNull)
                 .map(this.actorToActorDTOMapper::apply)

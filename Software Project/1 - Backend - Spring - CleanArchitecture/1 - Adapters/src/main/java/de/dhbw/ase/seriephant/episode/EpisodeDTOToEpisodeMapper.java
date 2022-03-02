@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
@@ -33,7 +34,7 @@ public class EpisodeDTOToEpisodeMapper implements Function<EpisodeDTO, Episode> 
         if (episodeDTO == null) {
             return null;
         }
-        List<Actor> actors = episodeDTO.getActorDTOs()
+        List<Actor> actors = episodeDTO.getActorDTOs() == null ? new ArrayList<>() : episodeDTO.getActorDTOs()
                 .stream()
                 .filter(Objects::nonNull)
                 .map(this.actorDTOToActorMapper::apply)
@@ -42,7 +43,7 @@ public class EpisodeDTOToEpisodeMapper implements Function<EpisodeDTO, Episode> 
         return new Episode(
                 episodeDTO.getId(),
                 episodeDTO.getTitle(),
-                LocalDate.parse(episodeDTO.getReleaseDate()),
+                episodeDTO.getReleaseDate() == null ? null : LocalDate.parse(episodeDTO.getReleaseDate()),
                 episodeDTO.getEpisodeNumber(),
                 this.seasonDTOToSeasonMapper.apply(episodeDTO.getSeasonDTO()),
                 actors
