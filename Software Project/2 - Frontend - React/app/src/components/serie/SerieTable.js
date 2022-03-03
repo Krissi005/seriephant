@@ -1,11 +1,12 @@
 import axios from "axios";
-import {useState, useEffect, useMemo} from "react";
+import React, {useState, useEffect, useMemo} from "react";
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import {useTable} from "react-table";
 import Button from "../Button";
+import {Link} from "react-router-dom";
 
-export const SerieTable  = ({userProfile}) => {
+export const SerieTable = ({userProfile}) => {
 
     const columnDefs = [
         {
@@ -17,7 +18,7 @@ export const SerieTable  = ({userProfile}) => {
             accessor: "title"
         },
         {
-            Header: 'Descrption',
+            Header: 'Description',
             accessor: "description"
         },
         {
@@ -39,17 +40,11 @@ export const SerieTable  = ({userProfile}) => {
             ).values()]
     }
 
-    useEffect(() => {if (userProfile == null) {
+    useEffect(() => {
         axios.get("http://localhost:8080/serie/read").then(
             res => {
                 setRowData(res.data);
             });
-    } else {
-        axios.get("http://localhost:8080/episode/readByUserId", {params: {userId: userProfile.id}}).then(
-            res => {
-                setRowData(uniqByKeepOne(res.data, it=>it.season.serie.id));
-            })
-    }
     }, []);
 
     const columns = useMemo(() => columnDefs, []);
@@ -67,12 +62,16 @@ export const SerieTable  = ({userProfile}) => {
         prepareRow
     } = tableInstance
 
-    const create = (event, serieId) => {
-
+    const deleteSerie = (event, userProfile) => {
+        axios.delete("http://localhost:8080/serie/delete", {params: {sereiId: userProfile.id}}).then(
+            res => {
+                window.alert("Succesfull :)");
+                window.open("/series", "_self");
+            })
     }
 
     return (<div>
-            <Button id={"create"} text={"Create Serie"} buttonType={"btn-success"}/>
+            <Link to={"/createSerie"}><Button id={"create"} text={"Create Serie"} buttonType={"btn-success"}/></Link>
             <table className={"table table-striped text-center"} {...getTableProps()}>
                 <thead>
                 {headerGroups.map((headerGroup) => (
@@ -92,8 +91,11 @@ export const SerieTable  = ({userProfile}) => {
                                 {row.cells.map(cell => {
                                     return (<td {...cell.getCellProps()}>{cell.render('Cell')}</td>)
                                 })}
-                                <td><Button id={row.values.id} text={"Edit"} buttonType={"btn-primary"}/></td>
-                                <td><Button id={row.values.id} text={"Delete"} buttonType={"btn-danger"}/></td>
+                                <td><Link to={"/editSerie/" + row.values.id}><Button id={row.values.id} text={"Edit"}
+                                                                                     buttonType={"btn-primary"}/></Link>
+                                </td>
+                                <td><a><Button id={row.values.id} text={"Delete"} buttonType={"btn-danger delete"}
+                                               onClick={(event) => deleteSerie(event, row.values)}/></a></td>
                             </tr>
                         )
                     })

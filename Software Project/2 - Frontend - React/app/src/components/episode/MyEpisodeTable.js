@@ -3,9 +3,8 @@ import {useTable} from 'react-table'
 import axios from "axios";
 import Button from "../Button";
 import {Link} from "react-router-dom";
-import {MyEpisodeTable} from "./MyEpisodeTable";
 
-export const EpisodeTable = ({userProfile, onClick, my}) => {
+export const MyEpisodeTable = ({userProfile}) => {
     const [rowData, setRowData] = useState([]);
 
     const columnDefs = [
@@ -36,28 +35,13 @@ export const EpisodeTable = ({userProfile, onClick, my}) => {
     ];
 
     useEffect(() => {
-        if (userProfile == null) {//
-            axios.get("http://localhost:8080/episode/read").then(
-                res => {
-                    setRowData(res.data);
-                })
-        } else {
-            if (!my) {
-                axios.get("http://localhost:8080/episode/readNotByUserId", {params: {userId: userProfile.id}}).then(
-                    (res) => {
-                        setRowData(res.data);
-                    }
-                )
-            } else {
-                axios.get("http://localhost:8080/episode/readByUserId", {params: {userId: userProfile.id}}).then(
-                    (res) => {
-                        setRowData(res.data);
-                    }
-                )
+        axios.get("http://localhost:8080/episode/readByUserId", {params: {userId: userProfile.id}}).then(
+            (res) => {
+                setRowData(res.data);
             }
+        )
 
-        }
-    }, [userProfile, my]);
+    }, []);
 
     const columns = useMemo(() => columnDefs, []);
 
@@ -82,8 +66,8 @@ export const EpisodeTable = ({userProfile, onClick, my}) => {
             })
     }
 
-    const watchEpisode = (event, userProfile, episode) => {
-        axios.put("http://localhost:8080/user/updateEpisodes", {
+    const unwatch = (event, userProfile, episode) => {
+        axios.put("http://localhost:8080/user/removeEpisodes", {
                 "id": userProfile.id,
                 "watchedEpisodes": [
                     {
@@ -95,28 +79,13 @@ export const EpisodeTable = ({userProfile, onClick, my}) => {
             if (res.status === 200) {
                 window.open("/users", "_self");
                 window.alert("Successful :)");
-                onClick(event, userProfile)
             } else {
                 window.alert("Failed :(");
             }
         })
     }
 
-    return (<div>
-            <Link to={"/createEpisode"}><Button id={"create"} text={"Create Episode"}
-                                                buttonType={"btn-success"}/></Link>
-            <table className={"table table-striped text-center"} {...getTableProps()}>
-                <thead>
-                {headerGroups.map((headerGroup) => (
-                    <tr {...headerGroup.getHeaderGroupProps()}>
-                        {headerGroup.headers.map((column) => (
-                            <th {...column.getHeaderProps()}>{column.render('Header')}</th>
-                        ))}
-                    </tr>
-                ))}
-                </thead>
-                <MyEpisodeTable userProfile={userProfile}/>
-                <tbody {...getTableBodyProps()}>
+    return (<tbody {...getTableBodyProps()}>
                 {
                     rows.map(row => {
                         prepareRow(row)
@@ -131,21 +100,15 @@ export const EpisodeTable = ({userProfile, onClick, my}) => {
                                 </td>
                                 <td><a><Button id={row.values.id} text={"Delete"} buttonType={"btn-danger delete"}
                                                onClick={(event) => deleteEpisode(event, row.values)}/></a></td>
-                                {(userProfile == null) ? <td></td> :
-                                    <td><a><Button id={row.values.id} text={"Watch"} buttonType={"btn-success"}
-                                                   onClick={(event) => watchEpisode(event, userProfile, row.values)}/></a>
-                                    </td>}
-                                <td></td>
+                                <td><a><Button id={row.values.id} text={"Unwatch"} buttonType={"btn-secondary"}
+                                               onClick={(event) => unwatch(event, userProfile, row.values)}/></a></td>
+                                <td><Link to={"/editRating/" + row.values.id}><Button id={row.values.id} text={"Rate"}
+                                                                                       buttonType={"btn-dark"}/></Link>
+                                </td>
                             </tr>
                         )
                     })
                 }
                 </tbody>
-            </table>
-        </div>
     )
-}
-
-EpisodeTable.defaultProps = {
-    my: false
 }

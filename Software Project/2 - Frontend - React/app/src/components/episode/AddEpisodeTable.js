@@ -1,53 +1,56 @@
-import React, {useEffect, useMemo, useState} from "react";
+import {useEffect, useMemo, useState} from "react";
 import {useTable} from 'react-table'
 import axios from "axios";
 import Button from "../Button";
-import {Link} from "react-router-dom";
 
-export const RatingTable = ({userProfile}) => {
+export const AddEpisodeTable = ({userProfile, allEpisodes, userEpisodes}) => {
     const [rowData, setRowData] = useState([]);
 
     const columnDefs = [
         {
             Header: 'Id',
-            accessor: "episode.id"
+            accessor: "id"
         },
         {
             Header: 'Serie',
-            accessor: "episode.season.serie.title"
+            accessor: "season.serie.title"
         },
         {
             Header: 'Season',
-            accessor: "episode.season.seasonNumber"
+            accessor: "season.seasonNumber"
         },
         {
             Header: 'Episode Number',
-            accessor: "episode.episodeNumber"
+            accessor: "episodeNumber"
         },
         {
             Header: 'Title',
-            accessor: "episode.title"
+            accessor: "title"
         },
         {
             Header: 'Release Date',
-            accessor: "episode.releaseDate"
+            accessor: "releaseDate"
         }
     ];
 
+    function getIds(data, key) {
+        return [
+            ...new Map(
+                data.map(x => [key(x), x])
+            ).keys()]
+    }
+
     useEffect(() => {
-        if (userProfile == null) {
-            axios.get("http://localhost:8080/rating/read").then(
-                res => {
-                    setRowData(res.data);
-                })
-        } else {
-            axios.get("http://localhost:8080/rating/readsByUserId", {params: {userId: userProfile.id}}).then(
-                (res) => {
-                    setRowData(res.data);
-                }
-            )
-        }
-    }, [userProfile]);
+        let ids = getIds(userEpisodes);
+        let rows = [];
+        allEpisodes.forEach(episode=>{
+            episode.watched = ids.includes(episode.id);
+            rows.push(episode);
+        })
+        setRowData(rows);
+    }, []);
+
+    console.log(rowData);
 
     const columns = useMemo(() => columnDefs, []);
 
@@ -65,7 +68,7 @@ export const RatingTable = ({userProfile}) => {
     } = tableInstance
 
     return (<div>
-            <Link to={"/createRating"}><Button id={"create"} text={"Create Rating"} buttonType={"btn-success"}/></Link>
+            <Button id={"create"} text={"Create Episode"} buttonType={"btn-success"}/>
             <table className={"table table-striped text-center"} {...getTableProps()}>
                 <thead>
                 {headerGroups.map((headerGroup) => (
@@ -85,10 +88,13 @@ export const RatingTable = ({userProfile}) => {
                                 {row.cells.map(cell => {
                                     return (<td {...cell.getCellProps()}>{cell.render('Cell')}</td>)
                                 })}
-                                <td><Link to={"/editRating/" + row.values.episode.id}><Button id={row.values.id}
-                                                                                              text={(row.values.rating == null ? "Rate" : row.values.rating)}
-                                                                                              buttonType={"btn-dark"}/></Link>
-                                </td>
+                                <td><Button id={row.values.id} text={"Edit"} buttonType={"btn-primary"}/></td>
+                                <td><Button id={row.values.id} text={"Delete"} buttonType={"btn-danger"}/></td>
+                                <UserButton condition={userProfile != null} userProfile={row.values} text={"Watch"}
+                                            buttonType={"btn-dark"}/>
+                                <UserButton condition={userProfile != null && row.values.watched}
+                                            userProfile={userProfile} text={"Rate"}
+                                            buttonType={"btn-dark"}/>
                             </tr>
                         )
                     })
@@ -97,4 +103,12 @@ export const RatingTable = ({userProfile}) => {
             </table>
         </div>
     )
+}
+
+function UserButton({condition, userProfile, buttonType, text}) {
+    console.log(text + condition)
+    if (!condition) {
+        return null;
+    }
+    return (<td><Button id={userProfile.id} text={text} buttonType={buttonType}/></td>);
 }

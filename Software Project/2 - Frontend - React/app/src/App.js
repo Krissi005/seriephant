@@ -17,6 +17,15 @@ import {CreateUser} from "./components/user/CreateUser";
 import {EditUser} from "./components/user/EditUser";
 import {EpisodeTable} from "./components/episode/EpisodeTable";
 import {RatingTable} from "./components/rating/RatingTable";
+import {CreateSerie} from "./components/serie/CreateSerie";
+import {CreateSeason} from "./components/season/CreateSeason";
+import {CreateEpisode} from "./components/episode/CreateEpisode";
+import {CreateRating} from "./components/rating/CreateRating";
+import {EditSerie} from "./components/serie/EditSerie";
+import {EditSeason} from "./components/season/EditSeason";
+import {EditEpisode} from "./components/episode/EditEpisode";
+import {WatchEpisode} from "./components/episode/WatchEpisode";
+import {MyEpisodeTable} from "./components/episode/MyEpisodeTable";
 
 class App extends React.Component {
     state = {
@@ -24,16 +33,11 @@ class App extends React.Component {
         chosenUserProfile: null
     }
 
-    setRowData = (rowData) => {
-        this.setState({rowData: rowData});
-    }
-
     watch = (event, userProfile, episode) =>{
-        axios.put("http://localhost:8080/user/updateEpisodes", { params: {userId: userProfile.id, episodeId: episode.id} }).then(res => {
+        axios.put("http://localhost:8080/user/updateEpisodes", { params: {"userId": userProfile.id, "episodeId": episode.id} }).then(res => {
             //document.getElementById("userNav").children.item(0).click()
             if (res.status === 200) {
                 window.open("/episodes", "_self");
-                window.alert("Succesfull :)");
                 window.alert("Succesfull :)");
             } else {
                 window.alert("Failed :(");
@@ -65,7 +69,7 @@ class App extends React.Component {
         return (
             <div className="App">
                 <Router>
-                    <Header choosedUser={this.state.chosenUserProfile} reset={this.reset}/>
+                    <Header chosenUser={this.state.chosenUserProfile} reset={this.reset}/>
                     <Routes>
                         <Route path="/users" element={<Users userProfile={this.state.chosenUserProfile} reset={this.reset}
                                                              choose={this.chooseUser} edit={this.edit}/>}/>
@@ -73,12 +77,23 @@ class App extends React.Component {
                         <Route path="/editUser/:userId" element ={<EditUser/>}/>
                         <Route path="/series" element={<SerieTable userProfile={this.state.chosenUserProfile}
                                                                    onClick={this.chooseUser}/>}/>
+                        <Route path="/createSerie" element={<CreateSerie/>}/>
+                        <Route path="/editSerie/:serieId" element ={<EditSerie/>}/>
                         <Route path="/seasons" element={<SeasonTable userProfile={this.state.chosenUserProfile}
                                                                      onClick={this.chooseUser}/>}/>
+                        <Route path="/createSeason" element={<CreateSeason/>}/>
+                        <Route path="/editSeason/:seasonId" element ={<EditSeason/>}/>
                         <Route path="/allEpisodes" element={<EpisodeTable userProfile={this.state.chosenUserProfile}
+                                                                          onClick={this.chooseUser}/>}/>
+                        <Route path="/createEpisode" element={<CreateEpisode/>}/>
+                        <Route path="/watchEpisode/:episodeId" element={<WatchEpisode/>}/>
+                        <Route path="/editEpisode/:episodeId" element ={<EditEpisode/>}/>
+                        <Route path="/episodes" element={<MyEpisodeTable userProfile={this.state.chosenUserProfile}
                                                                           onClick={this.chooseUser}/>}/>
                         <Route path="/rating" element={<RatingTable userProfile={this.state.chosenUserProfile}
                                                                     onClick={this.chooseUser}/>}/>
+                        <Route path="/editRating/:episodeId" element={<CreateRating userProfile={this.state.chosenUserProfile}/>}/>
+                        <Route path="/createRating" element={<CreateRating/>}/>
                         <Route path="/genres" element={<GenreTable userProfile={this.state.chosenUserProfile}
                                                                    onClick={this.chooseUser}/>}/>
                         <Route path="/actors" element={<ActorTable userProfile={this.state.chosenUserProfile}

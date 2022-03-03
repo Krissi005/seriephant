@@ -11,7 +11,7 @@ const Header = ({chosenUser, reset}) => {
                     <Image src={logo1} height="80px"/>
                 </a>
                 {chosenUser==null?
-                     "":(<Button onClick={reset} text={chosenUser.firstName +" "+ choosedUser.lastName} buttonType={"btn-danger"}/>)}
+                     "":(<Button onClick={reset} text={chosenUser.firstName +" "+ chosenUser.lastName} buttonType={"btn-danger"}/>)}
                 <ul className="navbar-nav">
                     <li id={"userNav"} className="nav-item">
                         <Link to={"/users"}>Users</Link>
@@ -24,12 +24,6 @@ const Header = ({chosenUser, reset}) => {
                     </li>
                     <li className="nav-item">
                         <Link to={"/allEpisodes"}>All Episodes</Link>
-                    </li>
-                    {chosenUser==null?"":<li className="nav-item">
-                        <Link to={"/episodes"}>My Episodes</Link>
-                    </li>}
-                    <li className="nav-item">
-                        <Link to={"/rating"}>Ratings</Link>
                     </li>
                     <li className="nav-item">
                         <Link to={"/genres"}>Genres</Link>

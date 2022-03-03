@@ -1,7 +1,8 @@
-import {useEffect, useMemo, useState} from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import {useTable} from 'react-table'
 import axios from "axios";
 import Button from "../Button";
+import {Link} from "react-router-dom";
 
 export const SeasonTable = ({userProfile}) => {
 
@@ -30,17 +31,11 @@ export const SeasonTable = ({userProfile}) => {
     }
 
     useEffect(() => {
-        if (userProfile == null) {
-            axios.get("http://localhost:8080/season/read").then(
-                res => {
-                    setRowData(res.data);
-                });
-        } else {
-            axios.get("http://localhost:8080/episode/readByUserId", {params: {userId: userProfile.id}}).then(
-                res => {
-                    setRowData(uniqByKeepOne(res.data, it => it.season.id));
-                })
-        }
+        axios.get("http://localhost:8080/season/read").then(
+            res => {
+                setRowData(res.data);
+            });
+
     }, []);
 
     const columns = useMemo(() => columnDefs, []);
@@ -58,12 +53,16 @@ export const SeasonTable = ({userProfile}) => {
         prepareRow
     } = tableInstance
 
-    const create = (event, serieId) => {
-
+    const deleteSeason = (event, userProfile) => {
+        axios.delete("http://localhost:8080/season/delete", {params: {seasonId: userProfile.id}}).then(
+            res => {
+                window.alert("Succesfull :)");
+                window.open("/seasons", "_self");
+            })
     }
 
     return (<div>
-            <Button id={"create"} text={"Create Season"} buttonType={"btn-success"}/>
+            <Link to={"/createSeason"}><Button id={"create"} text={"Create Season"} buttonType={"btn-success"}/></Link>
             <table className={"table table-striped text-center"} {...getTableProps()}>
                 <thead>
                 {headerGroups.map((headerGroup) => (
@@ -83,8 +82,11 @@ export const SeasonTable = ({userProfile}) => {
                                 {row.cells.map(cell => {
                                     return (<td {...cell.getCellProps()}>{cell.render('Cell')}</td>)
                                 })}
-                                <td><Button id={row.values.id} text={"Edit"} buttonType={"btn-primary"}/></td>
-                                <td><Button id={row.values.id} text={"Delete"} buttonType={"btn-danger"}/></td>
+                                <td><Link to={"/editSeason/" + row.values.id}><Button id={row.values.id} text={"Edit"}
+                                                                                      buttonType={"btn-primary"}/></Link>
+                                </td>
+                                <td><a><Button id={row.values.id} text={"Delete"} buttonType={"btn-danger delete"}
+                                               onClick={(event) => deleteSeason(event, row.values)}/></a></td>
                             </tr>
                         )
                     })

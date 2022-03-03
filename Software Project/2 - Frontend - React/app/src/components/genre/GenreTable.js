@@ -1,4 +1,4 @@
-import {useEffect, useMemo, useState} from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import {useTable} from 'react-table'
 import axios from "axios";
 import Button from "../Button";
@@ -23,10 +23,10 @@ export const GenreTable = ({userProfile}) => {
     const [rowData, setRowData] = useState([]);
 
     useEffect(() => {
-            axios.get("http://localhost:8080/genre/read").then(
-                res => {
-                    setRowData(res.data);
-                });
+        axios.get("http://localhost:8080/genre/read").then(
+            res => {
+                setRowData(res.data);
+            });
     }, []);
 
     const columns = useMemo(() => columnDefs, []);
@@ -44,12 +44,15 @@ export const GenreTable = ({userProfile}) => {
         prepareRow
     } = tableInstance
 
-    const create = (event, serieId) => {
-
+    const deleteGenre = (event, userProfile) => {
+        axios.delete("http://localhost:8080/genre/delete", {params: {genreId: userProfile.id}}).then(
+            res => {
+                window.alert("Succesfull :)");
+                window.open("/seasons", "_self");
+            })
     }
 
     return (<div>
-            <Button id={"create"} text={"Create Episode"} buttonType={"btn-success"}/>
             <table className={"table table-striped text-center"} {...getTableProps()}>
                 <thead>
                 {headerGroups.map((headerGroup) => (
@@ -69,8 +72,8 @@ export const GenreTable = ({userProfile}) => {
                                 {row.cells.map(cell => {
                                     return (<td {...cell.getCellProps()}>{cell.render('Cell')}</td>)
                                 })}
-                                <td><Button id={row.values.id} text={"Edit"} buttonType={"btn-primary"}/></td>
-                                <td><Button id={row.values.id} text={"Delete"} buttonType={"btn-danger"}/></td>
+                                <td><a><Button id={row.values.id} text={"Delete"} buttonType={"btn-danger delete"}
+                                               onClick={(event) => deleteGenre(event, row.values)}/></a></td>
                             </tr>
                         )
                     })

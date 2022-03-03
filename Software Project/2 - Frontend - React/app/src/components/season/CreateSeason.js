@@ -2,24 +2,24 @@ import Button from "../Button";
 import React, {useState} from "react";
 import axios from "axios";
 
-export const CreateUser = () => {
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
+export const CreateSeason = () => {
+    const [seasonNumber, setSeasonNumber] = useState("");
+    const [serie, setSerie] = useState("");
 
     const handleChange = (event) => {
-        setFirstName(event.target.value);
+        setSeasonNumber(event.target.value);
     }
 
-    const handleChangeLastName = (event) => {
-        setLastName(event.target.value);
+    const handleChangeSerie = (event) => {
+        setSerie(event.target.value);
     }
 
     const handleSubmit = (event) => {
-        axios.post("http://localhost:8080/user/create", {"firstName": firstName, "lastName": lastName}).then(res => {
+        axios.post("http://localhost:8080/season/create", {"seasonNumber": seasonNumber, "serieId": serie}).then(res => {
             //document.getElementById("userNav").children.item(0).click()
             if (res.status === 200) {
-                window.open("/users", "_self");
-                window.alert("Succesfull :)");
+                window.open("/seasons", "_self");
+                window.alert("Successful :)");
             } else {
                 window.alert("Failed :(");
             }
@@ -30,13 +30,13 @@ export const CreateUser = () => {
         <h1>Create New User</h1>
         <form>
             <label>
-                First Name <br/>
-                <input type="text" value={firstName} onChange={handleChange}/>
+                Season Number <br/>
+                <input type="text" value={seasonNumber} onChange={handleChange}/>
             </label>
             <br/>
             <label>
-                Last Name <br/>
-                <input type="text" value={lastName} onChange={handleChangeLastName}/>
+                Serie Id <br/>
+                <input type="text" value={serie} onChange={handleChangeSerie}/>
             </label>
             <br/>
             <Button id={"create"} text={"Submit"} buttonType="btn-success"
