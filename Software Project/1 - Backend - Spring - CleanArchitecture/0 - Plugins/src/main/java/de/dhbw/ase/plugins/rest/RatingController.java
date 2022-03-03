@@ -39,7 +39,7 @@ public class RatingController {
     }
 
     @PostMapping(value = "/new", params = {"userId", "episodeId", "rating"})
-    public RatingDTO createEpisodeRating(@RequestParam Long userId, @RequestParam Long episodeId, @RequestParam Integer rating) throws ValidationException {
+    public RatingDTO createEpisodeRating(@RequestParam Long userId, @RequestParam Long episodeId, @RequestParam Double rating) throws ValidationException {
         return this.ratingToRatingDTOMapper.apply(this.ratingApplicationService.saveEpisodeRating(userId, episodeId, rating));
     }
 
@@ -63,6 +63,24 @@ public class RatingController {
                 .collect(Collectors.toList());
     }
 
+    /*@GetMapping(value = "/readsByUserId")
+    public List<RatingDTO> getRatingsByUser(@RequestParam Long userId) throws ValidationException {
+        return this.ratingApplicationService.getRatingsByUser(userId).stream().map(this.ratingToRatingDTOMapper::apply)
+                .collect(Collectors.toList());
+    }*/
+
+    @GetMapping(value = "/readRatingsNotBy")
+    public List<RatingDTO> getRatingsNotByUser(@RequestParam Long userId) throws ValidationException {
+        return this.ratingApplicationService.getRatingsNotByUser(userId).stream().map(this.ratingToRatingDTOMapper::apply)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping(value = "/readRatingsAvg")
+    public List<RatingDTO> getRatingsForAvg(@RequestParam Long userId) throws ValidationException {
+        return this.ratingApplicationService.getRatingsForAvg(userId).stream().map(this.ratingToRatingDTOMapper::apply)
+                .collect(Collectors.toList());
+    }
+
     @GetMapping(value = "/read")
     public List<RatingDTO> getAllEpisodeRatings() {
         return this.ratingApplicationService.getAllEpisodeRatings()
@@ -83,7 +101,7 @@ public class RatingController {
               |_|
     */
     @PutMapping(value = "/update")
-    public RatingDTO updateEpisodeRating(@RequestParam Long userId, @RequestParam Long episodeId, @RequestParam Integer rating) throws ValidationException {
+    public RatingDTO updateEpisodeRating(@RequestParam Long userId, @RequestParam Long episodeId, @RequestParam Double rating) throws ValidationException {
         return this.ratingToRatingDTOMapper.apply(this.ratingApplicationService.updateEpisodeRating(userId, episodeId, rating));
     }
 

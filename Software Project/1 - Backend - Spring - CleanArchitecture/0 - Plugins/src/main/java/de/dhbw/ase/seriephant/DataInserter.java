@@ -70,19 +70,29 @@ public class DataInserter implements ApplicationListener<ApplicationReadyEvent> 
         Episode episode3 = new Episode("Erbe", LocalDate.parse("2021-03-02"), 2, season2);
         this.episodeRepository.save(episode3);
 
-        User user = new User("Pascal", "E");
+        User user = new User("Nico", "Holzi");
         this.userRepository.save(user);
-        User user1 = new User("Krissi", "A");
+        User user1 = new User("Krissi", "");
         this.userRepository.save(user1);
+        User user2 = new User("Henning", "Sexy");
+        this.userRepository.save(user2);
+        User user3 = new User("Lorenz", "Seufi");
+        this.userRepository.save(user3);
 
         user.watchEpisode(episode1);
         user.watchEpisode(episode2);
+        user2.watchEpisode(episode3);
         this.userRepository.save(user);
 
         Actor actor = new Actor("Melissa", "Benoist");
         this.actorRepository.save(actor);
 
+        Actor actor1 = new Actor("Chyler", "Leigh");
+        this.actorRepository.save(actor1);
+
         episode1.addActor(actor);
+        this.episodeRepository.save(episode1);
+        episode1.addActor(actor1);
         this.episodeRepository.save(episode1);
 
     }

@@ -1,5 +1,6 @@
 package de.dhbw.ase.seriephant.rating;
 
+import de.dhbw.ase.seriephant.domain.episode.Episode;
 import de.dhbw.ase.seriephant.domain.episode.EpisodeRepository;
 import de.dhbw.ase.seriephant.domain.rating.Rating;
 import de.dhbw.ase.seriephant.domain.rating.RatingKey;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.xml.bind.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -67,7 +69,7 @@ public class RatingApplicationService {
 
     }
 
-    public Rating saveEpisodeRating(Long userId, Long episodeId, Integer rating) throws ValidationException {
+    public Rating saveEpisodeRating(Long userId, Long episodeId, Double rating) throws ValidationException {
         if (this.ratingRepository.existsById(new RatingKey(userId, episodeId))) {
             Rating episodeRating = new Rating(new RatingKey(userId, episodeId), this.userRepository.getById(userId), this.episodeRepository.getById(episodeId), rating);
             return this.ratingRepository.save(episodeRating);
@@ -100,6 +102,64 @@ public class RatingApplicationService {
         throw new ValidationException("User is not valid.");
     }
 
+    /*public List<Rating> getRatingsByUser(Long userId) throws ValidationException {
+        if (this.userRepository.existsById(userId)) {
+            List<Rating> ratings = Collections.singletonList((Rating) this.ratingRepository.getAllWithAvg());
+            List<Rating> unwatchedRatings = new ArrayList<>();
+            for (Episode episode : this.userRepository.getById(userId).getWatchedEpisodes()) {
+                for (Rating rating : ratings) {
+                    if (Objects.equals(episode.getId(), rating.getEpisode().getId())) {
+                        unwatchedRatings.add(rating);
+                    }
+                }
+            }
+            return unwatchedRatings;
+        }
+        throw new ValidationException("User is not valid.");
+    }*/
+
+    public List<Rating> getRatingsNotByUser(Long userId) throws ValidationException {
+        if (this.userRepository.existsById(userId)) {
+            List<Rating> unwatchedRatings = new ArrayList<>();
+            List<Rating> ratings = this.ratingRepository.findAll();
+            List<Episode> episodes = this.episodeRepository.findAll();
+            for (Episode episode : episodes) {
+                Double sumRating = 0.0;
+                Double number = 0.0;
+                for (Rating rating : ratings) {
+                    if (rating.getRating() != null && episode.getId().equals(rating.getEpisode().getId())) {
+                        sumRating += rating.getRating();
+                        number++;
+                    }
+                }
+                unwatchedRatings.add(new Rating(this.userRepository.getById(userId), episode, number == 0 ? null : sumRating / number));
+            }
+            return unwatchedRatings;
+        }
+        throw new ValidationException("User is not valid.");
+    }
+
+    public List<Rating> getRatingsForAvg(Long userId) throws ValidationException {
+        if (this.userRepository.existsById(userId)) {
+            List<Rating> unwatchedRatings = new ArrayList<>();
+            List<Rating> ratings = this.ratingRepository.getRatingsForAvg();
+            List<Episode> episodes = this.episodeRepository.findAll();
+            for (Episode episode : episodes) {
+                Double sumRating = 0.0;
+                Double number = 0.0;
+                for (Rating rating : ratings) {
+                    if (rating.getRating() != null && episode.getId().equals(rating.getEpisode().getId())) {
+                        sumRating = +rating.getRating();
+                        number++;
+                    }
+                }
+                unwatchedRatings.add(new Rating(this.userRepository.getById(userId), episode, sumRating / number));
+            }
+            return unwatchedRatings;
+        }
+        throw new ValidationException("User is not valid.");
+    }
+
     public List<Rating> getAllEpisodeRatings() {
         return this.ratingRepository.findAll();
     }
@@ -115,7 +175,7 @@ public class RatingApplicationService {
               | |
               |_|
     */
-    public Rating updateEpisodeRating(Long userId, Long episodeId, Integer rating) throws ValidationException {
+    public Rating updateEpisodeRating(Long userId, Long episodeId, Double rating) throws ValidationException {
         if (this.ratingRepository.existsById(new RatingKey(userId, episodeId))) {
             Rating episodeRating = this.ratingRepository.getById(new RatingKey(userId, episodeId));
             episodeRating.setRating(rating);

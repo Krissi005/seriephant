@@ -31,11 +31,11 @@ public class RatingDTO {
     @JsonProperty("episode")
     private EpisodeDTO episodeDTO;
     @JsonProperty("rating")
-    private Integer rating;
+    private Double rating;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    public RatingDTO(RatingKeyDTO ratingKeyDTO, UserDTO userDTO, EpisodeDTO episodeDTO, Integer rating) {
+    public RatingDTO(RatingKeyDTO ratingKeyDTO, UserDTO userDTO, EpisodeDTO episodeDTO, Double rating) {
         this.ratingKeyDTO = ratingKeyDTO;
         this.userDTO = userDTO;
         this.episodeDTO = episodeDTO;
@@ -73,12 +73,12 @@ public class RatingDTO {
     }
 
     @JsonProperty("rating")
-    public Integer getRating() {
+    public Double getRating() {
         return rating;
     }
 
     @JsonProperty("rating")
-    public void setRating(Integer rating) {
+    public void setRating(Double rating) {
         this.rating = rating;
     }
 

@@ -10,7 +10,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
-@Table(name = "user_episode_ranking")
+@Table(name = "user_episode_rating")
 @Entity
 @Getter
 @Setter
@@ -33,9 +33,9 @@ public class Rating {
     @JoinColumn(name = "episode_id")
     Episode episode;
 
-    Integer rating;
+    Double rating;
 
-    public Rating(User user, Episode episode, Integer rating) {
+    public Rating(User user, Episode episode, Double rating) {
         this.id = new RatingKey(user.getId(), episode.getId());
         this.user = user;
         this.episode = episode;

@@ -21,7 +21,7 @@ public interface SpringDataEpisodeRepository extends JpaRepository<Episode, Long
 
     List<Episode> getEpisodesByUsersEquals(User user);
 
-    @Query(value = "SELECT * FROM EPISODE LEFT OUTER JOIN USER_EPISODE_RANKING ON EPISODE.ID = USER_EPISODE_RANKING.EPISODE_ID WHERE USER_EPISODE_RANKING.USER_ID IS NULL OR USER_EPISODE_RANKING.USER_ID!=?1", nativeQuery = true)
+    @Query(value = "SELECT DISTINCT EPISODE.* FROM EPISODE LEFT OUTER JOIN USER_EPISODE_RATING ON EPISODE.ID = USER_EPISODE_RATING.EPISODE_ID WHERE USER_EPISODE_RATING.USER_ID IS NULL OR USER_EPISODE_RATING.USER_ID!=?1", nativeQuery = true)
     List<Episode> getEpisodesByUsersIsNullOrUsersIsNot(Long userId);
 
     List<Episode> getEpisodesByTitle(String title);
