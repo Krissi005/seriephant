@@ -54,6 +54,11 @@ public class RatingBridge implements RatingRepository {
     }
 
     @Override
+    public List<Rating> findAllRatingsOfAllEpisodes() {
+        return this.springDataRatingRepository.findAllRatingsOfAllEpisodes();
+    }
+
+    @Override
     public List<Rating> findAll() {
         return this.springDataRatingRepository.findAll();
     }

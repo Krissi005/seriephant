@@ -28,6 +28,8 @@ public interface RatingRepository {
 
     List<Rating> getRatingsForAvg();
 
+    List<Rating> findAllRatingsOfAllEpisodes();
+
     List<Rating> findAll();
 
     /** UPDATE **/

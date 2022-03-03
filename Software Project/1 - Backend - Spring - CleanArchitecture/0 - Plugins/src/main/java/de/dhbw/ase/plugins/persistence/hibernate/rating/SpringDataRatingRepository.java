@@ -39,6 +39,9 @@ public interface SpringDataRatingRepository extends JpaRepository<Rating, Rating
             "LEFT OUTER JOIN USER_EPISODE_RATING rating ON episode.ID = rating.EPISODE_ID ", nativeQuery = true)
     List<Rating> getRatingsForAvg();
 
+    @Query(value = "SELECT USER_EPISODE_RATING.* FROM EPISODE LEFT OUTER JOIN USER_EPISODE_RATING ON EPISODE.ID = USER_EPISODE_RATING.EPISODE_ID ", nativeQuery = true)
+    List<Rating> findAllRatingsOfAllEpisodes();
+
 
     /** UPDATE **/
 

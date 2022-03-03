@@ -5,6 +5,7 @@ import de.dhbw.ase.seriephant.domain.episode.EpisodeRepository;
 import de.dhbw.ase.seriephant.domain.rating.Rating;
 import de.dhbw.ase.seriephant.domain.rating.RatingKey;
 import de.dhbw.ase.seriephant.domain.rating.RatingRepository;
+import de.dhbw.ase.seriephant.domain.user.User;
 import de.dhbw.ase.seriephant.domain.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -95,6 +96,15 @@ public class RatingApplicationService {
         throw new ValidationException("Id of Rating is not known.");
     }
 
+    public Rating getRatingByRating(Rating rating) throws ValidationException {
+        RatingKey ratingKey = new RatingKey(rating.getUser().getId(), rating.getEpisode().getId());
+        if (this.ratingRepository.existsById(ratingKey)) {
+            return this.ratingRepository.getById(ratingKey);
+        }
+        rating.setRating(null);
+        return rating;
+    }
+
     public List<Rating> getRatingByUserId(Long userId) throws ValidationException {
         if (this.userRepository.existsById(userId)) {
             return this.ratingRepository.getByUser(this.userRepository.getById(userId));
@@ -125,39 +135,77 @@ public class RatingApplicationService {
             List<Episode> episodes = this.episodeRepository.findAll();
             for (Episode episode : episodes) {
                 Double sumRating = 0.0;
-                Double number = 0.0;
+                int number = 0;
+                boolean user = false;
                 for (Rating rating : ratings) {
-                    if (rating.getRating() != null && episode.getId().equals(rating.getEpisode().getId())) {
-                        sumRating += rating.getRating();
-                        number++;
+                    if (episode.getId().equals(rating.getEpisode().getId())) {
+                        if (rating.getRating() != null) {
+                            sumRating += rating.getRating();
+                            number++;
+                        }
+                        if (rating.getUser().getId().equals(userId)) {
+                            user = true;
+                        }
                     }
                 }
-                unwatchedRatings.add(new Rating(this.userRepository.getById(userId), episode, number == 0 ? null : sumRating / number));
+                if (!user) {
+                    unwatchedRatings.add(new Rating(this.userRepository.getById(userId), episode, number == 0 ? null : sumRating / number));
+                }
             }
             return unwatchedRatings;
         }
         throw new ValidationException("User is not valid.");
     }
 
-    public List<Rating> getRatingsForAvg(Long userId) throws ValidationException {
+    public List<Rating> getRatingsByUser(Long userId) throws ValidationException {
         if (this.userRepository.existsById(userId)) {
             List<Rating> unwatchedRatings = new ArrayList<>();
-            List<Rating> ratings = this.ratingRepository.getRatingsForAvg();
+            List<Rating> ratings = this.ratingRepository.findAll();
             List<Episode> episodes = this.episodeRepository.findAll();
             for (Episode episode : episodes) {
                 Double sumRating = 0.0;
-                Double number = 0.0;
+                int number = 0;
+                boolean user = false;
                 for (Rating rating : ratings) {
-                    if (rating.getRating() != null && episode.getId().equals(rating.getEpisode().getId())) {
-                        sumRating = +rating.getRating();
-                        number++;
+                    if (episode.getId().equals(rating.getEpisode().getId())) {
+                        if (rating.getRating() != null) {
+                            sumRating += rating.getRating();
+                            number++;
+                        }
+                        if (rating.getUser().getId().equals(userId)) {
+                            user = true;
+                        }
                     }
                 }
-                unwatchedRatings.add(new Rating(this.userRepository.getById(userId), episode, sumRating / number));
+                if (user) {
+                    unwatchedRatings.add(new Rating(this.userRepository.getById(userId), episode, number == 0 ? null : sumRating / number));
+                }
             }
             return unwatchedRatings;
         }
         throw new ValidationException("User is not valid.");
+    }
+
+    public List<Rating> getAllEpisodesRatings() {
+        List<Rating> allEpisodesWithRatings = new ArrayList<>();
+        List<Rating> ratings = this.ratingRepository.findAll();
+        List<Episode> episodes = this.episodeRepository.findAll();
+        for (Episode episode : episodes) {
+            Double sumRating = 0.0;
+            int number = 0;
+            boolean user = false;
+            for (Rating rating : ratings) {
+                if (episode.getId().equals(rating.getEpisode().getId())) {
+                    if (rating.getRating() != null) {
+                        sumRating += rating.getRating();
+                        number++;
+                    }
+                }
+            }
+            allEpisodesWithRatings.add(new Rating(new User(1L, "", null, new ArrayList<>()), episode, number == 0 ? null : sumRating / number));
+
+        }
+        return allEpisodesWithRatings;
     }
 
     public List<Rating> getAllEpisodeRatings() {
@@ -202,5 +250,6 @@ public class RatingApplicationService {
             throw new ValidationException("Id of Rating is not known.");
         }
     }
+
     /************************************************************************************************************************************/
 }

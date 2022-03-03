@@ -52,9 +52,14 @@ public class RatingController {
         | | \ \  __/ (_| | (_| |
         |_|  \_\___|\__,_|\__,_|
     */
-    @GetMapping(value = "/readById")
+    @GetMapping(value = "/readById", params = {"userId", "episodeId"})
     public RatingDTO getRatingById(@RequestParam Long userId, @RequestParam Long episodeId) throws ValidationException {
         return this.ratingToRatingDTOMapper.apply(this.ratingApplicationService.getRatingById(this.ratingKeyDTOToRatingKeyMapper.apply(new RatingKeyDTO(userId, episodeId))));
+    }
+
+    @GetMapping(value = "/readByIdDTO")
+    public RatingDTO getRatingById(@RequestBody RatingDTO ratingDTO) throws ValidationException {
+        return this.ratingToRatingDTOMapper.apply(this.ratingApplicationService.getRatingByRating(this.episodeRatingDTOToRatingMapper.apply(ratingDTO)));
     }
 
     @GetMapping(value = "/readByUserId")
@@ -69,15 +74,23 @@ public class RatingController {
                 .collect(Collectors.toList());
     }*/
 
-    @GetMapping(value = "/readRatingsNotBy")
+    @GetMapping(value = "/readRatingsNotByUser")
     public List<RatingDTO> getRatingsNotByUser(@RequestParam Long userId) throws ValidationException {
         return this.ratingApplicationService.getRatingsNotByUser(userId).stream().map(this.ratingToRatingDTOMapper::apply)
                 .collect(Collectors.toList());
     }
 
-    @GetMapping(value = "/readRatingsAvg")
-    public List<RatingDTO> getRatingsForAvg(@RequestParam Long userId) throws ValidationException {
-        return this.ratingApplicationService.getRatingsForAvg(userId).stream().map(this.ratingToRatingDTOMapper::apply)
+    @GetMapping(value = "/readRatingsByUser")
+    public List<RatingDTO> getRatingsByUser(@RequestParam Long userId) throws ValidationException {
+        return this.ratingApplicationService.getRatingsByUser(userId).stream().map(this.ratingToRatingDTOMapper::apply)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping(value = "/readAllEpisodes")
+    public List<RatingDTO> getAllEpisodesRatings() {
+        return this.ratingApplicationService.getAllEpisodesRatings()
+                .stream()
+                .map(this.ratingToRatingDTOMapper::apply)
                 .collect(Collectors.toList());
     }
 
