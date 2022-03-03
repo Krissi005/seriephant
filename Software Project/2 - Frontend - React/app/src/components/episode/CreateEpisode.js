@@ -1,12 +1,14 @@
 import Button from "../Button";
 import React, {useState} from "react";
 import axios from "axios";
+import {useNavigate} from "react-router-dom";
 
 export const CreateEpisode = () => {
     const [title, setTitle] = useState("");
     const [episodeNumber, setEpisodeNumber] = useState("");
     const [releaseDate, setReleaseDate] = useState("yyyy-MM-dd");
     const [season, setSeason] = useState("");
+    const navigate = useNavigate()
 
     const handleChange = (event) => {
         setTitle(event.target.value);
@@ -25,9 +27,14 @@ export const CreateEpisode = () => {
     }
 
     const handleSubmit = (event) => {
-        axios.post("http://localhost:8080/episode/create", {"title": title, "releaseDate": releaseDate.equals("yyyy-MM-dd")?null:releaseDate, "episodeNumber": episodeNumber, "season": {"id": season}}).then(res => {
+        axios.post("http://localhost:8080/episode/create", {
+            "title": title,
+            "releaseDate": releaseDate.equals("yyyy-MM-dd") ? null : releaseDate,
+            "episodeNumber": episodeNumber,
+            "season": {"id": season}
+        }).then(res => {
             if (res.status === 200) {
-                window.open("/episodes", "_self");
+                navigate('/allEpisodes')
                 window.alert("Successful :)");
             } else {
                 window.alert("Failed :(");

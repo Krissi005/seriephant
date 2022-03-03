@@ -2,10 +2,11 @@ import React, {useEffect, useMemo, useState} from "react";
 import {useTable} from 'react-table'
 import axios from "axios";
 import Button from "../Button";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 export const MyEpisodeTable = ({userProfile}) => {
     const [rowData, setRowData] = useState([]);
+    const navigate = useNavigate()
 
     const columnDefs = [
         {
@@ -72,7 +73,7 @@ export const MyEpisodeTable = ({userProfile}) => {
         axios.delete("http://localhost:8080/episode/delete", {params: {"episodeId": episodeId}}).then(
             res => {
                 window.alert("Succesfull :)");
-                window.open("/allEpisodes", "_self");
+                navigate("/series");
             })
     }
 
@@ -87,7 +88,7 @@ export const MyEpisodeTable = ({userProfile}) => {
             }
         ).then(res => {
             if (res.status === 200) {
-                window.open("/users", "_self");
+                navigate("/series");
                 window.alert("Successful :)");
             } else {
                 window.alert("Failed :(");

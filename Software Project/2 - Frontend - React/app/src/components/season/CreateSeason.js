@@ -1,8 +1,10 @@
 import Button from "../Button";
 import React, {useState} from "react";
 import axios from "axios";
+import {useNavigate} from "react-router-dom";
 
 export const CreateSeason = () => {
+    const navigate = useNavigate()
     const [seasonNumber, setSeasonNumber] = useState("");
     const [serie, setSerie] = useState("");
 
@@ -18,7 +20,7 @@ export const CreateSeason = () => {
         axios.post("http://localhost:8080/season/create", {"seasonNumber": seasonNumber, "serieId": serie}).then(res => {
             //document.getElementById("userNav").children.item(0).click()
             if (res.status === 200) {
-                window.open("/seasons", "_self");
+                navigate("/seasons");
                 window.alert("Successful :)");
             } else {
                 window.alert("Failed :(");

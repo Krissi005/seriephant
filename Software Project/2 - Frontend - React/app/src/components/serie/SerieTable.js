@@ -4,7 +4,7 @@ import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import {useTable} from "react-table";
 import Button from "../Button";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 export const SerieTable = ({userProfile}) => {
 
@@ -32,13 +32,7 @@ export const SerieTable = ({userProfile}) => {
     ];
 
     const [rowData, setRowData] = useState([]);
-
-    function uniqByKeepOne(data, key) {
-        return [
-            ...new Map(
-                data.map(x => [key(x), x.season.serie])
-            ).values()]
-    }
+    const navigate = useNavigate()
 
     useEffect(() => {
         axios.get("http://localhost:8080/serie/read").then(
@@ -66,7 +60,7 @@ export const SerieTable = ({userProfile}) => {
         axios.delete("http://localhost:8080/serie/delete", {params: {sereiId: userProfile.id}}).then(
             res => {
                 window.alert("Succesfull :)");
-                window.open("/series", "_self");
+                navigate("/series");
             })
     }
 

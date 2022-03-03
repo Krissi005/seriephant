@@ -1,10 +1,11 @@
 import Button from "../Button";
 import React, {useEffect, useState} from "react";
 import axios from "axios";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 
 export const CreateRating = (userProfile) => {
     const params = useParams();
+    const navigate = useNavigate();
     const [userId, setUserId] = useState(userProfile.userProfile.id);
     const [episodeId, setEpisodeId] = useState(params.episodeId);
     const [rating, setRating] = useState("");
@@ -32,7 +33,7 @@ export const CreateRating = (userProfile) => {
             }
         ).then(res => {
             if (res.status === 200) {
-                window.open("/users", "_self");
+                navigate("/users");
                 window.alert("Successful :)");
             } else {
                 window.alert("Failed :(");

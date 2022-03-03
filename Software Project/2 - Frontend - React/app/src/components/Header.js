@@ -11,7 +11,7 @@ const Header = ({chosenUser, reset}) => {
                     <Image src={logo1} height="80px"/>
                 </a>
                 {chosenUser==null?
-                     "":(<Button onClick={reset} text={chosenUser.firstName +" "+ chosenUser.lastName} buttonType={"btn-danger"}/>)}
+                     "":(<Button onClick={(event) => reset(event, null)} text={chosenUser.firstName +" "+ chosenUser.lastName} buttonType={"btn-danger"}/>)}
                 <ul className="navbar-nav">
                     <li id={"userNav"} className="nav-item">
                         <Link to={"/users"}>Users</Link>

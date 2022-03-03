@@ -33,6 +33,11 @@ class App extends React.Component {
         chosenUserProfile: null
     }
 
+    constructor() {
+        super();
+        this.chooseUser= this.chooseUser.bind(this);
+    }
+
     watch = (event, userProfile, episode) =>{
         axios.put("http://localhost:8080/user/updateEpisodes", { params: {"userId": userProfile.id, "episodeId": episode.id} }).then(res => {
             //document.getElementById("userNav").children.item(0).click()
@@ -53,10 +58,6 @@ class App extends React.Component {
         window.open("/"+directory+":"+userProfile, "_self");
     }
 
-    reset = (event) => {
-        this.setState({chosenUserProfile: null});
-    }
-
     componentDidMount() {
         axios.get("http://localhost:8080/user/read").then(res => {
             this.setState({
@@ -69,9 +70,9 @@ class App extends React.Component {
         return (
             <div className="App">
                 <Router>
-                    <Header chosenUser={this.state.chosenUserProfile} reset={this.reset}/>
+                    <Header chosenUser={this.state.chosenUserProfile} reset={this.chooseUser}/>
                     <Routes>
-                        <Route path="/users" element={<Users userProfile={this.state.chosenUserProfile} reset={this.reset}
+                        <Route path="/users" element={<Users userProfile={this.state.chosenUserProfile} reset={this.chooseUser}
                                                              choose={this.chooseUser} edit={this.edit}/>}/>
                         <Route path="/createUser" element={<CreateUser/>}/>
                         <Route path="/editUser/:userId" element ={<EditUser/>}/>

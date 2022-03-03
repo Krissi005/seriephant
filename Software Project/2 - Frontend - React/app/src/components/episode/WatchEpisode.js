@@ -3,7 +3,7 @@ import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {useParams} from "react-router-dom";
 
-export const WatchEpisode = (userProfile) => {
+export const WatchEpisode = ({userProfile}) => {
     const params = useParams();
     const [userId, setUserId] = useState("");
     const [episodeId, setEpisodeId] = useState("");
@@ -13,8 +13,6 @@ export const WatchEpisode = (userProfile) => {
             setEpisodeId(params.episodeId)
         }
     }, [userProfile]);
-
-
 
     const handleChange = (event) => {
         setUserId(event.target.value);
@@ -36,7 +34,7 @@ export const WatchEpisode = (userProfile) => {
         ).then(res => {
             if (res.status === 200) {
                 window.open("/episodes", "_self");
-                window.alert("Successful :)");
+                //window.alert("Successful :)");
             } else {
                 window.alert("Failed :(");
             }

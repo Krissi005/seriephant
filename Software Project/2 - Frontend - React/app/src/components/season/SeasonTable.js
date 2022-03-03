@@ -2,7 +2,7 @@ import React, {useEffect, useMemo, useState} from "react";
 import {useTable} from 'react-table'
 import axios from "axios";
 import Button from "../Button";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 export const SeasonTable = ({userProfile}) => {
 
@@ -22,13 +22,7 @@ export const SeasonTable = ({userProfile}) => {
     ];
 
     const [rowData, setRowData] = useState([]);
-
-    function uniqByKeepOne(data, key) {
-        return [
-            ...new Map(
-                data.map(x => [key(x), x.season])
-            ).values()]
-    }
+    const navigate = useNavigate()
 
     useEffect(() => {
         axios.get("http://localhost:8080/season/read").then(
@@ -57,7 +51,7 @@ export const SeasonTable = ({userProfile}) => {
         axios.delete("http://localhost:8080/season/delete", {params: {seasonId: userProfile.id}}).then(
             res => {
                 window.alert("Succesfull :)");
-                window.open("/seasons", "_self");
+                navigate("/series");
             })
     }
 

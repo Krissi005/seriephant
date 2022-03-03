@@ -1,10 +1,11 @@
 import Button from "../Button";
 import React, {useEffect, useState} from "react";
 import axios from "axios";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 
 export const EditSeason = () => {
     const params = useParams();
+    const navigate = useNavigate()
     const [id, setId] = useState(null);
     const [seasonNumber, setSeasonNumber] = useState("");
 
@@ -26,7 +27,7 @@ export const EditSeason = () => {
             "seasonNumber": seasonNumber
         }).then(res => {
             if (res.status === 200) {
-                window.open("/seasons", "_self");
+                navigate("/seasons");
                 window.alert("Successful :)");
             } else {
                 window.alert("Failed :(");

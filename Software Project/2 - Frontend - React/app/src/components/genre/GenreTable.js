@@ -2,6 +2,7 @@ import React, {useEffect, useMemo, useState} from "react";
 import {useTable} from 'react-table'
 import axios from "axios";
 import Button from "../Button";
+import {useNavigate} from "react-router-dom";
 
 export const GenreTable = ({userProfile}) => {
 
@@ -21,6 +22,7 @@ export const GenreTable = ({userProfile}) => {
     ];
 
     const [rowData, setRowData] = useState([]);
+    const navigate = useNavigate()
 
     useEffect(() => {
         axios.get("http://localhost:8080/genre/read").then(
@@ -48,7 +50,7 @@ export const GenreTable = ({userProfile}) => {
         axios.delete("http://localhost:8080/genre/delete", {params: {genreId: userProfile.id}}).then(
             res => {
                 window.alert("Succesfull :)");
-                window.open("/seasons", "_self");
+                navigate("/series");
             })
     }
 

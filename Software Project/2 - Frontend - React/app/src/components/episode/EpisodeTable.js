@@ -72,34 +72,6 @@ export const EpisodeTable = ({userProfile, onClick, my}) => {
         prepareRow
     } = tableInstance
 
-    const deleteEpisode = (event, episode) => {
-        axios.delete("http://localhost:8080/episode/delete", {params: {"episodeId": episode.id}}).then(
-            res => {
-                window.alert("Succesfull :)");
-                window.open("/users", "_self");
-            })
-    }
-
-    const watchEpisode = (event, userProfile, episode) => {
-        axios.put("http://localhost:8080/user/updateEpisodes", {
-                "id": userProfile.id,
-                "watchedEpisodes": [
-                    {
-                        "id": episode.id
-                    }
-                ]
-            }
-        ).then(res => {
-            if (res.status === 200) {
-                window.open("/users", "_self");
-                window.alert("Successful :)");
-                onClick(event, userProfile)
-            } else {
-                window.alert("Failed :(");
-            }
-        })
-    }
-
     return (<div>
             <Link to={"/createEpisode"}><Button id={"create"} text={"Create Episode"}
                                                 buttonType={"btn-success"}/></Link>

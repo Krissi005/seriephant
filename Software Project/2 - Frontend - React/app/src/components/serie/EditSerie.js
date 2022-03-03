@@ -1,10 +1,11 @@
 import Button from "../Button";
 import React, {useEffect, useState} from "react";
 import axios from "axios";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 
 export const EditSerie = () => {
     const params = useParams();
+    const navigate = useNavigate();
     const [id, setId] = useState(null);
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
@@ -47,7 +48,7 @@ export const EditSerie = () => {
             "genre": {"id": genre}
         }).then(res => {
             if (res.status === 200) {
-                window.open("/series", "_self");
+                navigate('/series')
                 window.alert("Successful :)");
             } else {
                 window.alert("Failed :(");

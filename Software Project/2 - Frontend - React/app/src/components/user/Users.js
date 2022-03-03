@@ -2,7 +2,7 @@ import React, {useEffect, useMemo, useState} from "react";
 import axios from "axios";
 import {useTable} from "react-table";
 import Button from "../Button";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 export const Users = ({userProfile, choose, reset, edit}) => {
 
@@ -22,6 +22,7 @@ export const Users = ({userProfile, choose, reset, edit}) => {
     ];
 
     const [rowData, setRowData] = useState([]);
+    const navigate = useNavigate()
 
     useEffect(() => {
         axios.get("http://localhost:8080/user/read").then(
@@ -49,7 +50,7 @@ export const Users = ({userProfile, choose, reset, edit}) => {
         axios.delete("http://localhost:8080/user/delete", {params: {userId: userProfile.id}}).then(
             res => {
                 window.alert("Succesfull :)");
-                window.open("/users", "_self");
+               navigate("/users");
             })
     }
 
@@ -76,7 +77,7 @@ export const Users = ({userProfile, choose, reset, edit}) => {
                                 })}
                                 <td><Link to={"/editUser/"+row.values.id}><Button id={row.values.id} text={"Edit"} buttonType={"btn-primary"}/></Link></td>
                                 <td><a><Button id={row.values.id} text={"Delete"} buttonType={"btn-danger delete"}  onClick={(event) => deleteUser(event, row.values)}/></a></td>
-                                {(userProfile!=null && userProfile.id === row.values.id) ? <td><Button id={row.values.id} text={"Unchoose"} buttonType={"btn-danger"} onClick={reset}/></td>
+                                {(userProfile!=null && userProfile.id === row.values.id) ? <td><Button id={row.values.id} text={"Unchoose"} buttonType={"btn-danger"} onClick={(event) => choose(event, null)}/></td>
                                     :<td><a><Button id={row.values.id} text={"Choose"} buttonType={"btn-success"} onClick={(event) => choose(event, row.values)}/></a></td>
                                     }
                             </tr>

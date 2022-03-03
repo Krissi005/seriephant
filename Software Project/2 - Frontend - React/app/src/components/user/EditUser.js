@@ -1,11 +1,12 @@
 import Button from "../Button";
 import React, {useEffect, useState} from "react";
 import axios from "axios";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {wait} from "@testing-library/user-event/dist/utils";
 
 export const EditUser = () => {
     const params = useParams();
+    const navigate = useNavigate()
     const [id, setId] = useState(null);
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
@@ -33,7 +34,7 @@ export const EditUser = () => {
             "lastName": lastName
         }).then(res => {
             if (res.status === 200) {
-                window.open("/users", "_self");
+                navigate("/users");
                 window.alert("Succesfull :)");
             } else {
                 window.alert("Failed :(");

@@ -1,10 +1,11 @@
 import Button from "../Button";
 import React, {useEffect, useState} from "react";
 import axios from "axios";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 
 export const EditEpisode = () => {
     const params = useParams();
+    const navigate = useNavigate()
     const [id, setId] = useState(null);
     const [title, setTitle] = useState("");
     const [episodeNumber, setEpisodeNumber] = useState("");
@@ -47,7 +48,7 @@ export const EditEpisode = () => {
             "season": {"id": seasonId}
         }).then(res => {
             if (res.status === 200) {
-                window.open("/allEpisodes", "_self");
+                navigate('/allEpisodes');
                 window.alert("Successful :)");
             } else {
                 window.alert("Failed :(");
@@ -64,17 +65,17 @@ export const EditEpisode = () => {
             </label>
             <br/>
             <label>
-                Description <br/>
+                Epsiode Number <br/>
                 <input type="text" value={episodeNumber} onChange={handleChangeLastName}/>
             </label>
             <br/>
             <label>
-                Release Year <br/>
+                Release Date <br/>
                 <input type="text" value={releaseDate} onChange={handleChangeReleaseYear}/>
             </label>
             <br/>
             <label>
-                Genre Id <br/>
+                Season Id <br/>
                 <input type="text" value={seasonId} onChange={handleChangeGenre}/>
             </label>
             <br/>

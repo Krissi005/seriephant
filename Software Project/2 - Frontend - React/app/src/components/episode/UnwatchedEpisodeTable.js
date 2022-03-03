@@ -2,9 +2,10 @@ import React, {useEffect, useMemo, useState} from "react";
 import {useTable} from 'react-table'
 import axios from "axios";
 import Button from "../Button";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
-export const UnwatchedEpisodeTable = ({userProfile}) => {
+export const UnwatchedEpisodeTable = ({userProfile, onClick}) => {
+    const navigate = useNavigate()
     const [rowData, setRowData] = useState([]);
 
     const columnDefs = [
@@ -81,7 +82,7 @@ export const UnwatchedEpisodeTable = ({userProfile}) => {
         }
         ).then(res => {
             if (res.status === 200) {
-                window.open("/users", "_self");
+                navigate('/series');
                 window.alert("Succesfull :)");
             } else {
                 window.alert("Failed :(");

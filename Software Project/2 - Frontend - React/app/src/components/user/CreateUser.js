@@ -1,8 +1,10 @@
 import Button from "../Button";
 import React, {useState} from "react";
 import axios from "axios";
+import {useNavigate} from "react-router-dom";
 
 export const CreateUser = () => {
+    const navigate = useNavigate()
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
 
@@ -18,7 +20,7 @@ export const CreateUser = () => {
         axios.post("http://localhost:8080/user/create", {"firstName": firstName, "lastName": lastName}).then(res => {
             //document.getElementById("userNav").children.item(0).click()
             if (res.status === 200) {
-                window.open("/users", "_self");
+                navigate("/users");
                 window.alert("Succesfull :)");
             } else {
                 window.alert("Failed :(");
