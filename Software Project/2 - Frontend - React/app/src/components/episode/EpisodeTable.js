@@ -5,6 +5,7 @@ import Button from "../Button";
 import {Link} from "react-router-dom";
 import {MyEpisodeTable} from "./MyEpisodeTable";
 import {UnwatchedEpisodeTable} from "./UnwatchedEpisodeTable";
+import {AllEpisodeTable} from "./AllEpisodeTable";
 
 export const EpisodeTable = ({userProfile, onClick, my}) => {
     const [rowData, setRowData] = useState([]);
@@ -47,11 +48,11 @@ export const EpisodeTable = ({userProfile, onClick, my}) => {
                     setRowData(res.data);
                 })
         } else {
-                axios.get("http://localhost:8080/rating/readRatingsNotByUser", {params: {userId: userProfile.id}}).then(
-                    (res) => {
-                        setRowData(res.data);
-                    }
-                )
+            axios.get("http://localhost:8080/rating/readRatingsNotByUser", {params: {userId: userProfile.id}}).then(
+                (res) => {
+                    setRowData(res.data);
+                }
+            )
 
         }
     }, [userProfile, my]);
@@ -112,9 +113,10 @@ export const EpisodeTable = ({userProfile, onClick, my}) => {
                     </tr>
                 ))}
                 </thead>
-                <MyEpisodeTable userProfile={userProfile}/>
-                <UnwatchedEpisodeTable userProfile={userProfile}/>
-            </table>
+                {userProfile == null ? <AllEpisodeTable/>:<React.Fragment>
+                    <MyEpisodeTable userProfile={userProfile}/>
+                    <UnwatchedEpisodeTable userProfile={userProfile}/></React.Fragment>}
+                </table>
         </div>
     )
 }
