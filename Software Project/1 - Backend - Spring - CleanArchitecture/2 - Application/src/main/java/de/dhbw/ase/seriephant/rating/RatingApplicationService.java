@@ -193,7 +193,6 @@ public class RatingApplicationService {
         for (Episode episode : episodes) {
             Double sumRating = 0.0;
             int number = 0;
-            boolean user = false;
             for (Rating rating : ratings) {
                 if (episode.getId().equals(rating.getEpisode().getId())) {
                     if (rating.getRating() != null) {
