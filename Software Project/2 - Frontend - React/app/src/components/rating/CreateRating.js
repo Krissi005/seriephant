@@ -15,14 +15,6 @@ export const CreateRating = (userProfile) => {
         }
     }, [userProfile]);
 
-    const handleChange = (event) => {
-        setUserId(event.target.value);
-    }
-
-    const handleChangeEpisodeNumber = (event) => {
-        setEpisodeId(event.target.value);
-    }
-
     const handleChangeReleaseDate = (event) => {
         setRating(event.target.value);
     }
@@ -40,7 +32,7 @@ export const CreateRating = (userProfile) => {
             }
         ).then(res => {
             if (res.status === 200) {
-                window.open("/rating", "_self");
+                window.open("/users", "_self");
                 window.alert("Successful :)");
             } else {
                 window.alert("Failed :(");
@@ -51,16 +43,6 @@ export const CreateRating = (userProfile) => {
     return (<div className="container">
         <h1>Create New Rating</h1>
         <form>
-            <label>
-                User Id <br/>
-                <input type="text" value={userId} onChange={handleChange}/>
-            </label>
-            <br/>
-            <label>
-                Episode Id <br/>
-                <input type="text" value={episodeId} onChange={handleChangeEpisodeNumber}/>
-            </label>
-            <br/>
             <label>
                 Rating <br/>
                 <input type="text" value={rating} onChange={handleChangeReleaseDate}/>

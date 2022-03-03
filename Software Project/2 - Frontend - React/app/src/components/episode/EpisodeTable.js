@@ -4,6 +4,7 @@ import axios from "axios";
 import Button from "../Button";
 import {Link} from "react-router-dom";
 import {MyEpisodeTable} from "./MyEpisodeTable";
+import {UnwatchedEpisodeTable} from "./UnwatchedEpisodeTable";
 
 export const EpisodeTable = ({userProfile, onClick, my}) => {
     const [rowData, setRowData] = useState([]);
@@ -32,6 +33,10 @@ export const EpisodeTable = ({userProfile, onClick, my}) => {
         {
             Header: 'Release Date',
             accessor: "releaseDate"
+        },
+        {
+            Header: 'Rating',
+            accessor: "rating"
         }
     ];
 
@@ -42,19 +47,11 @@ export const EpisodeTable = ({userProfile, onClick, my}) => {
                     setRowData(res.data);
                 })
         } else {
-            if (!my) {
-                axios.get("http://localhost:8080/episode/readNotByUserId", {params: {userId: userProfile.id}}).then(
+                axios.get("http://localhost:8080/rating/readRatingsNotByUser", {params: {userId: userProfile.id}}).then(
                     (res) => {
                         setRowData(res.data);
                     }
                 )
-            } else {
-                axios.get("http://localhost:8080/episode/readByUserId", {params: {userId: userProfile.id}}).then(
-                    (res) => {
-                        setRowData(res.data);
-                    }
-                )
-            }
 
         }
     }, [userProfile, my]);
@@ -78,7 +75,7 @@ export const EpisodeTable = ({userProfile, onClick, my}) => {
         axios.delete("http://localhost:8080/episode/delete", {params: {"episodeId": episode.id}}).then(
             res => {
                 window.alert("Succesfull :)");
-                window.open("/allEpisodes", "_self");
+                window.open("/users", "_self");
             })
     }
 
@@ -116,31 +113,7 @@ export const EpisodeTable = ({userProfile, onClick, my}) => {
                 ))}
                 </thead>
                 <MyEpisodeTable userProfile={userProfile}/>
-                <tbody {...getTableBodyProps()}>
-                {
-                    rows.map(row => {
-                        prepareRow(row)
-                        return (
-                            <tr {...row.getRowProps()}>
-                                {row.cells.map(cell => {
-                                    return (<td {...cell.getCellProps()}>{cell.render('Cell')}</td>)
-                                })}
-                                <td><Link to={"/editEpisode/" + row.values.id}><Button id={row.values.id}
-                                                                                       text={"Edit"}
-                                                                                       buttonType={"btn-primary"}/></Link>
-                                </td>
-                                <td><a><Button id={row.values.id} text={"Delete"} buttonType={"btn-danger delete"}
-                                               onClick={(event) => deleteEpisode(event, row.values)}/></a></td>
-                                {(userProfile == null) ? <td></td> :
-                                    <td><a><Button id={row.values.id} text={"Watch"} buttonType={"btn-success"}
-                                                   onClick={(event) => watchEpisode(event, userProfile, row.values)}/></a>
-                                    </td>}
-                                <td></td>
-                            </tr>
-                        )
-                    })
-                }
-                </tbody>
+                <UnwatchedEpisodeTable userProfile={userProfile}/>
             </table>
         </div>
     )

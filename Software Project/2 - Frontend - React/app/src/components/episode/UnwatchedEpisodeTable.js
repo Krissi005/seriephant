@@ -4,7 +4,7 @@ import axios from "axios";
 import Button from "../Button";
 import {Link} from "react-router-dom";
 
-export const MyEpisodeTable = ({userProfile}) => {
+export const UnwatchedEpisodeTable = ({userProfile}) => {
     const [rowData, setRowData] = useState([]);
 
     const columnDefs = [
@@ -39,18 +39,12 @@ export const MyEpisodeTable = ({userProfile}) => {
     ];
 
     useEffect(() => {
-        if (userProfile == null) {
-            axios.get("http://localhost:8080/rating/read").then(
-                res => {
-                    setRowData(res.data);
-                })
-        } else {
-            axios.get("http://localhost:8080/rating/readRatingsByUser", {params: {userId: userProfile.id}}).then(
-                (res) => {
-                    setRowData(res.data);
-                }
-            )
-        }
+        axios.get("http://localhost:8080/rating/readRatingsNotByUser", {params: {userId: userProfile.id}}).then(
+            (res) => {
+                setRowData(res.data);
+            }
+        )
+
     }, []);
 
     const columns = useMemo(() => columnDefs, []);
@@ -72,23 +66,23 @@ export const MyEpisodeTable = ({userProfile}) => {
         axios.delete("http://localhost:8080/episode/delete", {params: {"episodeId": episodeId}}).then(
             res => {
                 window.alert("Succesfull :)");
-                window.open("/allEpisodes", "_self");
+                window.open("/users", "_self");
             })
     }
 
-    const unwatch = (event, userProfile, episodeId) => {
-        axios.put("http://localhost:8080/user/removeEpisodes", {
-                "id": userProfile.id,
-                "watchedEpisodes": [
-                    {
-                        "id": episodeId
-                    }
-                ]
-            }
+    const watch = (event, userProfile, episodeId) => {
+        axios.put("http://localhost:8080/user/updateEpisodes", {
+            "id": userProfile.id,
+            "watchedEpisodes": [
+                {
+                    "id": episodeId
+                }
+            ]
+        }
         ).then(res => {
             if (res.status === 200) {
                 window.open("/users", "_self");
-                window.alert("Successful :)");
+                window.alert("Succesfull :)");
             } else {
                 window.alert("Failed :(");
             }
@@ -102,7 +96,7 @@ export const MyEpisodeTable = ({userProfile}) => {
                 return (
                     <tr {...row.getRowProps()}>
                         {row.cells.map(cell => {
-                            return (<td {...cell.getCellProps() }>{cell.render('Cell')}</td>)
+                            return (<td {...cell.getCellProps()}>{cell.render('Cell')}</td>)
                         })}
                         <td><Link
                             to={"/editEpisode/" + row.cells[0].value}><Button
@@ -110,16 +104,13 @@ export const MyEpisodeTable = ({userProfile}) => {
                             text={"Edit"}
                             buttonType={"btn-primary"}/></Link>
                         </td>
-                        <td><a><Button id={row.cells[0].value} text={"Delete"} buttonType={"btn-danger delete"}
+                        <td><a><Button id={row.cells[0].value}
+                                       text={"Delete"} buttonType={"btn-danger delete"}
                                        onClick={(event) => deleteEpisode(event, row.cells[0].value)}/></a></td>
                         <td><a><Button id={row.cells[0].value}
-                                       text={"Unwatch"} buttonType={"btn-secondary"}
-                                       onClick={(event) => unwatch(event, userProfile, row.cells[0].value)}/></a>
-                        </td>
-                        <td><Link to={"/editRating/" + row.cells[0].value}><Button
-                            id={row.cells[0].value}
-                            text={"Rate"}
-                            buttonType={"btn-dark"}/></Link>
+                                       text={"Watch"} buttonType={"btn-success"}
+                                       onClick={(event) => watch(event, userProfile, row.cells[0].value)}/></a></td>
+                        <td>
                         </td>
                     </tr>
                 )
