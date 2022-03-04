@@ -82,7 +82,7 @@ export const UnwatchedEpisodeTable = ({userProfile, onClick}) => {
         }
         ).then(res => {
             if (res.status === 200) {
-                navigate('/series');
+                navigate('/myEpisodes');
                 window.alert("Succesfull :)");
             } else {
                 window.alert("Failed :(");

@@ -48,19 +48,9 @@ public class SerieDTO {
         return id;
     }
 
-    @JsonProperty("id")
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     @JsonProperty("title")
     public String getTitle() {
         return title;
-    }
-
-    @JsonProperty("title")
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     @JsonProperty("description")
@@ -68,19 +58,9 @@ public class SerieDTO {
         return description;
     }
 
-    @JsonProperty("description")
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     @JsonProperty("releaseYear")
     public Integer getReleaseYear() {
         return releaseYear;
-    }
-
-    @JsonProperty("releaseYear")
-    public void setReleaseYear(Integer releaseYear) {
-        this.releaseYear = releaseYear;
     }
 
     @JsonProperty("genre")
@@ -88,19 +68,9 @@ public class SerieDTO {
         return genreDTO;
     }
 
-    @JsonProperty("genre")
-    public void setGenreDTO(GenreDTO genreDTO) {
-        this.genreDTO = genreDTO;
-    }
-
     @JsonAnyGetter
     public Map<String, Object> getAdditionalProperties() {
         return this.additionalProperties;
-    }
-
-    @JsonAnySetter
-    public void setAdditionalProperty(String name, Object value) {
-        this.additionalProperties.put(name, value);
     }
 
 }

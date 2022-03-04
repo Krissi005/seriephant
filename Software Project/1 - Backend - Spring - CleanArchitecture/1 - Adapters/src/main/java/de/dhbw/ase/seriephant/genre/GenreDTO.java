@@ -39,19 +39,9 @@ public class GenreDTO {
         return id;
     }
 
-    @JsonProperty("id")
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     @JsonProperty("title")
     public String getTitle() {
         return title;
-    }
-
-    @JsonProperty("title")
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     @JsonProperty("description")
@@ -59,19 +49,9 @@ public class GenreDTO {
         return description;
     }
 
-    @JsonProperty("description")
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     @JsonAnyGetter
     public Map<String, Object> getAdditionalProperties() {
         return this.additionalProperties;
-    }
-
-    @JsonAnySetter
-    public void setAdditionalProperty(String name, Object value) {
-        this.additionalProperties.put(name, value);
     }
 
 }

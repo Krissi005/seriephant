@@ -47,19 +47,9 @@ public class RatingDTO {
         return ratingKeyDTO;
     }
 
-    @JsonProperty("id")
-    public void setRatingKeyDTO(RatingKeyDTO id) {
-        this.ratingKeyDTO = ratingKeyDTO;
-    }
-
     @JsonProperty("user")
     public UserDTO getUserDTO() {
         return userDTO;
-    }
-
-    @JsonProperty("user")
-    public void setUserDTO(UserDTO userDTO) {
-        this.userDTO = userDTO;
     }
 
     @JsonProperty("episode")
@@ -67,29 +57,14 @@ public class RatingDTO {
         return episodeDTO;
     }
 
-    @JsonProperty("episode")
-    public void setEpisodeDTO(EpisodeDTO episodeDTO) {
-        this.episodeDTO = episodeDTO;
-    }
-
     @JsonProperty("rating")
     public Double getRating() {
         return rating;
     }
 
-    @JsonProperty("rating")
-    public void setRating(Double rating) {
-        this.rating = rating;
-    }
-
     @JsonAnyGetter
     public Map<String, Object> getAdditionalProperties() {
         return this.additionalProperties;
-    }
-
-    @JsonAnySetter
-    public void setAdditionalProperty(String name, Object value) {
-        this.additionalProperties.put(name, value);
     }
 
 }

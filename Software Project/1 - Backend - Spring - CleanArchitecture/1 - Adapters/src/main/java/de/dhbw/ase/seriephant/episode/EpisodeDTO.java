@@ -54,19 +54,9 @@ public class EpisodeDTO {
         return id;
     }
 
-    @JsonProperty("id")
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     @JsonProperty("title")
     public String getTitle() {
         return title;
-    }
-
-    @JsonProperty("title")
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     @JsonProperty("releaseDate")
@@ -74,19 +64,9 @@ public class EpisodeDTO {
         return releaseDate;
     }
 
-    @JsonProperty("releaseDate")
-    public void setReleaseDate(String releaseDate) {
-        this.releaseDate = releaseDate;
-    }
-
     @JsonProperty("episodeNumber")
     public Integer getEpisodeNumber() {
         return episodeNumber;
-    }
-
-    @JsonProperty("episodeNumber")
-    public void setEpisodeNumber(Integer episodeNumber) {
-        this.episodeNumber = episodeNumber;
     }
 
     @JsonProperty("season")
@@ -94,29 +74,14 @@ public class EpisodeDTO {
         return seasonDTO;
     }
 
-    @JsonProperty("season")
-    public void setSeasonDTO(SeasonDTO seasonDTO) {
-        this.seasonDTO = seasonDTO;
-    }
-
     @JsonProperty("actors")
     public List<ActorDTO> getActorDTOs() {
         return actorDTOs;
     }
 
-    @JsonProperty("actors")
-    public void setActorDTOs(List<ActorDTO> actorDTOs) {
-        this.actorDTOs = actorDTOs;
-    }
-
     @JsonAnyGetter
     public Map<String, Object> getAdditionalProperties() {
         return this.additionalProperties;
-    }
-
-    @JsonAnySetter
-    public void setAdditionalProperty(String name, Object value) {
-        this.additionalProperties.put(name, value);
     }
 
 }

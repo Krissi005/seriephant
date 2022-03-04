@@ -40,19 +40,9 @@ public class SeasonDTO {
         return id;
     }
 
-    @JsonProperty("id")
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     @JsonProperty("seasonNumber")
     public Integer getSeasonNumber() {
         return seasonNumber;
-    }
-
-    @JsonProperty("seasonNumber")
-    public void setSeasonNumber(Integer seasonNumber) {
-        this.seasonNumber = seasonNumber;
     }
 
     @JsonProperty("serie")
@@ -60,19 +50,9 @@ public class SeasonDTO {
         return serieDTO;
     }
 
-    @JsonProperty("serie")
-    public void setSerieDTO(SerieDTO serieDTO) {
-        this.serieDTO = serieDTO;
-    }
-
     @JsonAnyGetter
     public Map<String, Object> getAdditionalProperties() {
         return this.additionalProperties;
-    }
-
-    @JsonAnySetter
-    public void setAdditionalProperty(String name, Object value) {
-        this.additionalProperties.put(name, value);
     }
 
 }

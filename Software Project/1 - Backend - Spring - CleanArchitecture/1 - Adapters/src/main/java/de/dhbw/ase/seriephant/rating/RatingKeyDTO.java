@@ -36,30 +36,15 @@ public class RatingKeyDTO {
         return userId;
     }
 
-    @JsonProperty("userId")
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
     @JsonProperty("episodeId")
     public Long getEpisodeId() {
         return episodeId;
-    }
-
-    @JsonProperty("episodeId")
-    public void setEpisodeId(Long episodeId) {
-        this.episodeId = episodeId;
     }
 
 
     @JsonAnyGetter
     public Map<String, Object> getAdditionalProperties() {
         return this.additionalProperties;
-    }
-
-    @JsonAnySetter
-    public void setAdditionalProperty(String name, Object value) {
-        this.additionalProperties.put(name, value);
     }
 
 }

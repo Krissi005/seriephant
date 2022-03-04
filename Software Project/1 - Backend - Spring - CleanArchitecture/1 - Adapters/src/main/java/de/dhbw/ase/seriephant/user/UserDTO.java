@@ -45,19 +45,9 @@ public class UserDTO {
         return id;
     }
 
-    @JsonProperty("id")
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     @JsonProperty("firstName")
     public String getFirstName() {
         return firstName;
-    }
-
-    @JsonProperty("firstName")
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
     }
 
     @JsonProperty("lastName")
@@ -65,28 +55,13 @@ public class UserDTO {
         return lastName;
     }
 
-    @JsonProperty("lastName")
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
     @JsonProperty("watchedEpisodes")
     public List<EpisodeDTO> getWatchedEpisodeDTOs() {
         return watchedEpisodeDTOs;
     }
 
-    @JsonProperty("watchedEpisodes")
-    public void setWatchedEpisodeDTOs(List<EpisodeDTO> watchedEpisodeDTOs) {
-        this.watchedEpisodeDTOs = watchedEpisodeDTOs;
-    }
-
     @JsonAnyGetter
     public Map<String, Object> getAdditionalProperties() {
         return this.additionalProperties;
-    }
-
-    @JsonAnySetter
-    public void setAdditionalProperty(String name, Object value) {
-        this.additionalProperties.put(name, value);
     }
 }
