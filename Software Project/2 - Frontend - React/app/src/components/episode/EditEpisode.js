@@ -57,7 +57,7 @@ export const EditEpisode = () => {
     }
 
     return (<div className="container">
-        <h1>Create New Episode</h1>
+        <h1>Edit New Episode</h1>
         <form>
             <label>
                 Title <br/>

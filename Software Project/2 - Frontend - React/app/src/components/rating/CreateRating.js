@@ -33,7 +33,8 @@ export const CreateRating = (userProfile) => {
             }
         ).then(res => {
             if (res.status === 200) {
-                navigate("/users");
+                window.reload(false)
+                navigate("/allEpisodes");
                 window.alert("Successful :)");
             } else {
                 window.alert("Failed :(");

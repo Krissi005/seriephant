@@ -3,12 +3,13 @@ import {useTable} from 'react-table'
 import axios from "axios";
 import Button from "../Button";
 import {Link} from "react-router-dom";
-import {MyEpisodeTable} from "./MyEpisodeTable";
+import {WatchedEpisodeTable} from "./WatchedEpisodeTable";
 import {UnwatchedEpisodeTable} from "./UnwatchedEpisodeTable";
 import {AllEpisodeTable} from "./AllEpisodeTable";
 
 export const EpisodeTable = ({userProfile, onClick, my}) => {
     const [rowData, setRowData] = useState([]);
+    const [reload, setReload] = useState(false);
 
     const columnDefs = [
         {
@@ -72,6 +73,10 @@ export const EpisodeTable = ({userProfile, onClick, my}) => {
         prepareRow
     } = tableInstance
 
+    const reloading = (bool) => {
+        setReload(!bool);
+    }
+
     return (<div>
             <Link to={"/createEpisode"}><Button id={"create"} text={"Create Episode"}
                                                 buttonType={"btn-success"}/></Link>
@@ -86,7 +91,7 @@ export const EpisodeTable = ({userProfile, onClick, my}) => {
                 ))}
                 </thead>
                 {userProfile == null ? <AllEpisodeTable/>:<React.Fragment>
-                    <MyEpisodeTable userProfile={userProfile}/>
+                    <WatchedEpisodeTable userProfile={userProfile} reload={reloading} state={reload}/>
                     <UnwatchedEpisodeTable userProfile={userProfile}/></React.Fragment>}
                 </table>
         </div>

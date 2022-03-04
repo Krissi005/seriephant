@@ -10,8 +10,9 @@ const Header = ({chosenUser, reset}) => {
                 <a className="navbar-brand" href="https://github.com/Krissi005/seriephant">
                     <Image src={logo1} height="80px"/>
                 </a>
-                {chosenUser==null?
-                     "":(<Button onClick={(event) => reset(event, null)} text={chosenUser.firstName +" "+ chosenUser.lastName} buttonType={"btn-danger"}/>)}
+                {chosenUser == null ?
+                    "" : (<Button onClick={(event) => reset(event, null)}
+                                  text={chosenUser.firstName + " " + chosenUser.lastName} buttonType={"btn-danger"}/>)}
                 <ul className="navbar-nav">
                     <li id={"userNav"} className="nav-item">
                         <Link to={"/users"}>Users</Link>
@@ -25,6 +26,10 @@ const Header = ({chosenUser, reset}) => {
                     <li className="nav-item">
                         <Link to={"/allEpisodes"}>All Episodes</Link>
                     </li>
+                    {chosenUser == null ?
+                        "" : (<li className="nav-item">
+                            <Link to={"/myEpisodes"}>My Episodes</Link>
+                        </li>)}
                     <li className="nav-item">
                         <Link to={"/genres"}>Genres</Link>
                     </li>

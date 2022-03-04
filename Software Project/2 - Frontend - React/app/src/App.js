@@ -89,7 +89,7 @@ class App extends React.Component {
                         <Route path="/createEpisode" element={<CreateEpisode/>}/>
                         <Route path="/watchEpisode/:episodeId" element={<WatchEpisode/>}/>
                         <Route path="/editEpisode/:episodeId" element ={<EditEpisode/>}/>
-                        <Route path="/episodes" element={<MyEpisodeTable userProfile={this.state.chosenUserProfile}
+                        <Route path="/myEpisodes" element={<MyEpisodeTable userProfile={this.state.chosenUserProfile}
                                                                           onClick={this.chooseUser}/>}/>
                         <Route path="/rating" element={<RatingTable userProfile={this.state.chosenUserProfile}
                                                                     onClick={this.chooseUser}/>}/>
