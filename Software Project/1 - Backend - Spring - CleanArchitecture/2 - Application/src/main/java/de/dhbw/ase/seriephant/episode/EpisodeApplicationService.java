@@ -117,7 +117,7 @@ public class EpisodeApplicationService {
               |_|
     */
     public Episode updateEpisode(Episode episode) throws ValidationException {
-        if (episode != null && episode.getId() == null && this.episodeRepository.existsById(episode.getId())) {
+        if (episode != null && episode.getId() != null && this.episodeRepository.existsById(episode.getId())) {
             Episode foundEpisode = this.episodeRepository.getById(episode.getId());
             foundEpisode.setTitle(episode.getTitle());
             foundEpisode.setReleaseDate(episode.getReleaseDate());

@@ -19,7 +19,4 @@ public class RatingKey implements Serializable {
 
     @Column(name = "episode_id")
     Long episodeId;
-
-    // standard constructors, getters, and setters
-    // hashcode and equals implementation
 }
