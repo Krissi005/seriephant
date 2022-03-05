@@ -117,22 +117,22 @@ public class EpisodeApplicationService {
               |_|
     */
     public Episode updateEpisode(Episode episode) throws ValidationException {
-        if (episode != null && episode.getId() != null && this.episodeRepository.existsById(episode.getId())) {
-            Episode foundEpisode = this.episodeRepository.getById(episode.getId());
-            foundEpisode.setTitle(episode.getTitle());
-            foundEpisode.setReleaseDate(episode.getReleaseDate());
-            foundEpisode.setEpisodeNumber(episode.getEpisodeNumber());
-            if (episode.getActors() != null && !episode.getActors().isEmpty()) {
-                for (Actor actor : foundEpisode.getActors()) {
-                    episode.removeActor(actor);
-                }
-                for (Actor actor : episode.getActors()) {
-                    episode.addActor(actor);
-                }
-            }
-            return this.updateSeason(episode, foundEpisode);
+        if (episode == null || episode.getId() == null || !this.episodeRepository.existsById(episode.getId())) {
+            throw new ValidationException("Episode is not valid.");
         }
-        throw new ValidationException("Episode is not valid.");
+        Episode foundEpisode = this.episodeRepository.getById(episode.getId());
+        foundEpisode.setTitle(episode.getTitle());
+        foundEpisode.setReleaseDate(episode.getReleaseDate());
+        foundEpisode.setEpisodeNumber(episode.getEpisodeNumber());
+        if (episode.getActors() != null && !episode.getActors().isEmpty()) {
+            for (Actor actor : foundEpisode.getActors()) {
+                episode.removeActor(actor);
+            }
+            for (Actor actor : episode.getActors()) {
+                episode.addActor(actor);
+            }
+        }
+        return this.updateSeason(episode, foundEpisode);
     }
 
     private Episode updateSeason(Episode episode, Episode foundEpisode) throws ValidationException {

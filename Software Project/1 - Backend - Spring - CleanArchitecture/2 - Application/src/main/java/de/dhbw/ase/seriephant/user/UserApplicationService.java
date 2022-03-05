@@ -121,7 +121,7 @@ public class UserApplicationService {
     }
 
     public User updateSeenEpisodesOfUser(User user) throws ValidationException {
-        if (user == null && user.getId() == null) {
+        if (user == null || user.getId() == null) {
             throw new ValidationException("User is not valid.");
         }
 
@@ -160,7 +160,7 @@ public class UserApplicationService {
     }
 
     public User removeSeenEpisodeOfUser(User user) throws ValidationException {
-        if (user == null && user.getId() == null) {
+        if (user == null || user.getId() == null) {
             throw new ValidationException("User is not valid.");
         }
 
