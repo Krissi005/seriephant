@@ -2,7 +2,6 @@ package de.dhbw.ase.seriephant.actor;
 
 import de.dhbw.ase.seriephant.domain.actor.Actor;
 import de.dhbw.ase.seriephant.domain.actor.ActorRepository;
-import de.dhbw.ase.seriephant.domain.episode.EpisodeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,12 +11,11 @@ import java.util.List;
 @Service
 public class ActorApplicationService {
     private final ActorRepository actorRepository;
-    private final EpisodeRepository episodeRepository;
+
 
     @Autowired
-    private ActorApplicationService(ActorRepository actorRepository, EpisodeRepository episodeRepository) {
+    private ActorApplicationService(ActorRepository actorRepository) {
         this.actorRepository = actorRepository;
-        this.episodeRepository = episodeRepository;
     }
 
     /************************************************************************************************************************************/
