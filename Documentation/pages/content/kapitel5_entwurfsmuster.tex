@@ -1,0 +1,32 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Descr:       Vorlage für Berichte der DHBW-Karlsruhe
+%% Author:      Prof. Dr. Jürgen Vollmer, vollmer@dhbw-karlsruhe.de
+%% Modified :	Nico Holzhäuser, TINF19B4
+%% -*- coding: utf-8 -*-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Entwurfsmuster}
+Das Objektmuster \hk{Bridge Pattern} kam in diesem Projekt zum Einsatz. 
+
+\section{Begründung des Einsatzes}
+Dieses Entwurfsmuster wurde eingesetzt, da so eine Entkopplung von Domänenmodell und Persistierungslogik gelingt. Die Trennung von Domänenmodell und Persistierungslogik ist Teil von Clean Architecture, da so die Persistierung leicht ausgetauscht werden kann. Hierbei erfolgt die Implementierung in Form eines Interfaces im Domänenmodell, welches von einer Bridge mit Hilfe eines ORM-Plugins in der Plugins-Schicht umgesetzt wird.
+
+\section{\ac{UML} Vorher}
+Im folgenden sieht man das \ac{UML} Diagramm vor der Verwendung des Bridge Patterns. Hierbei hat das Repository als Child von einem JPA Repository direkt auf die Datenbank zugegriffen. Die Persistierungslogik war so nicht getrennt und konnte nur mit einigen Anpassungen ausgetauscht werden.
+
+        \begin{figure}[H]
+	        \centering
+            \shadowimage[width=0.8\textwidth]{zfiles/Bilder/uml_vorher.png}
+	        \caption{UML Diagram ohne Benutzung des Bridge Pattern}
+	        \label{a.2.cleanArchitecture}
+        \end{figure}
+
+\section{\ac{UML} Nachher}
+Beim \ac{UML} Diagramm nach der Verwendung des Bridge Patterns sieht man, das mehr Klassen beteiligt sind. Zwischen Repository und JPARepository sind zum einen die Bridge sowie das Spring DataRepository dazwischen. Dadurch wird die Persistierung nicht mehr direkt, sondern über die Bridge durchgeführt.
+
+        \begin{figure}[H]
+	        \centering
+            \shadowimage[width=0.8\textwidth]{zfiles/Bilder/uml_nachher.png}
+	        \caption{UML Diagram mit Benutzung des Bridge Pattern}
+	        \label{a.2.cleanArchitecture}
+        \end{figure}

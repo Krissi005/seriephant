@@ -1,0 +1,62 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Descr:       Vorlage für Berichte der DHBW-Karlsruhe
+%% Author:      Prof. Dr. Jürgen Vollmer, vollmer@dhbw-karlsruhe.de
+%% Modified :	Nico Holzhäuser, TINF19B4
+%% -*- coding: utf-8 -*-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Refactoring}
+\label{refactoring}
+
+\section{Identifizieren von Codesmells}
+
+    \subsection{Code Smell 1}
+    Hierbei handelt es sich um den Code Smell "Long method". Methoden sollen kurz und übersichtlich sein, die folgende Methode ist aber lang und verschachtelt.
+    
+    \begin{figure}[h]
+	    \centering
+        \shadowimage[width=0.95\textwidth]{zfiles/Bilder/long_method_old.png}
+	    %\shadowimage[height=250px]{./zfiles/Bilder/cleanArchitecture.png}
+	    \caption{Code Smell "Long method" before fix}
+	    \label{a.2.cleanArchitecture}
+    \end{figure}
+    
+    
+        \subsubsection{Begründung}
+        Die Methode ist 20 Zeilen lang und sehr verschachtelt. Dadurch ist es schwer, auf den ersten Blick zu erkennen, was die Methode macht. Auch ist die Methode nicht übersichtlich.
+
+        \subsubsection{Fix}
+        Durch das Auslagern von einzelnen Teilen der Methode wird klarer, was wo passiert und warum. In meinem Projekt gab es einige weitere lange Methoden, die sehr unübersichtlich waren. Durch die Umstrukturierung von einer langen Methode in mehrere kurze werden die einzelnen Teile der Methode übersichtlicher und sind leichter verständlich.
+    
+        \begin{figure}[h]
+	        \centering
+            \shadowimage[width=0.8\textwidth]{zfiles/Bilder/long_method_fix.png}
+	        %\shadowimage[height=250px]{./zfiles/Bilder/cleanArchitecture.png}
+	        \caption{Code Smell "Long method" before fix}
+	        \label{a.2.cleanArchitecture}
+        \end{figure}
+    
+    
+
+    \subsection{Code Smell 2}
+    Bei diesem Code Smell geht es darum, dass ungenutze private Variablen entfernt werden.
+    \begin{figure}[h]
+	    \centering
+        \shadowimage[width=0.95\textwidth]{zfiles/Bilder/unused_variable_old.png}
+	    %\shadowimage[height=250px]{./zfiles/Bilder/cleanArchitecture.png}
+	    \caption{Code Smell "Long method" before fix}
+	    \label{a.2.cleanArchitecture}
+    \end{figure}
+
+        \subsubsection{Begründung}
+        Wenn eine private Variable oder ein Import in der Klasse nicht benutzt werden, sind diese unnötig und verschlechtern nur die Übersichtlichkeit und Fehleranfälligkeit des Codes. 
+
+        \subsubsection{Fix}
+        Für den Fix wurden hierbei einfach die unbenutze private Variablendeklaration entfernt und auch die Zuweisung aus dem Konstruktor wurde entfernt.
+        \begin{figure}[h]
+	        \centering
+            \shadowimage[width=0.8\textwidth]{zfiles/Bilder/unused_variable_fix.png}
+	        %\shadowimage[height=250px]{./zfiles/Bilder/cleanArchitecture.png}
+	        \caption{Code Smell "Long method" before fix}
+	        \label{a.2.cleanArchitecture}
+        \end{figure}

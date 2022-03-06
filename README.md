@@ -4,7 +4,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/Krissi005/seriephant">
-    <img src="Documentation/seriephant_short.png" alt="Logo" height="384">
+    <img src="Documentation/zfiles/Logos/seriephant_short.png" alt="Logo" height="384">
   </a>
 
   <p align="center">
@@ -67,22 +67,31 @@ To get a local copy up and running follow these simple example steps.
 - IDE, which supports Maven Projects for the Backend
 - IDE, which supports NPM for the Frontend
 
-### Installation - Backend
+### Installation
 
 1. Clone the repo
    ```sh
    git clone https://github.com/Krissi005/seriephant.git
    ```
-2. Navigate in the Folder /1 - Backend - Spring/
-3. Download the needed Maven Dependencys to run the Project
+
+#### Installation - Backend
+
+2. Import the Folder /1 - Backend - Spring - CleanArchitecture as a project in your IDE
+3. Download the needed Maven Dependencies to run the Project
    ```sh
    mvn install
    ```
 4. Start the Backend in your IDE by Executing the main Method in the Class 'SeriephantApplication.java'
 
-### Installation - Frontend
+#### Installation - Frontend
 
-TBD
+2. Open the Folder /1 - Backend - Spring - CleanArchitecture as a project in your IDE
+3. Download the needed Maven Dependencies to run the Project
+   ```sh
+   npm install
+   ```
+4. Start the Frontend in your IDE by Executing the start Method in the Json File 'package.json'
+5. Access <a href="https://localhose:3000">https://localhose:3000</a> on your Browser to view the frontend
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -93,6 +102,9 @@ TBD
 ### Backend
 - [Swagger](http://localhost:8080/swagger-ui/index.html)
 - [H2Console](http://localhost:8080/h2-ui/login.jsp)
+
+### Frontend
+- [WebApp](http://localhost:3000)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 

@@ -1,0 +1,103 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Descr:       Vorlage für Berichte der DHBW-Karlsruhe
+%% Author:      Prof. Dr. Jürgen Vollmer, vollmer@dhbw-karlsruhe.de
+%% Modified :	Kristin Agne, TINF19B4
+%% -*- coding: utf-8 -*-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Programming Principles}
+
+\section{SOLID}
+SOLID steht für weiter fünf Prinzipien, die im folgenden betrachtet werden.
+
+    \subsection{Single Responsibility}
+    
+        \subsubsection{Analyse}
+        Das Prinzip wird bei den Repository Klassen eingesetzt. Hierbei hat jedes Repository nur eine Funktion. Diese Funktion ist die Schittstelle zur Datenbank.
+        
+        \subsubsection{Begründung}
+        Der Grund dafür ist, dass eine Klasse nur eine Zuständigkeit haben soll. Es kapselt so die Zuständigkeit, diese sind klar definiert, da jede Klasse nur einen Nutzen hat.
+
+    \subsection{Open Closed Principle}
+    
+        \subsubsection{Analyse}
+        Hierbei geht es darum, dass Objekte einfach erweiterbar sind, ohne sie grundsätzlich zu ändern. In dem Projekt kommt dieses Prinzip zum Beispiel in den Services oder den Controllern zum Einsatz. Hierbei kann der Controller um einen Endpunkt erweitert werden, ohne dass die Klasse grundlegend modifiziert werden muss. Auch bei den Services trifft dies zu.
+        
+        \subsubsection{Begründung}
+        Der Grund für die Benutzung dieses Prinzips ist, dass eine Erweiterung an Funktionen oft vorkommt. Wenn man jedes Mal die Klasse von Grund auf ändern müsste, wäre das sehr aufwendig. Durch das Open Closed Principle kann man neue Features ohne großen Aufwand hinzufügen.
+
+    \subsection{Liskov Substitution Principle}
+    
+        Das Liskov Substitution Principle findet in dem Projekt keine Anwendung. Grund dafür ist, dass es keine Vererbung in dem Projekt gibt.
+
+    \subsection{Interface Segregation Principle}
+    
+        \subsubsection{Analyse}
+        Das Interface Segregation Principle wurde in den Repository Interfaces verwendet. Hierbei wurden keine unnötigen Schnittstellenteile implementiert.
+        
+        \subsubsection{Begründung}
+        Der Grund hierfür ist, dass Schnittstellen so kleiner sind und nur verwendete Methoden implementieren. Dadurch wird die Wartbarkeit erheblich verbessert und der Code wird kompakter und besser wiederverwendbar.
+
+\subsection{Dependency Inversion Principle}
+
+        \subsubsection{Analyse}
+        Das Dependency Inversion Principle kommt vorallem bei objektorientierten Entwürfen zum Einsatz und strukturiert das Projekt in Module. Die einzelnen Module stellen hierbei verschiedenen Ebenen dar. Die Ebenen haben verschiedene Ordnungen, und sind abhängig voneinander. In diesem Projekt ist die niedrigste Ebene die Plugin-Schicht (siehe \cref{cleanArchitecture}). Module niedriger Ebenen sind immer von Modulen höherer Ebenen abhängig, da Module niedrigerer Ebenen die Vorgänge der höheren Ebene spezifizieren.
+        
+        \subsubsection{Begründung}
+        Der Grund, warum man die verschiedenen Ebenen in Module aufteilt und somit eine Abhängigkeit von niedrigen zu höheren Ebenen realisiert, ist, dass man so dem Prinzip der Hierarchie nicht widersprechen kann. Desweiteren wird so die Vorstellung der Clean Architecture zwangsweise umgesetzt und Veränderungen in der Architektur oder des Design sind leicht umsetzbar. 
+
+\section{GRASP}
+GRASP steht für General Responsibilits Assignemnt Software Principles. Darunter werden viele Muster vertsanden, wovon im folgenden zwei näher betrachtet werden, die voneinander abhängen.
+
+    \subsection{Serivce and Controller}
+    Im folgenden wird die Betrachtung von Low Coupling und High Cohesion in den Services und Controllern betrachtet.
+
+        \subsubsection{Low Coupling}
+        
+            \myparagraph{Analyse}
+            Bei dem Prinzip Low Coupling geht es um die Minimierung der Abhängigkeiten einer Klasse von der Umgebung. Hierbei sollten die einzelnen Klassen und Objekte möglichst wenig untereinander vernetzt sein, sodass die Abhängigkeiten so gering wie möglich gehalten sind. Dieses Prinzip wurde in einigen ApplicationServices umgesetzt, aber nicht in allen. Der ActorApplicationService oder der GenreApplicationService sind jeweils nur von einem Repository, von dem ApplicationRepository bzw. dem GenreRepository abhängig. Hier ist das Prinzip des Low Coupling umgestezt. Im Gegensatz dazu wurde das Prinzip im EpisodeApplicationService nicht umgesetzt, da hier eine Abhängigkeit zu vier Repositories besteht. Hier spricht man von High Coupling.
+            
+            \myparagraph{Begründung}
+            Der Grund für das Einsetzen von Low Coupling ist die leichte Anpassbarkeit. Durch die geringen Abhängikeiten können ActorApplicationService und GenreApllication im Gegensatz zum EpisdoeApllicationService leicht angepasst werden. Auch die Verständlichkeit der beiden Klassen mit Low Coupling ist einfacher und man kann die beiden Klassen besser wieder verwenden. Zusätzlich ist das Testen von Klassen mit Low Coupling einfacher, da man nur auf wenige Abhängigkeiten achten muss.
+    
+        \subsubsection{High Cohesion}
+            
+            \myparagraph{Analyse}
+            Bei dem Prinzip High Cohesion geht es um die Vermeidung von verschiedenen Verantwortlichkeiten bzw. Aufgaben innerhalb einer Klasse. Hierbei wird betrachtet, inwieweit die Objekte und Attribute einer Klasse zusammenarbeiten und wie viel sie über andere Objekte wissen müssen. Im Projekt wurde dieses Prinzip zum Beispiel in den Controllern umgesetzt. Hierbei bekommen die Controller eine Anzahl von Parametern und eine Methode, und sie verarbeiten diese Daten mit Hilfe des Services. Dabei haben die Controller nur eine Art von Verantwortlichkeit und somit ist das Prinzip der hohen Kohäsion hier umgesetzt.
+            
+            \myparagraph{Begründung}
+            Der Grund für die Umsetzung des Prinzips ist, dass man so die Übersichtlichkeit der Klasse deutlich verbessert und die Komplexität minimiert.
+            
+        \subsubsection{Zusammenhang Low Coupling und Hogh Cohesion}
+        Diese zwei Prinzipien stehen hier in Korrelation zueinander. Desto höher die Cohesion wird und desto mehr man Verantwortlichkeiten in andere Klassen auslagert, desto höher wird auch die Abhängigkeit. High Cohesion geht also mit High Coupling einher, beides voll umzusetzen ist schwierig, man sollte ein Mittel finden, bei dem das Cpupling möglichst low und die Cohasion möglichst high ist.
+    
+    \subsection{Domain}
+    Im Bereich der Domäne verhält sich die Verbindung zwischen Low Coupling und High Cohesion synchron.
+
+        \subsubsection{Loose Coupling}
+        
+            \myparagraph{Analyse}
+            Bei dem Prinzip Loose Coupling geht es um die Minimierung der Abhängigkeiten einer Klasse von der Umgebung. Betrachtet man die Klassen innerhalb der Domäne, sieht man, dass hier eine Tight Coupling ist. Da die beispielsweise die Klasse Genre eine List<Serie> und jede Serie ein Genre Objekt hat, sind die beiden Klassen gekoppelt. 
+            
+            \myparagraph{Begründung}
+            Der Grund für diese Umsetzung und die hohe Kopplung ist, wie in Spring die Entities angelegt wurden und wie mit deren Beziehungen umgegangen wird. Hierbei werden komplette Objekte anstelle von ihren Id's referenziert.
+    
+        \subsubsection{High Cohesion}
+            
+            \myparagraph{Analyse}
+            Bei dem Prinzip High Cohesion geht es um die Vermeidung von verschiedenen Verantwortlichkeiten bzw. Aufgaben innerhalb einer Klasse. Innerhalb der Domäne hätte man aufgrund er Tight Coupling eigentlich eine low cohesion, da durch die hohe Abhängigkeit von der Genre und Serie Klasse Funktionen gegenseitig übernommen werden müssten. Jedoch ist dies durch Spring nicht der Fall, weil das Genre theoretisch nur in der Serie gespeichert ist und beim Persistieren die List<Serie> in der Genre Klasse von Spring automatisch geupdatet wird.
+            
+            \myparagraph{Begründung}
+            Auch hierfür ist der Grund Verbesserung der Übersichtlichkeit der Klasse sowie die Minimierung der Komplexität.
+            
+        \subsubsection{Zusammenhang Loose Coupling und High Cohesion}
+        Normalerweise stehen Loose Coupling und High Cohesion  hier synchron in Beziehung, da bei einer geringen Anzahl von Abhängikeit auch eine hohe Kohäsion umgesetzt wird. Allerdings ist durch Spring und die Verwendung von Hibernate hier Tight Coupling umgesetzt, und trotzdem ist noch eine hohe Kohäsion vorhanden.
+
+\section{DRY}
+Das Prinzip DRY bedeutet \hk{Don't Repeat yourself}. Hierbei handelt es sich um ein Prinzip des Clean Code, da Codeabschnitte nicht wiederholt, sondern ausgelagert und wiederverwendet werden sollen.
+
+    \subsection{Analyse}
+    Diese Prinzip ist ein grundlegegndes Prinzip und wurd prinzipiell in dem gesamten Projekt umgesetzt. Im Kapitel \cref{refactoring} sieht man die Extraktion von Teilen einer Methode in einzelne neue Methoden. Diese neuen Methoden werden anschließend auch von anderen Methoden benutzt, wodurch eine Wiederholung vermieden wird.
+    
+    \subsection{Begründung}
+    Diese Prinzip hat mehrere Vorteile, da man so weniger Code schreiben muss und sich somit Zeit spart. Außerdem nimmt die Übersichtlichkeit enorm zu, wenn man gleiche Teile in Methoden auslagert und mehrfach verwendet. Nicht nur die Übersichtlichkeit, sondern auch die Verständlichkeit und Fehleranfälligkeit des Codes wird so verbessert. Desweiteren wird die Wartbarkeit vereinfacht, weil man so bei Logikfehlern oder Veränderungen nur eine Methode und nicht alle Codestellen anpassen muss.
