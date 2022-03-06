@@ -34,28 +34,8 @@ public class RatingBridge implements RatingRepository {
     }
 
     @Override
-    public List<Rating> getAllWithAvg() {
-        return this.springDataRatingRepository.getAllWithAvg();
-    }
-
-    @Override
     public List<Rating> getByUser(User user) {
         return this.springDataRatingRepository.getByUser(user);
-    }
-
-    @Override
-    public List<Rating> getRatingsByUser(Long userId) {
-        return this.springDataRatingRepository.getRatingsByUser(userId);
-    }
-
-    @Override
-    public List<Rating> getRatingsForAvg() {
-        return this.springDataRatingRepository.getRatingsForAvg();
-    }
-
-    @Override
-    public List<Rating> findAllRatingsOfAllEpisodes() {
-        return this.springDataRatingRepository.findAllRatingsOfAllEpisodes();
     }
 
     @Override

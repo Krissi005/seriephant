@@ -43,7 +43,7 @@ export const CreateRating = (userProfile) => {
     }
 
     return (<div className="container">
-        <h1>Create New Rating</h1>
+        <h1>Create New Rating (1-10)</h1>
         <form>
             <label>
                 Rating <br/>

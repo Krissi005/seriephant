@@ -20,15 +20,7 @@ public interface RatingRepository {
 
     Rating getById(RatingKey ratingKey);
 
-    List<Rating> getAllWithAvg();
-
     List<Rating> getByUser(User user);
-
-    List<Rating> getRatingsByUser(Long userId);
-
-    List<Rating> getRatingsForAvg();
-
-    List<Rating> findAllRatingsOfAllEpisodes();
 
     List<Rating> findAll();
 
