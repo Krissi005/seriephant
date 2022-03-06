@@ -42,15 +42,16 @@ public class RatingApplicationService {
         if (rating == null || rating.getRating() == null || rating.getRating() < 0 || rating.getRating() > 10) {
             throw new ValidationException("Rating is not valid.");
         }
-        if (rating.getUser() == null || rating.getUser().getId() == null) {
-            throw new ValidationException("Id of User is not known.");
-        }
 
-        if (rating.getEpisode() == null || rating.getEpisode().getId() == null) {
+        if (rating.getId() != null && rating.getId().getUserId() != null && rating.getId().getEpisodeId() != null) {
+            return this.saveEpisodeRating(rating.getUser().getId(), rating.getEpisode().getId(), rating.getRating());
+        } else if (rating.getUser() != null && rating.getUser().getId() != null) {
+            if (rating.getEpisode() != null && rating.getEpisode().getId() != null) {
+                return this.saveEpisodeRating(rating.getUser().getId(), rating.getEpisode().getId(), rating.getRating());
+            }
             throw new ValidationException("Id of Episode is not known.");
         }
-
-        return this.saveEpisodeRating(rating.getId().getUserId(), rating.getId().getEpisodeId(), rating.getRating());
+        throw new ValidationException("Id of User is not known.");
     }
 
     public Rating saveEpisodeRating(Long userId, Long episodeId, Double rating) throws ValidationException {
@@ -62,7 +63,7 @@ public class RatingApplicationService {
             throw new ValidationException("Id of Episode is not known.");
         }
 
-        if (this.ratingRepository.existsById(new RatingKey(userId, episodeId))) {
+        if (!this.ratingRepository.existsById(new RatingKey(userId, episodeId))) {
             throw new ValidationException("Episode is not watched yet.");
         }
 
