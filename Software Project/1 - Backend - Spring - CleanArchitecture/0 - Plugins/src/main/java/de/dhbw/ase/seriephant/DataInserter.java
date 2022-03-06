@@ -6,6 +6,8 @@ import de.dhbw.ase.seriephant.domain.episode.Episode;
 import de.dhbw.ase.seriephant.domain.episode.EpisodeRepository;
 import de.dhbw.ase.seriephant.domain.genre.Genre;
 import de.dhbw.ase.seriephant.domain.genre.GenreRepository;
+import de.dhbw.ase.seriephant.domain.rating.Rating;
+import de.dhbw.ase.seriephant.domain.rating.RatingRepository;
 import de.dhbw.ase.seriephant.domain.season.Season;
 import de.dhbw.ase.seriephant.domain.season.SeasonRepository;
 import de.dhbw.ase.seriephant.domain.serie.Serie;
@@ -42,6 +44,9 @@ public class DataInserter implements ApplicationListener<ApplicationReadyEvent> 
 
     @Autowired
     ActorRepository actorRepository;
+
+    @Autowired
+    RatingRepository ratingRepository;
 
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
@@ -94,6 +99,10 @@ public class DataInserter implements ApplicationListener<ApplicationReadyEvent> 
         this.episodeRepository.save(episode1);
         episode1.addActor(actor1);
         this.episodeRepository.save(episode1);
+
+        Rating rating = new Rating(user, episode1, 7.0);
+        episode1.getRatingAggregate();
+        this.ratingRepository.save(rating);
 
     }
 }

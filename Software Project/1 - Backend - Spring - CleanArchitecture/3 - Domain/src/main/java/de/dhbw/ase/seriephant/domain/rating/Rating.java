@@ -33,12 +33,12 @@ public class Rating {
     @JoinColumn(name = "episode_id")
     Episode episode;
 
-    Double rating;
+    Double ratingValue;
 
-    public Rating(User user, Episode episode, Double rating) {
+    public Rating(User user, Episode episode, Double ratingValue) {
         this.id = new RatingKey(user.getId(), episode.getId());
         this.user = user;
         this.episode = episode;
-        this.rating = rating;
+        this.ratingValue = ratingValue;
     }
 }

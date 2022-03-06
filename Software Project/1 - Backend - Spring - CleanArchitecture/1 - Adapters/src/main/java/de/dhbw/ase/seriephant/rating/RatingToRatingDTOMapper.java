@@ -31,7 +31,7 @@ public class RatingToRatingDTOMapper implements Function<Rating, RatingDTO> {
                 this.ratingKeyToRatingKeyDTOMapper.apply(rating.getId()),
                 this.userToUserDTOMapper.apply(rating.getUser()),
                 this.episodeToEpisodeDTOMapper.apply(rating.getEpisode()),
-                rating.getRating()
+                rating.getRatingValue()
         );
     }
 }
