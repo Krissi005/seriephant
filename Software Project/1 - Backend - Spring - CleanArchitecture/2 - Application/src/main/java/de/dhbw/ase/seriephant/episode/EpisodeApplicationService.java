@@ -50,17 +50,9 @@ public class EpisodeApplicationService {
                 });
             }
             episode.setActors(actors);
-            return this.updateSeason(episode);
+            return this.updateSeason(episode, episode);
         }
         throw new ValidationException("Episode is not valid.");
-    }
-
-    private Episode updateSeason(Episode episode) throws ValidationException {
-        if (episode.getSeason() != null && episode.getSeason().getId() != null && this.seasonRepository.existsById(episode.getSeason().getId())) {
-            episode.setSeason(this.seasonRepository.getById(episode.getSeason().getId()));
-            return this.episodeRepository.save(episode);
-        }
-        throw new ValidationException("Season is not valid.");
     }
 
     public Episode saveEpisode(String title, LocalDate releaseDate, Integer episodeNumber, Long seasonId) throws ValidationException {
@@ -135,10 +127,10 @@ public class EpisodeApplicationService {
         return this.updateSeason(episode, foundEpisode);
     }
 
-    private Episode updateSeason(Episode episode, Episode foundEpisode) throws ValidationException {
+    private Episode updateSeason(Episode episode, Episode updatedEpisode) throws ValidationException {
         if (episode.getSeason() != null && episode.getSeason().getId() != null && this.seasonRepository.existsById(episode.getSeason().getId())) {
-            foundEpisode.setSeason(this.seasonRepository.getById(episode.getSeason().getId()));
-            return this.episodeRepository.save(foundEpisode);
+            updatedEpisode.setSeason(this.seasonRepository.getById(episode.getSeason().getId()));
+            return this.episodeRepository.save(updatedEpisode);
         }
         throw new ValidationException("Season is not valid.");
     }

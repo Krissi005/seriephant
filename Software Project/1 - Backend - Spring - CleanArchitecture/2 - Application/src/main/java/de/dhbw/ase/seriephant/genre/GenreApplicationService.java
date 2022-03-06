@@ -28,10 +28,13 @@ public class GenreApplicationService {
         \_____|_|  \___|\__,_|\__\___|
      */
     public Genre saveGenre(Genre genre) throws ValidationException {
-        if (genre != null && (genre.getId() == null || !this.genreRepository.existsById(genre.getId()))) {
-            return this.genreRepository.save(genre);
+        if (genre == null) {
+            throw new ValidationException("Genre is not valid.");
         }
-        throw new ValidationException("Genre is not valid.");
+        if (genre.getId() == null || this.genreRepository.existsById(genre.getId())) {
+            throw new ValidationException("Id of Genre exists already.");
+        }
+        return this.genreRepository.save(genre);
     }
 
     public Genre saveGenre(String title, String description) {
@@ -49,10 +52,10 @@ public class GenreApplicationService {
         |_|  \_\___|\__,_|\__,_|
     */
     public Genre getGenreById(Long genreId) throws ValidationException {
-        if (this.genreRepository.existsById(genreId)) {
-            return this.genreRepository.getById(genreId);
+        if (!this.genreRepository.existsById(genreId)) {
+            throw new ValidationException("Id of Genre is not known.");
         }
-        throw new ValidationException("Id of Genre is not known.");
+        return this.genreRepository.getById(genreId);
     }
 
     public List<Genre> getAllGenres() {
@@ -71,13 +74,16 @@ public class GenreApplicationService {
               |_|
     */
     public Genre updateGenre(Genre genre) throws ValidationException {
-        if (genre != null && genre.getId() != null && this.genreRepository.existsById(genre.getId())) {
-            Genre foundGenre = this.genreRepository.getById(genre.getId());
-            foundGenre.setTitle(genre.getTitle());
-            foundGenre.setDescription(genre.getDescription());
-            return this.genreRepository.save(foundGenre);
+        if (genre == null) {
+            throw new ValidationException("Genre is not valid.");
         }
-        throw new ValidationException("Id of Genre is not known.");
+        if (genre.getId() == null || !this.genreRepository.existsById(genre.getId())) {
+            throw new ValidationException("Id of Genre is not known.");
+        }
+        Genre foundGenre = this.genreRepository.getById(genre.getId());
+        foundGenre.setTitle(genre.getTitle());
+        foundGenre.setDescription(genre.getDescription());
+        return this.genreRepository.save(foundGenre);
     }
 
     /************************************************************************************************************************************/
@@ -90,11 +96,11 @@ public class GenreApplicationService {
         |_____/ \___|_|\___|\__\___|
     */
     public void deleteGenre(Long genreId) throws ValidationException {
-        if (this.genreRepository.existsById(genreId)) {
-            this.genreRepository.deleteById(genreId);
-        } else {
+        if (!this.genreRepository.existsById(genreId)) {
             throw new ValidationException("Id of Genre is not known.");
         }
+        this.genreRepository.deleteById(genreId);
+
     }
 
     /************************************************************************************************************************************/
