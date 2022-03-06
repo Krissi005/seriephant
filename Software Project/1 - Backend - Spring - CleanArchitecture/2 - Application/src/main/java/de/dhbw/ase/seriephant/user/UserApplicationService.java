@@ -141,11 +141,11 @@ public class UserApplicationService {
         Long userId = user.getId();
         Long episodeId = user.getWatchedEpisodes().get(0).getId();
 
-        if (this.userRepository.existsById(userId)) {
+        if (!this.userRepository.existsById(userId)) {
             throw new ValidationException("Id of User is not known.");
         }
 
-        if (this.episodeRepository.existsById(episodeId)) {
+        if (!this.episodeRepository.existsById(episodeId)) {
             throw new ValidationException("Id of Episode is not known.");
         }
 
