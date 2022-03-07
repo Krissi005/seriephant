@@ -10,7 +10,7 @@
   <p align="center">
     Project for the course Advanced Software Engineering @ DHBW Karlsruhe
     <br />
-    <a href="Documentation/documentation.pdf"><strong>Explore the docs »</strong></a>
+    <a href="Documentation/!!_Abgabe_!!/Rohfassung_Projektdokumentation.pdf"><strong>Explore the docs »</strong></a>
     <br />
   </p>
 </div>
@@ -91,7 +91,7 @@ To get a local copy up and running follow these simple example steps.
    npm install
    ```
 4. Start the Frontend in your IDE by Executing the start Method in the Json File 'package.json'
-5. Access <a href="https://localhose:3000">https://localhose:3000</a> on your Browser to view the frontend
+5. Access <a href="https://localhost:3000">https://localhost:3000</a> on your Browser to view the frontend
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
