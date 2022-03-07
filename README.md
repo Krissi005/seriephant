@@ -10,7 +10,7 @@
   <p align="center">
     Project for the course Advanced Software Engineering @ DHBW Karlsruhe
     <br />
-    <a href="Documentation/documentation.pdf"><strong>Explore the docs »</strong></a>
+    <a href="Documentation/!!_Abgabe_!!/Rohfassung_Projektdokumentation.pdf"><strong>Explore the docs »</strong></a>
     <br />
   </p>
 </div>
