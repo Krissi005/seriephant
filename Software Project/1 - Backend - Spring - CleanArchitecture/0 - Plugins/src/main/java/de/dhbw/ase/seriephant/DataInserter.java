@@ -101,7 +101,6 @@ public class DataInserter implements ApplicationListener<ApplicationReadyEvent> 
         this.episodeRepository.save(episode1);
 
         Rating rating = new Rating(user, episode1, 7.0);
-        episode1.getRatingAggregate();
         this.ratingRepository.save(rating);
 
     }
