@@ -91,7 +91,7 @@ To get a local copy up and running follow these simple example steps.
    npm install
    ```
 4. Start the Frontend in your IDE by Executing the start Method in the Json File 'package.json'
-5. Access <a href="https://localhose:3000">https://localhose:3000</a> on your Browser to view the frontend
+5. Access <a href="https://localhost:3000">https://localhose:3000</a> on your Browser to view the frontend
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
