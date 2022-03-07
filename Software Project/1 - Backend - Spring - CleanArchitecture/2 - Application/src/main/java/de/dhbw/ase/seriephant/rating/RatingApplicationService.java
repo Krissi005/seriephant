@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import javax.xml.bind.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class RatingApplicationService {
@@ -169,9 +170,33 @@ public class RatingApplicationService {
         List<RatingAggregate> allEpisodesWithRatings = new ArrayList<>();
         List<Episode> episodes = this.episodeRepository.findAll();
         for (Episode episode : episodes) {
-            allEpisodesWithRatings.add(new RatingAggregate(episode, episode.getRatings()));
+            allEpisodesWithRatings.add(new RatingAggregate(episode, this.getAllRatingsOfEpisode(episode.getId())));
         }
         return allEpisodesWithRatings;
+    }
+
+    public List<RatingAggregate> getUnwatchedEpisodesWithRatings(Long userId) {
+        return this.getRatingAggregatesByWatchedFilter(userId, false);
+    }
+
+    public List<RatingAggregate> getWatchedEpisodesWithRatings(Long userId) {
+        return this.getRatingAggregatesByWatchedFilter(userId, true);
+    }
+
+    private List<RatingAggregate> getRatingAggregatesByWatchedFilter(Long userId, Boolean bool) {
+        List<Long> watchedEpisodes = this.episodeRepository.getEpisodesByUsersEquals(userId).stream().map(Episode::getId).collect(Collectors.toList());
+        List<RatingAggregate> allEpisodesWithRatings = new ArrayList<>();
+        List<Episode> episodes = this.episodeRepository.findAll();
+        for (Episode episode : episodes) {
+            if (bool.equals(watchedEpisodes.contains(episode.getId()))) {
+                allEpisodesWithRatings.add(new RatingAggregate(episode, episode.getRatings()));
+            }
+        }
+        return allEpisodesWithRatings;
+    }
+
+    public List<Rating> getAllRatingsOfEpisode(Long episodeId) {
+        return this.ratingRepository.getAllRatingsOfEpisode(episodeId);
     }
 
     public List<Rating> getAllEpisodeRatings() {

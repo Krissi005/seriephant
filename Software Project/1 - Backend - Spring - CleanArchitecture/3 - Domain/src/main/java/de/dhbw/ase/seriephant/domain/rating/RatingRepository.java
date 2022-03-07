@@ -22,6 +22,8 @@ public interface RatingRepository {
 
     List<Rating> getByUser(User user);
 
+    List<Rating> getAllRatingsOfEpisode(Long episodeId);
+
     List<Rating> findAll();
 
     /** UPDATE **/
