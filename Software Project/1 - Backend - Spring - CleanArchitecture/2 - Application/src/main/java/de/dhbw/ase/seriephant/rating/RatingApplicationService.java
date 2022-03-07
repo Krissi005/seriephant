@@ -5,6 +5,7 @@ import de.dhbw.ase.seriephant.domain.episode.EpisodeRepository;
 import de.dhbw.ase.seriephant.domain.rating.Rating;
 import de.dhbw.ase.seriephant.domain.rating.RatingKey;
 import de.dhbw.ase.seriephant.domain.rating.RatingRepository;
+import de.dhbw.ase.seriephant.domain.ratingAggregate.RatingAggregate;
 import de.dhbw.ase.seriephant.domain.user.User;
 import de.dhbw.ase.seriephant.domain.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -160,6 +161,15 @@ public class RatingApplicationService {
                 }
             }
             allEpisodesWithRatings.add(new Rating(new User(1L, "", null, new ArrayList<>()), episode, number == 0 ? null : sumRating / number));
+        }
+        return allEpisodesWithRatings;
+    }
+
+    public List<RatingAggregate> getAllEpisodesWithRatings() {
+        List<RatingAggregate> allEpisodesWithRatings = new ArrayList<>();
+        List<Episode> episodes = this.episodeRepository.findAll();
+        for (Episode episode : episodes) {
+            allEpisodesWithRatings.add(new RatingAggregate(episode, episode.getRatings()));
         }
         return allEpisodesWithRatings;
     }

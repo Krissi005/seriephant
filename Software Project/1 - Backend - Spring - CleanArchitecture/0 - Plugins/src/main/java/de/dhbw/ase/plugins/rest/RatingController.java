@@ -1,6 +1,8 @@
 package de.dhbw.ase.plugins.rest;
 
 import de.dhbw.ase.seriephant.rating.*;
+import de.dhbw.ase.seriephant.ratingAggregate.RatingAggregateDTO;
+import de.dhbw.ase.seriephant.ratingAggregate.RatingAggregateToRatingAggregateDTOMapper;
 import org.springframework.web.bind.annotation.*;
 
 import javax.xml.bind.ValidationException;
@@ -15,12 +17,14 @@ public class RatingController {
     private final RatingDTOToRatingMapper episodeRatingDTOToRatingMapper;
     private final RatingToRatingDTOMapper ratingToRatingDTOMapper;
     private final RatingKeyDTOToRatingKeyMapper ratingKeyDTOToRatingKeyMapper;
+    private final RatingAggregateToRatingAggregateDTOMapper ratingAggregateToRatingAggregateDTOMapper;
 
-    public RatingController(RatingApplicationService ratingApplicationService, RatingDTOToRatingMapper episodeRatingDTOToRatingMapper, RatingToRatingDTOMapper ratingToRatingDTOMapper, RatingKeyDTOToRatingKeyMapper ratingKeyDTOToRatingKeyMapper) {
+    public RatingController(RatingApplicationService ratingApplicationService, RatingDTOToRatingMapper episodeRatingDTOToRatingMapper, RatingToRatingDTOMapper ratingToRatingDTOMapper, RatingKeyDTOToRatingKeyMapper ratingKeyDTOToRatingKeyMapper, RatingAggregateToRatingAggregateDTOMapper ratingAggregateToRatingAggregateDTOMapper) {
         this.ratingApplicationService = ratingApplicationService;
         this.episodeRatingDTOToRatingMapper = episodeRatingDTOToRatingMapper;
         this.ratingToRatingDTOMapper = ratingToRatingDTOMapper;
         this.ratingKeyDTOToRatingKeyMapper = ratingKeyDTOToRatingKeyMapper;
+        this.ratingAggregateToRatingAggregateDTOMapper = ratingAggregateToRatingAggregateDTOMapper;
     }
 
     /************************************************************************************************************************************/
@@ -92,6 +96,11 @@ public class RatingController {
                 .stream()
                 .map(this.ratingToRatingDTOMapper::apply)
                 .collect(Collectors.toList());
+    }
+
+    @GetMapping(value = "/readAllEpisodesWithRatings")
+    public List<RatingAggregateDTO> getAllEpisodesWithRatings() {
+        return this.ratingApplicationService.getAllEpisodesWithRatings().stream().map(this.ratingAggregateToRatingAggregateDTOMapper::apply).collect(Collectors.toList());
     }
 
     @GetMapping(value = "/read")
