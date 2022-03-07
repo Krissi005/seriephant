@@ -39,15 +39,15 @@ public class RatingApplicationService {
         \_____|_|  \___|\__,_|\__\___|
      */
     public Rating saveEpisodeRating(Rating rating) throws ValidationException {
-        if (rating == null || rating.getRating() == null || rating.getRating() < 0 || rating.getRating() > 10) {
+        if (rating == null || rating.getRatingValue() == null || rating.getRatingValue() < 0 || rating.getRatingValue() > 10) {
             throw new ValidationException("Rating is not valid.");
         }
 
         if (rating.getId() != null && rating.getId().getUserId() != null && rating.getId().getEpisodeId() != null) {
-            return this.saveEpisodeRating(rating.getUser().getId(), rating.getEpisode().getId(), rating.getRating());
+            return this.saveEpisodeRating(rating.getUser().getId(), rating.getEpisode().getId(), rating.getRatingValue());
         } else if (rating.getUser() != null && rating.getUser().getId() != null) {
             if (rating.getEpisode() != null && rating.getEpisode().getId() != null) {
-                return this.saveEpisodeRating(rating.getUser().getId(), rating.getEpisode().getId(), rating.getRating());
+                return this.saveEpisodeRating(rating.getUser().getId(), rating.getEpisode().getId(), rating.getRatingValue());
             }
             throw new ValidationException("Id of Episode is not known.");
         }
@@ -94,7 +94,7 @@ public class RatingApplicationService {
         if (this.ratingRepository.existsById(ratingKey)) {
             return this.ratingRepository.getById(ratingKey);
         }
-        rating.setRating(null);
+        rating.setRatingValue(null);
         return rating;
     }
 
@@ -130,8 +130,8 @@ public class RatingApplicationService {
             boolean user = false;
             for (Rating rating : ratings) {
                 if (episode.getId().equals(rating.getEpisode().getId())) {
-                    if (rating.getRating() != null) {
-                        sumRating += rating.getRating();
+                    if (rating.getRatingValue() != null) {
+                        sumRating += rating.getRatingValue();
                         number++;
                     }
                     if (rating.getUser().getId().equals(userId)) {
@@ -154,8 +154,8 @@ public class RatingApplicationService {
             Double sumRating = 0.0;
             int number = 0;
             for (Rating rating : ratings) {
-                if (episode.getId().equals(rating.getEpisode().getId()) && rating.getRating() != null) {
-                    sumRating += rating.getRating();
+                if (episode.getId().equals(rating.getEpisode().getId()) && rating.getRatingValue() != null) {
+                    sumRating += rating.getRatingValue();
                     number++;
                 }
             }
@@ -197,7 +197,7 @@ public class RatingApplicationService {
             throw new ValidationException("Id of Rating is not known.");
         }
         Rating rating = this.ratingRepository.getById(new RatingKey(userId, episodeId));
-        rating.setRating(null);
+        rating.setRatingValue(null);
         this.ratingRepository.save(rating);
 
     }
