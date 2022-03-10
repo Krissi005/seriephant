@@ -13,7 +13,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Getter
-public class RatingKey implements Serializable {
+public final class RatingKey implements Serializable {
 
     @Column(name = "user_id")
     Long userId;

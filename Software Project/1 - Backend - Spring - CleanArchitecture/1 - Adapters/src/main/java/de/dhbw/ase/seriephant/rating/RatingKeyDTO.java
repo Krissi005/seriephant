@@ -15,7 +15,7 @@ import java.util.Map;
 
 })
 @Generated("jsonschema2pojo")
-public class RatingKeyDTO {
+public final class RatingKeyDTO {
 
     @JsonProperty("userId")
     private Long userId;

@@ -23,7 +23,7 @@ import java.util.Map;
         "actors"
 })
 @Generated("jsonschema2pojo")
-public class EpisodeDTO {
+public final class EpisodeDTO {
 
     @JsonProperty("id")
     private Long id;

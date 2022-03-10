@@ -18,7 +18,7 @@ import java.util.Map;
         "serie"
 })
 @Generated("jsonschema2pojo")
-public class SeasonDTO {
+public final class SeasonDTO {
 
     @JsonProperty("id")
     private Long id;

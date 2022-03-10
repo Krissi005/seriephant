@@ -20,7 +20,7 @@ import java.util.Map;
         "rating"
 })
 @Generated("jsonschema2pojo")
-public class RatingDTO {
+public final class RatingDTO {
 
     @JsonProperty("id")
     private RatingKeyDTO ratingKeyDTO;

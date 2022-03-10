@@ -20,7 +20,7 @@ import java.util.Map;
         "watchedEpisodes"
 })
 @Generated("jsonschema2pojo")
-public class UserDTO {
+public final class UserDTO {
 
     @JsonProperty("id")
     private Long id;

@@ -20,7 +20,7 @@ import java.util.Map;
         "genre"
 })
 @Generated("jsonschema2pojo")
-public class SerieDTO {
+public final class SerieDTO {
 
     @JsonProperty("id")
     private Long id;

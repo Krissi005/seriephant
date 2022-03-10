@@ -17,7 +17,7 @@ import java.util.Map;
         "description"
 })
 @Generated("jsonschema2pojo")
-public class GenreDTO {
+public final class GenreDTO {
 
     @JsonProperty("id")
     private Long id;

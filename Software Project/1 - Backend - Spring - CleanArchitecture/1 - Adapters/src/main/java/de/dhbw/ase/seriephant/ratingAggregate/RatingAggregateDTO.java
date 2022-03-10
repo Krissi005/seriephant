@@ -18,7 +18,7 @@ import java.util.Map;
         "numberOfRatings"
 })
 @Generated("jsonschema2pojo")
-public class RatingAggregateDTO {
+public final class RatingAggregateDTO {
 
     @JsonIgnoreProperties({"actors"})
     @JsonProperty("episode")

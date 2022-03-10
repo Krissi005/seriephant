@@ -17,7 +17,7 @@ import java.util.Map;
         "lastName"
 })
 @Generated("jsonschema2pojo")
-public class ActorDTO {
+public final class ActorDTO {
 
     @JsonProperty("id")
     private Long id;
