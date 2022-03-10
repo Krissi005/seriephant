@@ -25,6 +25,7 @@ public class Actor {
     private String firstName;
     @Column(name = "lastname")
     private String lastName;
+    @Transient
     @ManyToMany(mappedBy = "actors", cascade = {CascadeType.PERSIST})
     @JsonIgnoreProperties("actors")
     List<Episode> playedInEpisodes = new ArrayList<>();
@@ -38,5 +39,10 @@ public class Actor {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
+    }
+
+    @PreRemove
+    public void preRemove() {
+        this.playedInEpisodes.forEach(episode -> episode.removeActor(this));
     }
 }

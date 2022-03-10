@@ -31,6 +31,7 @@ public class Season {
     @JoinColumn(name = "serie_id", nullable = false)
     private Serie serie;
 
+    @Transient
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "season")
     @JsonIgnoreProperties("season")
     private List<Episode> episodes;

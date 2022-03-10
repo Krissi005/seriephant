@@ -31,6 +31,7 @@ public class Serie {
     @JsonIgnoreProperties("series")
     @JoinColumn(name = "genre_id")
     private Genre genre;
+    @Transient
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "serie")
     @JsonIgnoreProperties("episodes")
     private List<Season> seasons;
@@ -48,10 +49,7 @@ public class Serie {
     }
 
     public Serie(String title, String description, Integer releaseYear, Genre genre) {
-        this.title = title;
-        this.description = description;
-        this.releaseYear = releaseYear;
-        this.genre = genre;
+        this(null, title, description, releaseYear, genre);
     }
 
     public Serie(Long id, String title, String description, Integer releaseYear, Genre genre) {

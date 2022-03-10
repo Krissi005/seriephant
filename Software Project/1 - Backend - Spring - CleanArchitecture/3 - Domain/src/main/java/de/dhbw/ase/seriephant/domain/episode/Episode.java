@@ -35,13 +35,15 @@ public class Episode {
     @JsonIgnoreProperties("episodes")
     @JoinColumn(name = "season_id", nullable = false)
     private Season season;
+    @Transient
     @ManyToMany(mappedBy = "watchedEpisodes", cascade = {CascadeType.PERSIST})
     @JsonIgnoreProperties("watchedEpisodes")
     private List<User> users = new ArrayList<>();
+    @Transient
     @OneToMany(mappedBy = "episode")
     @JsonIgnoreProperties("episode")
     List<Rating> ratings;
-    @ManyToMany(cascade = {CascadeType.ALL})
+    @ManyToMany(cascade = {CascadeType.PERSIST})
     @JsonIgnoreProperties("playedInEpisodes")
     @JoinTable(
             name = "actor_episode",

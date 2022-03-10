@@ -34,6 +34,7 @@ public class User {
             inverseJoinColumns = {@JoinColumn(name = "episode_id", referencedColumnName = "id")}
     )
     List<Episode> watchedEpisodes = new ArrayList<>();
+    @Transient
     @OneToMany(mappedBy = "user")
     @JsonIgnoreProperties("user")
     List<Rating> ratings;

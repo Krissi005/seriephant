@@ -27,6 +27,7 @@ public class Genre {
     private String title;
     @Column(name = "description")
     private String description;
+    @Transient
     @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "genre")
     @JsonIgnoreProperties("genre")
     private List<Serie> series;
