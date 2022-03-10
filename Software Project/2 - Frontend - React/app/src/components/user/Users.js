@@ -54,7 +54,7 @@ export const Users = ({userProfile, choose, reset, edit}) => {
             })
     }
 
-    return (<div>
+    return (<div className="container">
             <Link to={"/createUser"}><Button id={"create"} text={"Create User"} buttonType={"btn-success"}/></Link>
             <table className={"table table-striped text-center"} {...getTableProps()}>
                 <thead>

@@ -44,15 +44,15 @@ export const ActorTable = ({userProfile}) => {
         prepareRow
     } = tableInstance
 
-    const deleteActor = (event, userProfile) => {
-        axios.delete("http://localhost:8080/season/delete", {params: {seasonId: userProfile.id}}).then(
+    const deleteActor = (event, actorId) => {
+        axios.delete("http://localhost:8080/actor/delete", {params: {actorId: actorId}}).then(
             res => {
                 window.alert("Succesfull :)");
-                window.open("/seasons", "_self");
+                window.location.reload("/actors");
             })
     }
 
-    return (<div>
+    return (<div className="container">
             <table className={"table table-striped text-center"} {...getTableProps()}>
                 <thead>
                 {headerGroups.map((headerGroup) => (
@@ -73,7 +73,7 @@ export const ActorTable = ({userProfile}) => {
                                     return (<td {...cell.getCellProps()}>{cell.render('Cell')}</td>)
                                 })}
                                 <td><a><Button id={row.values.id} text={"Delete"} buttonType={"btn-danger delete"}
-                                               onClick={(event) => deleteActor(event, row.values)}/></a></td>
+                                               onClick={(event) => deleteActor(event, row.values.id)}/></a></td>
                             </tr>
                         )
                     })

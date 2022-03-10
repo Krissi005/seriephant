@@ -77,7 +77,7 @@ export const EpisodeTable = ({userProfile, onClick, my}) => {
         setReload(!bool);
     }
 
-    return (<div>
+    return (<div className="container">
             <Link to={"/createEpisode"}><Button id={"create"} text={"Create Episode"}
                                                 buttonType={"btn-success"}/></Link>
             <table className={"table table-striped text-center"} {...getTableProps()}>

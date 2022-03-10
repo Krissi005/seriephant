@@ -6,7 +6,7 @@ import {useTable} from "react-table";
 import Button from "../Button";
 import {Link, useNavigate} from "react-router-dom";
 
-export const SerieTable = ({userProfile}) => {
+export const SerieTable = ({userProfile, setId, onClick}) => {
 
     const columnDefs = [
         {
@@ -57,14 +57,15 @@ export const SerieTable = ({userProfile}) => {
     } = tableInstance
 
     const deleteSerie = (event, userProfile) => {
-        axios.delete("http://localhost:8080/serie/delete", {params: {sereiId: userProfile.id}}).then(
+        axios.delete("http://localhost:8080/serie/delete", {params: {serieId: userProfile.id}}).then(
             res => {
                 window.alert("Succesfull :)");
+                window.location.reload()
                 navigate("/series");
             })
     }
 
-    return (<div>
+    return (<div className="container">
             <Link to={"/createSerie"}><Button id={"create"} text={"Create Serie"} buttonType={"btn-success"}/></Link>
             <table className={"table table-striped text-center"} {...getTableProps()}>
                 <thead>
@@ -85,8 +86,8 @@ export const SerieTable = ({userProfile}) => {
                                 {row.cells.map(cell => {
                                     return (<td {...cell.getCellProps()}>{cell.render('Cell')}</td>)
                                 })}
-                                <td><Link to={"/editSerie/" + row.values.id}><Button id={row.values.id} text={"Edit"}
-                                                                                     buttonType={"btn-primary"}/></Link>
+                                <td><Link to={"/editSerie"}><Button id={row.values.id} text={"Edit"}
+                                                                                     buttonType={"btn-primary"} onClick={(event)=>setId(event, row.values.id)}/></Link>
                                 </td>
                                 <td><a><Button id={row.values.id} text={"Delete"} buttonType={"btn-danger delete"}
                                                onClick={(event) => deleteSerie(event, row.values)}/></a></td>

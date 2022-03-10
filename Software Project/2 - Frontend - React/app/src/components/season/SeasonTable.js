@@ -55,7 +55,7 @@ export const SeasonTable = ({userProfile}) => {
             })
     }
 
-    return (<div>
+    return (<div className="container">
             <Link to={"/createSeason"}><Button id={"create"} text={"Create Season"} buttonType={"btn-success"}/></Link>
             <table className={"table table-striped text-center"} {...getTableProps()}>
                 <thead>

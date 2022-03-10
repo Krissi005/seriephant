@@ -26,11 +26,13 @@ import {EditSeason} from "./components/season/EditSeason";
 import {EditEpisode} from "./components/episode/EditEpisode";
 import {WatchEpisode} from "./components/episode/WatchEpisode";
 import {MyEpisodeTable} from "./components/episode/MyEpisodeTable";
+import {Startpage} from "./components/Startpage";
 
 class App extends React.Component {
     state = {
         userProfiles: [],
-        chosenUserProfile: null
+        chosenUserProfile: null,
+        id: null
     }
 
     constructor() {
@@ -54,6 +56,10 @@ class App extends React.Component {
         this.setState({chosenUserProfile: userProfile});
     }
 
+    setId = (event, id) => {
+        this.setState({id: id});
+    }
+
     edit = (event, userProfile, directory) => {
         window.open("/"+directory+":"+userProfile, "_self");
     }
@@ -72,14 +78,15 @@ class App extends React.Component {
                 <Router>
                     <Header chosenUser={this.state.chosenUserProfile} reset={this.chooseUser}/>
                     <Routes>
+                        <Route path="/" element={<Startpage />}/>
                         <Route path="/users" element={<Users userProfile={this.state.chosenUserProfile} reset={this.chooseUser}
                                                              choose={this.chooseUser} edit={this.edit}/>}/>
                         <Route path="/createUser" element={<CreateUser/>}/>
                         <Route path="/editUser/:userId" element ={<EditUser/>}/>
                         <Route path="/series" element={<SerieTable userProfile={this.state.chosenUserProfile}
-                                                                   onClick={this.chooseUser}/>}/>
+                                                                   onClick={this.chooseUser} setId={this.setId}/>}/>
                         <Route path="/createSerie" element={<CreateSerie/>}/>
-                        <Route path="/editSerie/:serieId" element ={<EditSerie/>}/>
+                        <Route path="/editSerie" element ={<EditSerie userProfile={this.state.chosenUserProfile} id={this.state.id} chooseUser={this.chooseUser}/>}/>
                         <Route path="/seasons" element={<SeasonTable userProfile={this.state.chosenUserProfile}
                                                                      onClick={this.chooseUser}/>}/>
                         <Route path="/createSeason" element={<CreateSeason/>}/>

@@ -54,7 +54,7 @@ export const GenreTable = ({userProfile}) => {
             })
     }
 
-    return (<div>
+    return (<div className="container">
             <table className={"table table-striped text-center"} {...getTableProps()}>
                 <thead>
                 {headerGroups.map((headerGroup) => (

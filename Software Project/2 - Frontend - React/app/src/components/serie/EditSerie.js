@@ -3,19 +3,18 @@ import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {useNavigate, useParams} from "react-router-dom";
 
-export const EditSerie = () => {
-    const params = useParams();
+export const EditSerie = ({userProfile, id, chooseUser}) => {
     const navigate = useNavigate();
-    const [id, setId] = useState(null);
+    //const [id, setId] = useState(id);
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [releaseYear, setReleaseYear] = useState("");
     const [genre, setGenre] = useState("");
 
     useEffect(() => {
-        axios.get("http://localhost:8080/serie/readById", {params: {serieId: params.serieId}}).then(
+        axios.get("http://localhost:8080/serie/readById", {params: {serieId: id}}).then(
             res => {
-                setId(res.data.id);
+                //setId(res.data.id);
                 setTitle(res.data.title);
                 setDescription(res.data.description);
                 setReleaseYear(res.data.releaseYear);
@@ -48,7 +47,7 @@ export const EditSerie = () => {
             "genre": {"id": genre}
         }).then(res => {
             if (res.status === 200) {
-                navigate('/series')
+                window.location = "/series";
                 window.alert("Successful :)");
             } else {
                 window.alert("Failed :(");

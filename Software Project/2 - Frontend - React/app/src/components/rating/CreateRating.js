@@ -14,7 +14,7 @@ export const CreateRating = (userProfile) => {
         if (userProfile == null) {
             setEpisodeId(params.episodeId)
         }
-    }, [userProfile]);
+    }, []);
 
     const handleChangeReleaseDate = (event) => {
         setRating(event.target.value);
@@ -33,7 +33,7 @@ export const CreateRating = (userProfile) => {
             }
         ).then(res => {
             if (res.status === 200) {
-                window.reload(false)
+                window.location.reload("/allEpisodes");
                 navigate("/allEpisodes");
                 window.alert("Successful :)");
             } else {

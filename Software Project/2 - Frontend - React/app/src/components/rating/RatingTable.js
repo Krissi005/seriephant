@@ -64,7 +64,7 @@ export const RatingTable = ({userProfile}) => {
         prepareRow
     } = tableInstance
 
-    return (<div>
+    return (<div className="container">
             <Link to={"/createRating"}><Button id={"create"} text={"Create Rating"} buttonType={"btn-success"}/></Link>
             <table className={"table table-striped text-center"} {...getTableProps()}>
                 <thead>
