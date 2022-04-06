@@ -20,6 +20,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doReturn;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -45,9 +46,9 @@ class GenreControllerTest {
     private static final String NEW_GENRE_TITLE = "newGenreTitle";
     private static final String NEW_GENRE_DESCRIPTION = "newGenreDescription";
 
-    private static final Genre GENRE_1 = new Genre("Title1", "Description1");
-    private static final Genre GENRE_2 = new Genre("Title2", "Description2");
-    private static final Genre GENRE_3 = new Genre("Title3", "Description3");
+    private static final GenreDTO GENRE_DTO_1 = new GenreDTO(21L, "Title1", "Description1");
+    private static final GenreDTO GENRE_DTO_2 = new GenreDTO(22L, "Title2", "Description2");
+    private static final GenreDTO GENRE_DTO_3 = new GenreDTO(23L, "Title3", "Description3");
 
     private GenreDTO genreDTO;
 
@@ -87,15 +88,14 @@ class GenreControllerTest {
 
     @Test
     void getAllGenres() throws Exception {
-        List<Genre> genres = Arrays.asList(GENRE_1, GENRE_2, GENRE_3);
+        List<GenreDTO> genres = Arrays.asList(GENRE_DTO_1, GENRE_DTO_2, GENRE_DTO_3);
         doReturn(genres).when(this.genreController).getAllGenres();
-        MvcResult mvcResult = this.mockMvc.perform(MockMvcRequestBuilders
-                        .get("/genre/read")
+        MvcResult mvcResult = this.mockMvc.perform(get("/genre/read")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn();
         String responseBody = mvcResult.getResponse().getContentAsString();
-        List<Genre> readOutGenres = Arrays.asList(this.objectMapper.reader().forType(Genre[].class).readValue(responseBody));
+        List<GenreDTO> readOutGenres = Arrays.asList(this.objectMapper.reader().forType(GenreDTO[].class).readValue(responseBody));
         for (int i = 0; i < 3; i++) {
             assertEquals(genres.get(i).getTitle(), readOutGenres.get(i).getTitle());
             assertEquals(genres.get(i).getDescription(), readOutGenres.get(i).getDescription());
