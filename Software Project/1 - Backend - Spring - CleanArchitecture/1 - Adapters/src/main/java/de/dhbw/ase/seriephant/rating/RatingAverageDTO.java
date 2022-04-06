@@ -1,7 +1,6 @@
-package de.dhbw.ase.seriephant.ratingAggregate;
+package de.dhbw.ase.seriephant.rating;
 
 import com.fasterxml.jackson.annotation.*;
-import de.dhbw.ase.seriephant.episode.EpisodeDTO;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -13,16 +12,19 @@ import java.util.Map;
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-        "episode",
+        "episodeId",
+        "episodeTitle",
         "ratingAverage",
         "numberOfRatings"
 })
 @Generated("jsonschema2pojo")
-public final class RatingAggregateDTO {
+public final class RatingAverageDTO {
 
-    @JsonIgnoreProperties({"actors"})
-    @JsonProperty("episode")
-    private EpisodeDTO episodeDTO;
+    @JsonProperty("episodeId")
+    private Long episodeId;
+
+    @JsonProperty("episodeTitle")
+    private String episodeTitle;
 
     @JsonProperty("ratingAverage")
     private Double ratingAverage;
@@ -33,15 +35,21 @@ public final class RatingAggregateDTO {
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    public RatingAggregateDTO(EpisodeDTO episodeDTO, Double ratingAverage, Integer numberOfRatings) {
-        this.episodeDTO = episodeDTO;
+    public RatingAverageDTO(Long episodeId, String episodeTitle, Double ratingAverage, Integer numberOfRatings) {
+        this.episodeId = episodeId;
+        this.episodeTitle = episodeTitle;
         this.ratingAverage = ratingAverage;
         this.numberOfRatings = numberOfRatings;
     }
 
-    @JsonProperty("episode")
-    public EpisodeDTO getEpisodeDTO() {
-        return episodeDTO;
+    @JsonProperty("episodeId")
+    public Long getEpisodeId() {
+        return episodeId;
+    }
+
+    @JsonProperty("episodeTitle")
+    public String getEpisodeTitle() {
+        return episodeTitle;
     }
 
     @JsonProperty("ratingAverage")

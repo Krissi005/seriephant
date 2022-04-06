@@ -3,9 +3,9 @@ package de.dhbw.ase.seriephant.rating;
 import de.dhbw.ase.seriephant.domain.episode.Episode;
 import de.dhbw.ase.seriephant.domain.episode.EpisodeRepository;
 import de.dhbw.ase.seriephant.domain.rating.Rating;
+import de.dhbw.ase.seriephant.domain.rating.RatingAverage;
 import de.dhbw.ase.seriephant.domain.rating.RatingKey;
 import de.dhbw.ase.seriephant.domain.rating.RatingRepository;
-import de.dhbw.ase.seriephant.domain.ratingAggregate.RatingAggregate;
 import de.dhbw.ase.seriephant.domain.user.User;
 import de.dhbw.ase.seriephant.domain.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -166,30 +166,25 @@ public class RatingApplicationService {
         return allEpisodesWithRatings;
     }
 
-    public List<RatingAggregate> getAllEpisodesWithRatings() {
-        List<RatingAggregate> allEpisodesWithRatings = new ArrayList<>();
-        List<Episode> episodes = this.episodeRepository.findAll();
-        for (Episode episode : episodes) {
-            allEpisodesWithRatings.add(new RatingAggregate(episode, this.getAllRatingsOfEpisode(episode.getId())));
-        }
-        return allEpisodesWithRatings;
+    public List<RatingAverage> getAllEpisodesWithRatings() {
+        return this.ratingRepository.getAllAverages();
     }
 
-    public List<RatingAggregate> getUnwatchedEpisodesWithRatings(Long userId) {
+    public List<RatingAverage> getUnwatchedEpisodesWithRatings(Long userId) {
         return this.getRatingAggregatesByWatchedFilter(userId, false);
     }
 
-    public List<RatingAggregate> getWatchedEpisodesWithRatings(Long userId) {
+    public List<RatingAverage> getWatchedEpisodesWithRatings(Long userId) {
         return this.getRatingAggregatesByWatchedFilter(userId, true);
     }
 
-    private List<RatingAggregate> getRatingAggregatesByWatchedFilter(Long userId, Boolean bool) {
+    private List<RatingAverage> getRatingAggregatesByWatchedFilter(Long userId, Boolean bool) {
         List<Long> watchedEpisodes = this.episodeRepository.getEpisodesByUsersEquals(userId).stream().map(Episode::getId).collect(Collectors.toList());
-        List<RatingAggregate> allEpisodesWithRatings = new ArrayList<>();
-        List<Episode> episodes = this.episodeRepository.findAll();
-        for (Episode episode : episodes) {
-            if (bool.equals(watchedEpisodes.contains(episode.getId()))) {
-                allEpisodesWithRatings.add(new RatingAggregate(episode, episode.getRatings()));
+        List<RatingAverage> allEpisodesWithRatings = new ArrayList<>();
+        List<RatingAverage> ratingAverages = this.ratingRepository.getAllAverages();
+        for (RatingAverage ratingAverage : ratingAverages) {
+            if (bool.equals(watchedEpisodes.contains(ratingAverage.getEpisodeId()))) {
+                allEpisodesWithRatings.add(ratingAverage);
             }
         }
         return allEpisodesWithRatings;

@@ -1,12 +1,15 @@
 package de.dhbw.ase.seriephant.plugins.persistence.hibernate.rating;
 
 import de.dhbw.ase.seriephant.domain.rating.Rating;
+import de.dhbw.ase.seriephant.domain.rating.RatingAverage;
 import de.dhbw.ase.seriephant.domain.rating.RatingKey;
 import de.dhbw.ase.seriephant.domain.rating.RatingRepository;
 import de.dhbw.ase.seriephant.domain.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -41,6 +44,16 @@ public class RatingBridge implements RatingRepository {
     @Override
     public List<Rating> getAllRatingsOfEpisode(Long episodeId) {
         return this.springDataRatingRepository.getAllRatingsOfEpisode(episodeId);
+    }
+
+    @Override
+    public List<RatingAverage> getAllAverages() {
+        List<RatingAverage> arrayList = new ArrayList();
+        List<Object[]> objectList = this.springDataRatingRepository.getAllAverages();
+        for (Object[] obj : objectList) {
+            arrayList.add(new RatingAverage(((BigInteger) obj[0]).longValue(), (String) obj[1], (Double) obj[2], ((BigInteger) obj[3]).intValue()));
+        }
+        return arrayList;
     }
 
     @Override

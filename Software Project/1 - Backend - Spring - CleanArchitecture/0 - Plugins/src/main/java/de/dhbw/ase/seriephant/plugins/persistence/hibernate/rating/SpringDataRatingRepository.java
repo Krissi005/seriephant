@@ -26,7 +26,9 @@ public interface SpringDataRatingRepository extends JpaRepository<Rating, Rating
     @Query(value = "SELECT * FROM USER_EPISODE_RATING WHERE USER_EPISODE_RATING.EPISODE_ID =?1", nativeQuery = true)
     List<Rating> getAllRatingsOfEpisode(Long episodeId);
 
-
+    @Query(value = "SELECT EPISODE.ID, EPISODE.TITLE , AVG(USER_EPISODE_RATING.RATING_VALUE), COUNT(USER_EPISODE_RATING.RATING_VALUE) FROM EPISODE LEFT OUTER JOIN USER_EPISODE_RATING ON EPISODE.ID = USER_EPISODE_RATING.EPISODE_ID GROUP BY EPISODE_ID", nativeQuery = true)
+    List<Object[]> getAllAverages();
+    
     /** UPDATE **/
 
     /**
