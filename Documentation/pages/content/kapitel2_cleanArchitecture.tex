@@ -12,7 +12,7 @@
     \includegraphics[width=0.95\textwidth]{zfiles/Bilder/schichten.png}
 
     \section{Schichtenarchitektur}
-     Das Projekt soll sich an der Schichtenarchitektur orientieren. Hierbei sollen die einzelnen Module die einzelnen Schichten darstellen.
+     Das Projekt soll sich an der Schichtenarchitektur orientieren. Hierbei sollen die einzelnen Module die einzelnen Schichten darstellen. Der Grund für die Benutzung einzelner Schichten ist die fachliche Unabhängigkeit der Anwendung von der sonstigen Infrastruktur. Dadurch können die einzelnen Teile leichter wiederverwendet, getestet und weiterentwickelt werden. Es ist auch leichter, einzelne Komponenten der Infrastruktur auszutauschen.
     
         \subsection{Abstraction - Schicht}
     	Diese Schicht stellt den Kern der Applikation dar. Hier werden Fundamente, oft durch die verwendete Programmiersprache geschaffen. Ein Beispiel hierfür ist die Implementierung des \hk{Strings} in Java, welche in der Spring Boot Anwendung verwendet wird.

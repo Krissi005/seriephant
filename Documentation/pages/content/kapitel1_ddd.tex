@@ -36,9 +36,11 @@ Ratings sind Bewertungen von Nutzern zu einzelnen Episoden.
 
         \subsubsection{Analyse}
         In diesem Projekt werden Value Objects dafür benutzt, Daten vom Frontend zum Backend und wieder zurück zu schicken. Bei dem Aufruf eines Create oder Update Endpunkts wird vom Frontend ein value object mitgeschickt. Auch vom Backend bekommt man ein Value Object zurück. In diesem Projekt werden Value Objects von den \hk{DTO}-Klassen repräsentiert und sind im Modul \hk{1 - Adapters} zu finden.
+        Ein weiteres Beispiel für ein Value Object in dem Projekt ist der Key des Ratings, der als Embeddable umgesetzt wurde. Dieser Key setzt sich aus der Id des Users und aus der Id der Episode zusammen und ist der Primary Key für das Rating. Dieser Key kann nicht verändert werden.
 
         \subsubsection{Begründung}
-        Der Grund für die Benutzung von Value Objects ist, dass so viele Daten vom Frontend zum Backend geschickt werden können, ohne dass sie verändert werden können. Da es bei der Create oder Update Methode eine Vielzahl von Parametern gibt, ist eine Kapselung in einem Value Object übersichtlicher.
+        Der Grund für die Benutzung von Value Objects ist, dass so viele Daten vom Frontend zum Backend geschickt werden können, ohne dass sie verändert werden können. Die Serialisierbarkeit wird durch das Verwenden von Value Objects sichergestellt. Da es bei der Create oder Update Methode eine Vielzahl von Parametern gibt, ist eine Kapselung in einem Value Object übersichtlicher.
+        Der Key ist ein Value Object, das nicht verändert werden darf, weil die Entität Rating an den Primary Key gekoppelt ist. Könnte man den Key ändern, würde das Rating Objekt nicht mehr richtig sein.
 
     \subsection{Entities} \label{1.entities}
     Entitäten stellen die Basis eines Modells dar. Sie sind Objekte, die durch ihre Identität definiert werden und Attribute besitzen. Verschiedene Instanzen einer Entität können die gleichen Eigenschaften haben. Attribute könne geupdatet werden, hierbei verändert dich die Instanz nicht. 
@@ -57,19 +59,22 @@ Ratings sind Bewertungen von Nutzern zu einzelnen Episoden.
         Jede Entität wird mit einer Id identifiziert. Die Entitäten haben Eigenschaften, die sich ändern können. In diesem Projekt sind die Entitäten im Modul \hk{3 - Domain} zu finden.
 
         \subsubsection{Begründung}
-         Während der Laufzeit ändern sich die Attribute der dieser Objekte regelmäßig. Daher ist es sinnvoll, diese Objekte als Entitäten umzusetzen, zu persistieren, bei Bedarf Attribute zu updaten und anschließend erneut zu persistieren.
+         Während der Laufzeit ändern sich die Attribute dieser Objekte regelmäßig. Daher ist es sinnvoll, diese Objekte als Entitäten umzusetzen, zu persistieren, bei Bedarf Attribute zu updaten und anschließend erneut zu persistieren.
 
     \subsection{Aggregates}
     Aggregates umfassen mindestens eine Entität, im sogenannten Aggregatstamm. An diesem können weitere (Unter-)Entitäten oder Objekte angehängt werden, um sogenannte Aggregates zu bilden.
 
-        \subsubsection{Analyse \& Begründung}
-        Aggregates finden in diesem Projekt keine direkte Anwendung, da die Entitäten jeweils für einzelne, fachspezifische Bereiche stehen. Somit ist keine Gliederung oder Zuordnung mehrerer Entitäten zu einem bestehenden Bereich nötig.
+        \subsubsection{Analyse}
+        Aggregates finden in diesem Projekt Anwendung bei der Klasse RatingAverage. Hierbei werden Ratings und Episoden zusammengefasst um einen Durchschnitt oder die Anzahl der Bewertungen anzeigen zu lassen.
+        
+        \subsubsection{Begründung}
+        Grund für die Benutzung des Aggregate ist, dass die verschiedenen Entitäten zusammengefasst werden können. So kann mit den Daten besser interagiert werden, der Durchschnitt und die Anzahl an Bewertungen kann im Aggregate Objekt gespeichert werden und ans Frontend weitergegeben werden.
 
     \subsection{Repositories}
     Repositories sind Klassen, die eine Schnittstelle zwischen Domäne und der Datenzuordnungsebene bilden. Diese dienen meist dazu die Basisoperationen CRUD zu implementieren. Hier lassen sich Entitäten erstellen, lesen, updaten oder löschen.
     
         \subsubsection{Analyse}
-        Repositorys sind im Backend, im Modul \hk{0 - Plugins} zu finden. Diese werden mit Hilfe der JPA-Repository Schnittstelle implementiert, um auf die von Hibernate ORM geschaffenen Strukturn zuzugreifen. Hier wird das Objekt sowie die Id festegelegt.
+        Repositorys sind im Backend, im Modul \hk{0 - Plugins} zu finden. Diese werden mit Hilfe der JPA-Repository Schnittstelle implementiert, um auf die von Hibernate ORM geschaffenen Strukturn zuzugreifen. Hier wird das Objekt sowie die Id festegelegt. Mit Hilfe der Repository-Interfaces in der Domänenschicht und Implementierung in der Pluginsschicht kann zwischen den Schichten kommuniziert werden.
 
         \subsubsection{Begründung}
         Hierbei wird das ORM-Framework Hibernate verwendet, um die definierten Operationen von Repositories zu implementieren. Diese Implementierung implementiert automatisch die grundlegenden Funktionen und kann um weitere, eigene, Funktionen erweitert werden. Dadurch können Fehler vermieden werden, und man hat eine klare Trennung der Logik zu den Operationen mit den Daten.
