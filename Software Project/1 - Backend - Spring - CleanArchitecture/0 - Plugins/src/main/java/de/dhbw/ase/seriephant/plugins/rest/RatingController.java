@@ -70,29 +70,23 @@ public class RatingController {
                 .collect(Collectors.toList());
     }
 
-    /*@GetMapping(value = "/readsByUserId")
-    public List<RatingDTO> getRatingsByUser(@RequestParam Long userId) throws ValidationException {
-        return this.ratingApplicationService.getRatingsByUser(userId).stream().map(this.ratingToRatingDTOMapper::apply)
-                .collect(Collectors.toList());
-    }*/
-
     @GetMapping(value = "/readRatingsNotByUser")
-    public List<RatingDTO> getRatingsNotByUser(@RequestParam Long userId) throws ValidationException {
-        return this.ratingApplicationService.getRatingsNotByUser(userId).stream().map(this.ratingToRatingDTOMapper::apply)
+    public List<RatingAverageDTO> getRatingsNotByUser(@RequestParam Long userId) throws ValidationException {
+        return this.ratingApplicationService.getRatingsNotByUser(userId).stream().map(this.ratingAverageToRatingAverageDTOMapper::apply)
                 .collect(Collectors.toList());
     }
 
     @GetMapping(value = "/readRatingsByUser")
-    public List<RatingDTO> getRatingsByUser(@RequestParam Long userId) throws ValidationException {
-        return this.ratingApplicationService.getRatingsByUser(userId).stream().map(this.ratingToRatingDTOMapper::apply)
+    public List<RatingAverageDTO> getEpisodesWithRatingsWatchedByUser(@RequestParam Long userId) throws ValidationException {
+        return this.ratingApplicationService.getRatingsByUser(userId).stream().map(this.ratingAverageToRatingAverageDTOMapper::apply)
                 .collect(Collectors.toList());
     }
 
     @GetMapping(value = "/readAllEpisodes")
-    public List<RatingDTO> getAllEpisodesRatings() {
+    public List<RatingAverageDTO> getAllEpisodesRatings() {
         return this.ratingApplicationService.getAllEpisodesRatings()
                 .stream()
-                .map(this.ratingToRatingDTOMapper::apply)
+                .map(this.ratingAverageToRatingAverageDTOMapper::apply)
                 .collect(Collectors.toList());
     }
 
@@ -101,8 +95,16 @@ public class RatingController {
         return this.ratingApplicationService.getAllEpisodesWithRatings().stream().map(this.ratingAverageToRatingAverageDTOMapper::apply).collect(Collectors.toList());
     }
 
+    @GetMapping(value = "/readAllRatingsOfEpisode")
+    public List<RatingDTO> getAllEpisodeRatings(@RequestParam Long episodeId) {
+        return this.ratingApplicationService.getAllRatingsOfEpisode(episodeId)
+                .stream()
+                .map(this.ratingToRatingDTOMapper::apply)
+                .collect(Collectors.toList());
+    }
+
     @GetMapping(value = "/read")
-    public List<RatingDTO> getAllEpisodeRatings() {
+    public List<RatingDTO> getAllRatings() {
         return this.ratingApplicationService.getAllEpisodeRatings()
                 .stream()
                 .map(this.ratingToRatingDTOMapper::apply)

@@ -6,7 +6,6 @@ import de.dhbw.ase.seriephant.domain.rating.Rating;
 import de.dhbw.ase.seriephant.domain.rating.RatingAverage;
 import de.dhbw.ase.seriephant.domain.rating.RatingKey;
 import de.dhbw.ase.seriephant.domain.rating.RatingRepository;
-import de.dhbw.ase.seriephant.domain.user.User;
 import de.dhbw.ase.seriephant.domain.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -107,7 +106,7 @@ public class RatingApplicationService {
         throw new ValidationException("User is not valid.");
     }
 
-    public List<Rating> getRatingsNotByUser(Long userId) throws ValidationException {
+    public List<RatingAverage> getRatingsNotByUser(Long userId) throws ValidationException {
         if (!this.userRepository.existsById(userId)) {
             throw new ValidationException("User is not valid.");
         }
@@ -115,15 +114,15 @@ public class RatingApplicationService {
 
     }
 
-    public List<Rating> getRatingsByUser(Long userId) throws ValidationException {
+    public List<RatingAverage> getRatingsByUser(Long userId) throws ValidationException {
         if (!this.userRepository.existsById(userId)) {
             throw new ValidationException("User is not valid.");
         }
         return this.getRatings(userId, Boolean.TRUE);
     }
 
-    private List<Rating> getRatings(Long userId, Boolean bool) {
-        List<Rating> unwatchedRatings = new ArrayList<>();
+    private List<RatingAverage> getRatings(Long userId, Boolean bool) {
+        List<RatingAverage> unwatchedRatings = new ArrayList<>();
         List<Rating> ratings = this.ratingRepository.findAll();
         List<Episode> episodes = this.episodeRepository.findAll();
         for (Episode episode : episodes) {
@@ -142,14 +141,14 @@ public class RatingApplicationService {
                 }
             }
             if (bool.equals(user)) {
-                unwatchedRatings.add(new Rating(this.userRepository.getById(userId), episode, number == 0 ? null : sumRating / number));
+                unwatchedRatings.add(new RatingAverage(episode.getId(), number == 0 ? null : sumRating / number, number));
             }
         }
         return unwatchedRatings;
     }
 
-    public List<Rating> getAllEpisodesRatings() {
-        List<Rating> allEpisodesWithRatings = new ArrayList<>();
+    public List<RatingAverage> getAllEpisodesRatings() {
+        List<RatingAverage> allEpisodesWithRatings = new ArrayList<>();
         List<Rating> ratings = this.ratingRepository.findAll();
         List<Episode> episodes = this.episodeRepository.findAll();
         for (Episode episode : episodes) {
@@ -161,7 +160,7 @@ public class RatingApplicationService {
                     number++;
                 }
             }
-            allEpisodesWithRatings.add(new Rating(new User(1L, "", null, new ArrayList<>()), episode, number == 0 ? null : sumRating / number));
+            allEpisodesWithRatings.add(new RatingAverage(episode.getId(), number == 0 ? null : sumRating / number, number));
         }
         return allEpisodesWithRatings;
     }

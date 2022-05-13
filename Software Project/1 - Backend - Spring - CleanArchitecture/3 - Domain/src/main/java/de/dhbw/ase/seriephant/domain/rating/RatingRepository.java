@@ -24,6 +24,8 @@ public interface RatingRepository {
 
     List<Rating> getAllRatingsOfEpisode(Long episodeId);
 
+    RatingAverage getAverageRatingOfEpisode(Long episodeId);
+
     List<RatingAverage> getAllAverages();
 
     List<Rating> findAll();

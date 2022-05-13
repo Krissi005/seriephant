@@ -47,11 +47,22 @@ public class RatingBridge implements RatingRepository {
     }
 
     @Override
+    public RatingAverage getAverageRatingOfEpisode(Long episodeId) {
+        RatingAverage ratingAverage = null;
+        for (Object[] obj : this.springDataRatingRepository.getAllAverages()) {
+            if (((BigInteger) obj[0]).longValue() == episodeId) {
+                ratingAverage = new RatingAverage(((BigInteger) obj[0]).longValue(), (Double) obj[1], ((BigInteger) obj[2]).intValue());
+            }
+        }
+        return ratingAverage;
+    }
+
+    @Override
     public List<RatingAverage> getAllAverages() {
         List<RatingAverage> arrayList = new ArrayList();
         List<Object[]> objectList = this.springDataRatingRepository.getAllAverages();
         for (Object[] obj : objectList) {
-            arrayList.add(new RatingAverage(((BigInteger) obj[0]).longValue(), (String) obj[1], (Double) obj[2], ((BigInteger) obj[3]).intValue()));
+            arrayList.add(new RatingAverage(((BigInteger) obj[0]).longValue(), (Double) obj[1], ((BigInteger) obj[2]).intValue()));
         }
         return arrayList;
     }
