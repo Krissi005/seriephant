@@ -31,7 +31,7 @@ Ratings sind Bewertungen von Nutzern zu einzelnen Episoden.
 
 \section{Analyse und Begründung der verwendeten Muster}
 
-    \subsection{Value Objects}
+    \subsection{Value Objects} \label{1.vo}
     Value Objects sind sogenannte Wertobjekte, die unveränderbar sind, da sie einen bestimmten Wert bzw. eine bestimmte Kombination aus Werten repräsentieren. Um Werte eines Value Objects zu ändern, muss ein neues erstellt werden.
 
         \subsubsection{Analyse}
@@ -61,7 +61,7 @@ Ratings sind Bewertungen von Nutzern zu einzelnen Episoden.
         \subsubsection{Begründung}
          Während der Laufzeit ändern sich die Attribute dieser Objekte regelmäßig. Daher ist es sinnvoll, diese Objekte als Entitäten umzusetzen, zu persistieren, bei Bedarf Attribute zu updaten und anschließend erneut zu persistieren.
 
-    \subsection{Aggregates}
+    \subsection{Aggregates} \label{1.aggregate}
     Aggregates umfassen mindestens eine Entität, im sogenannten Aggregatstamm. An diesem können weitere (Unter-)Entitäten oder Objekte angehängt werden, um sogenannte Aggregates zu bilden.
 
         \subsubsection{Analyse}
@@ -70,7 +70,7 @@ Ratings sind Bewertungen von Nutzern zu einzelnen Episoden.
         \subsubsection{Begründung}
         Grund für die Benutzung des Aggregate ist, dass die verschiedenen Entitäten zusammengefasst werden können. So kann mit den Daten besser interagiert werden, der Durchschnitt und die Anzahl an Bewertungen kann im Aggregate Objekt gespeichert werden und ans Frontend weitergegeben werden.
 
-    \subsection{Repositories}
+    \subsection{Repositories} \label{1.repo}
     Repositories sind Klassen, die eine Schnittstelle zwischen Domäne und der Datenzuordnungsebene bilden. Diese dienen meist dazu die Basisoperationen CRUD zu implementieren. Hier lassen sich Entitäten erstellen, lesen, updaten oder löschen.
     
         \subsubsection{Analyse}

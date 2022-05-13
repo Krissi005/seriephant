@@ -13,15 +13,15 @@ SOLID steht für weiter fünf Prinzipien, die im folgenden betrachtet werden.
     \subsection{Single Responsibility Principle}
     
         \subsubsection{Analyse}
-        Das Prinzip wird bei den Repository Klassen eingesetzt. Hierbei hat jedes Repository nur eine Funktion. Diese Funktion ist die Schittstelle zur Datenbank.
+        Das Prinzip wird bei den RepositoryInterface Klassen eingesetzt. Hierbei hat jedes RepositoryInterfaces nur eine genau definierte Funktion. Diese Funktion ist die Anbindung an die Datenbank.
         
         \subsubsection{Begründung}
-        Der Grund dafür ist, dass eine Klasse nur eine Zuständigkeit haben soll. Es kapselt so die Zuständigkeit, diese sind klar definiert, da jede Klasse nur einen Nutzen hat. Das führt dazu, dass Änderungen der Software nur zu Änderungen in einem eingegrenzten Bereich führen.
+        Der Grund dafür ist, dass eine Klasse, Methode, etc. nur eine Zuständigkeit haben soll. Es kapselt so die Zuständigkeit, diese sind klar definiert, da jede Klasse etc. nur einen Nutzen hat. Das führt dazu, dass Änderungen der Software nur zu Änderungen in einem eingegrenzten Bereich führen.
 
     \subsection{Open Closed Principle}
     
         \subsubsection{Analyse}
-        Hierbei geht es darum, dass Klassen einfach erweiterbar sind, ohne sie grundsätzlich zu ändern. In dem Projekt kommt dieses Prinzip zum Beispiel in den Services oder den Controllern zum Einsatz. Hierbei kann der Controller um einen Endpunkt erweitert werden, ohne dass die Klasse grundlegend modifiziert werden muss. Auch bei den Services trifft dies zu.
+        Hierbei geht es darum, dass Klassen einfach erweiterbar sind, ohne sie grundsätzlich zu ändern. In dem Projekt kommt dieses Prinzip zum Beispiel in den Application Service Klassen oder den Controller Klassen zum Einsatz. Hierbei kann der Controller um einen Endpunkt erweitert werden, ohne dass die Klasse grundlegend modifiziert werden muss. Auch bei den Service Klassen trifft dies zu.
         
         \subsubsection{Begründung}
         Der Grund für die Benutzung dieses Prinzips ist, dass eine Erweiterung an Methoden oft vorkommt. Wenn man jedes Mal die Klasse von Grund auf ändern müsste, wäre das sehr aufwendig. Durch das Open Closed Principle kann man neue Methoden ohne großen Aufwand hinzufügen.
@@ -35,15 +35,15 @@ SOLID steht für weiter fünf Prinzipien, die im folgenden betrachtet werden.
         Das Interface Segregation Principle wurde in den Repository Interfaces verwendet. Hierbei wurden keine unnötigen Schnittstellenteile implementiert.
         
         \subsubsection{Begründung}
-        Der Grund hierfür ist, dass Schnittstellen so kleiner sind und nur verwendete Methoden implementieren. Dadurch wird die Wartbarkeit erheblich verbessert und der Code wird kompakter und besser wiederverwendbar. Die implementierten Klassen gewinnen so an Übersichtlichkeit, fachlich zusammengehöriges Verhalten wird so gruppiert und die Modularität wird dadurch verbessert.
+        Der Grund hierfür ist, dass Schnittstellen so kleiner sind und nur verwendete Methoden zwingend implementiert werden müssen. Dadurch wird die Wartbarkeit erheblich verbessert und der Code wird kompakter und besser wiederverwendbar. Die implementierten Klassen gewinnen so an Übersichtlichkeit, fachlich zusammengehöriges Verhalten wird so gruppiert und die Modularität wird dadurch verbessert.
 
 \subsection{Dependency Inversion Principle}
 
         \subsubsection{Analyse}
-        Das Dependency Inversion Principle kommt vorallem bei objektorientierten Entwürfen zum Einsatz und strukturiert das Projekt in Module. Die einzelnen Module stellen hierbei verschiedenen Ebenen dar. Die Ebenen haben verschiedene Ordnungen, und sind abhängig voneinander. In diesem Projekt ist die niedrigste Ebene die Plugin-Schicht (siehe \cref{cleanArchitecture}). Module niedriger Ebenen sind immer von Modulen höherer Ebenen abhängig, da Module niedrigerer Ebenen die Vorgänge der höheren Ebene spezifizieren.
+        Das Dependency Inversion Principle kommt vorallem bei objektorientierten Entwürfen zum Einsatz und besagt, dass höhere Module nicht von niedrigeren Modulen abhängen sollen. Die einzelnen Module stellen hierbei verschiedenen Ebenen dar. Die Ebenen haben verschiedene Ordnungen, und sind abhängig voneinander. In diesem Projekt ist die niedrigste Ebene die Plugin-Schicht (siehe \cref{cleanArchitecture}). Module niedriger Ebenen sind immer von Modulen höherer Ebenen abhängig, da Module niedrigerer Ebenen die Vorgänge der höheren Ebene spezifizieren.
         
         \subsubsection{Begründung}
-        Der Grund, warum man die verschiedenen Ebenen in Module aufteilt und somit eine Abhängigkeit von niedrigen zu höheren Ebenen realisiert, ist, dass man so dem Prinzip der Hierarchie nicht widersprechen kann. Des Weiteren wird so die Vorstellung der Clean Architecture zwangsweise umgesetzt und Veränderungen in der Architektur oder des Design sind leicht umsetzbar. So wird auch Komplexität verringert.
+        Der Grund, warum man die verschiedenen Ebenen in Module aufteilt und somit eine Abhängigkeit von niedrigen zu höheren Ebenen realisiert, ist, dass man so dem Prinzip der Hierarchie nicht widersprechen kann. Des Weiteren wird so die Vorstellung der Clean Architecture zwangsweise umgesetzt und Veränderungen in der Architektur oder des Design sind leicht umsetzbar. So wird auch die Komplexität des gesamten Projekts verringert.
 
 \section{GRASP}
 GRASP steht für General Responsibility Assignment Software Patterns. Darunter werden neun Muster verstanden, welche im Folgenden näher betrachtet werden.
@@ -103,7 +103,7 @@ GRASP steht für General Responsibility Assignment Software Patterns. Darunter w
     Bei dem Information Expert Pattern geht es darum, dass eine Klasse nur genau die Informationen kennt, die sie auch benötigt, um ihrer Verantwortung gerecht zu werden. Das heißt, eine Aufgabe wird immer von der Klasse übernommen, die das meiste benötigte Wissen besitzt. Dieses Pattern fördert high cohesion. Umgesetzt wird dieses Pattern in den Entitäten und Repositories. Die Entitäten kapseln das Wissen, sodass nur mit Gettern und Settern darauf zugegriffen werden kann. Bei den Repositories übernimmt immer genau das Repository die Aufgabe, welches das meiste Wissen hat.
     
     \subsection{Polymorphism}
-    Das Polymorphism-Pattern wird in diesem Projekt nicht umgesetzt, da es keine Vererbung in diesem Projekt gibt.
+    Das Polymorphism-Pattern wird in diesem Projekt nicht umgesetzt, da es keine Anwendungsfälle (beispielsweise Vererbung oder verschiedene Ausprägungen einer Interface Methode) in diesem Projekt gibt.
     
     \subsection{Protected variations}
     Das Protected variations pattern wird in diesem Projekt durch die Repository Interfaces in der Domänenschicht, die in der Plugins Schicht implementiert werden, umgesetzt. Dadurch wird die eigentliche Implementierung in der Plugins Schicht über die Interfaces verschleiert. So hat eine Veränderung an der Implementierung keine Auswirkung auf das restliche System.
@@ -112,7 +112,7 @@ GRASP steht für General Responsibility Assignment Software Patterns. Darunter w
     Das Pure Fabrication Pattern stellt Klassen da, die in der Domäne nicht existieren. In diesen Klassen werden beispielsweise Methoden ausgelagert und die Klassen werden als Erfindung bezeichnet, da die nichts reales aus der Domänenschicht repräsentieren. Dieses Pattern wird zur Unterstützung von high cohesion und low coupling eingesetzt. In diesem Projekt wird Pure Fabrication durch die Data Transfer Objects (DTO) in der Adapter Schicht umgesetzt. Durch diese Klassen wird beispielsweise das Frontend von der Domäne entkoppelt. Eine Anpassung der Domäne für nicht zwingend zu einer Anpassung des Frontends.
 
 \section{DRY}
-Das Prinzip DRY bedeutet \hk{Don't Repeat yourself}. Hierbei handelt es sich um ein Prinzip des Clean Code, da Codeabschnitte nicht wiederholt, sondern ausgelagert und wiederverwendet werden sollen.
+Das Prinzip DRY bedeutet \hk{Don't Repeat yourself}. Hierbei handelt es sich um ein Prinzip des Clean Code, damit Codeabschnitte nicht wiederholt, sondern stattdessen ausgelagert und wiederverwendet werden.
 
     \subsection{Analyse}
     Diese Prinzip ist ein grundlegendes Prinzip und wurde prinzipiell in dem gesamten Projekt umgesetzt. Im \cref{refactoring} sieht man die Extraktion von Teilen einer Methode in einzelne neue Methoden. Diese neuen Methoden werden anschließend auch von anderen Methoden benutzt, wodurch eine Wiederholung vermieden wird.
