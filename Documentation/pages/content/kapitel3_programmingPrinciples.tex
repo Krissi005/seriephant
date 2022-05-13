@@ -8,12 +8,12 @@
 \chapter{Programming Principles}
 
 \section{SOLID}
-SOLID steht für weiter fünf Prinzipien, die im folgenden betrachtet werden.
+SOLID steht für fünf Prinzipien, die im Folgenden betrachtet werden.
 
     \subsection{Single Responsibility Principle}
     
         \subsubsection{Analyse}
-        Das Prinzip wird bei den RepositoryInterface Klassen eingesetzt. Hierbei hat jedes RepositoryInterfaces nur eine genau definierte Funktion. Diese Funktion ist die Anbindung an die Datenbank.
+        Das Prinzip wird bei den RepositoryInterface Klassen eingesetzt. Hierbei hat jedes RepositoryInterface nur eine genau definierte Funktion. Diese Funktion ist die Anbindung an die Datenbank.
         
         \subsubsection{Begründung}
         Der Grund dafür ist, dass eine Klasse, Methode, etc. nur eine Zuständigkeit haben soll. Es kapselt so die Zuständigkeit, diese sind klar definiert, da jede Klasse etc. nur einen Nutzen hat. Das führt dazu, dass Änderungen der Software nur zu Änderungen in einem eingegrenzten Bereich führen.
@@ -27,7 +27,7 @@ SOLID steht für weiter fünf Prinzipien, die im folgenden betrachtet werden.
         Der Grund für die Benutzung dieses Prinzips ist, dass eine Erweiterung an Methoden oft vorkommt. Wenn man jedes Mal die Klasse von Grund auf ändern müsste, wäre das sehr aufwendig. Durch das Open Closed Principle kann man neue Methoden ohne großen Aufwand hinzufügen.
 
     \subsection{Liskov Substitution Principle}
-        Unter dem Liskov Substitution Principle wird zusammengefasst, dass eine Instanz einer Klasse durch eine Instanz einer anderen Klasse, die entweder von dieser Klasse erbt oder das gleiche Interface erweitert, ersetzt werden kann. Hierbei darf es nicht zu einem logischen Bruch innerhalb der Anwendung kommen. In diesem Projekt gibt es zwar keine Vererbung, aber es wurden Interfaces benutzt. Dieses Prinzip kommt also bei den Repository Interfaces zum Einsatz. Die Bridge Klassen (z.B. GenreBridge) implementiert hierbei das Repository Interface und jede Instanz der Bridge Klasse kann durch eine Instanz ersetzt werden, die das gleiche Interface erweitert. Dies wird mit dem Liskov Substitution Principle umgesetzt, um die implementierte Logik in der Bridge Klasse einfach austauschen zu können, ohne alle Klassen anpassen zu müssen, die von den Repository Interfaces abhängig sind (wie die Application Services).
+        Unter dem Liskov Substitution Principle wird zusammengefasst, dass eine Instanz einer Klasse durch eine Instanz einer anderen Klasse, die entweder von dieser Klasse erbt oder das gleiche Interface erweitert, ersetzt werden kann. Hierbei darf es nicht zu einem logischen Bruch innerhalb der Anwendung kommen. In diesem Projekt gibt es zwar keine Vererbung, aber es wurden Interfaces benutzt. Dieses Prinzip kommt also bei den Repository Interfaces zum Einsatz. Die Bridge Klassen (z.B. GenreBridge) implementieren hierbei das Repository Interface und jede Instanz der Bridge Klasse kann durch eine Instanz ersetzt werden, die das gleiche Interface implementiert. Dies wird mit dem Liskov Substitution Principle umgesetzt, um die implementierte Logik in der Bridge Klasse einfach austauschen zu können, ohne alle Klassen anpassen zu müssen, die von den Repository Interfaces abhängig sind (wie die Application Services).
 
     \subsection{Interface Segregation Principle}
     
@@ -40,7 +40,7 @@ SOLID steht für weiter fünf Prinzipien, die im folgenden betrachtet werden.
 \subsection{Dependency Inversion Principle}
 
         \subsubsection{Analyse}
-        Das Dependency Inversion Principle kommt vorallem bei objektorientierten Entwürfen zum Einsatz und besagt, dass höhere Module nicht von niedrigeren Modulen abhängen sollen. Die einzelnen Module stellen hierbei verschiedenen Ebenen dar. Die Ebenen haben verschiedene Ordnungen, und sind abhängig voneinander. In diesem Projekt ist die niedrigste Ebene die Plugin-Schicht (siehe \cref{cleanArchitecture}). Module niedriger Ebenen sind immer von Modulen höherer Ebenen abhängig, da Module niedrigerer Ebenen die Vorgänge der höheren Ebene spezifizieren.
+        Das Dependency Inversion Principle kommt vor allem bei objektorientierten Entwürfen zum Einsatz und besagt, dass höhere Module nicht von niedrigeren Modulen abhängen sollen. Die einzelnen Module stellen hierbei verschiedenen Ebenen dar. Die Ebenen haben verschiedene Ordnungen, und sind abhängig voneinander. In diesem Projekt ist die niedrigste Ebene die Plugin-Schicht (siehe \cref{cleanArchitecture}). Module niedriger Ebenen sind immer von Modulen höherer Ebenen abhängig, da Module niedrigerer Ebenen die Vorgänge der höheren Ebene spezifizieren.
         
         \subsubsection{Begründung}
         Der Grund, warum man die verschiedenen Ebenen in Module aufteilt und somit eine Abhängigkeit von niedrigen zu höheren Ebenen realisiert, ist, dass man so dem Prinzip der Hierarchie nicht widersprechen kann. Des Weiteren wird so die Vorstellung der Clean Architecture zwangsweise umgesetzt und Veränderungen in der Architektur oder des Design sind leicht umsetzbar. So wird auch die Komplexität des gesamten Projekts verringert.
@@ -73,7 +73,7 @@ GRASP steht für General Responsibility Assignment Software Patterns. Darunter w
 		\subsubsection{Loose Coupling}
 		
 		\myparagraph{Analyse}
-		Bei dem Prinzip Loose Coupling geht es um die Minimierung der Abhängigkeiten einer Klasse von der Umgebung. Betrachtet man die Klassen innerhalb der Domäne, sieht man, dass hier eine Tight Coupling ist. Da die beispielsweise die Klasse Genre eine List<Serie> und jede Serie ein Genre Objekt hat, sind die beiden Klassen gekoppelt. 
+		Bei dem Prinzip Loose Coupling geht es um die Minimierung der Abhängigkeiten einer Klasse von der Umgebung. Betrachtet man die Klassen innerhalb der Domäne, sieht man, dass hier Tight Coupling ist. Da die beispielsweise die Klasse Genre eine List<Serie> und jede Serie ein Genre Objekt hat, sind die beiden Klassen gekoppelt. 
 		
 		\myparagraph{Begründung}
 		Der Grund für diese Umsetzung und die hohe Kopplung ist, wie in Spring die Entities angelegt wurden und wie mit deren Beziehungen umgegangen wird. Hierbei werden komplette Objekte anstelle von ihren Id's referenziert.
@@ -81,7 +81,7 @@ GRASP steht für General Responsibility Assignment Software Patterns. Darunter w
 		\subsubsection{High Cohesion}
 		
 		\myparagraph{Analyse}
-		Bei dem Prinzip High Cohesion geht es um die Vermeidung von verschiedenen Verantwortlichkeiten bzw. Aufgaben innerhalb einer Klasse. Innerhalb der Domäne hätte man aufgrund er Tight Coupling eigentlich eine low cohesion, da durch die hohe Abhängigkeit von der Genre und Serie Klasse Funktionen gegenseitig übernommen werden müssten. Jedoch ist dies durch Spring nicht der Fall, weil das Genre theoretisch nur in der Serie gespeichert ist und beim Persistieren die List<Serie> in der Genre Klasse von Spring automatisch geupdatet wird.
+		Bei dem Prinzip High Cohesion geht es um die Vermeidung von verschiedenen Verantwortlichkeiten bzw. Aufgaben innerhalb einer Klasse. Innerhalb der Domäne hätte man aufgrund von Tight Coupling eigentlich eine Low Cohesion, da durch die hohe Abhängigkeit von der Genre und Serie Klasse Funktionen gegenseitig übernommen werden müssten. Jedoch ist dies durch Spring nicht der Fall, weil das Genre theoretisch nur in der Serie gespeichert ist und beim Persistieren die List<Serie> in der Genre Klasse von Spring automatisch geupdatet wird.
 		
 		\myparagraph{Begründung}
 		Auch hierfür ist der Grund Verbesserung der Übersichtlichkeit der Klasse sowie die Minimierung der Komplexität.
@@ -98,18 +98,17 @@ GRASP steht für General Responsibility Assignment Software Patterns. Darunter w
     \subsection{Indirection}
     Das Indirection Pattern wird verwendet, um Low Coupling umzusetzen. Es wird ein sogenannter Vermittler zwischen Client und Server eingesetzt. In diesem Projekt findet dieses Pattern keinen Einsatz, da die Leistungsfähigkeit so vermindert wird.
     
-    \subsection{Information expert}
-    Assign a responsibility to the information expert– the class that has the information necessary to fulfill the responsibility.
+    \subsection{Information Expert}
     Bei dem Information Expert Pattern geht es darum, dass eine Klasse nur genau die Informationen kennt, die sie auch benötigt, um ihrer Verantwortung gerecht zu werden. Das heißt, eine Aufgabe wird immer von der Klasse übernommen, die das meiste benötigte Wissen besitzt. Dieses Pattern fördert high cohesion. Umgesetzt wird dieses Pattern in den Entitäten und Repositories. Die Entitäten kapseln das Wissen, sodass nur mit Gettern und Settern darauf zugegriffen werden kann. Bei den Repositories übernimmt immer genau das Repository die Aufgabe, welches das meiste Wissen hat.
     
     \subsection{Polymorphism}
     Das Polymorphism-Pattern wird in diesem Projekt nicht umgesetzt, da es keine Anwendungsfälle (beispielsweise Vererbung oder verschiedene Ausprägungen einer Interface Methode) in diesem Projekt gibt.
     
-    \subsection{Protected variations}
-    Das Protected variations pattern wird in diesem Projekt durch die Repository Interfaces in der Domänenschicht, die in der Plugins Schicht implementiert werden, umgesetzt. Dadurch wird die eigentliche Implementierung in der Plugins Schicht über die Interfaces verschleiert. So hat eine Veränderung an der Implementierung keine Auswirkung auf das restliche System.
+    \subsection{Protected Variations}
+    Das Protected Variations Pattern wird in diesem Projekt durch die Repository Interfaces in der Domänenschicht, die in der Plugins Schicht implementiert werden, umgesetzt. Dadurch wird die eigentliche Implementierung in der Plugins Schicht über die Interfaces verschleiert. So hat eine Veränderung an der Implementierung keine Auswirkung auf das restliche System.
     
     \subsection{Pure Fabrication}
-    Das Pure Fabrication Pattern stellt Klassen da, die in der Domäne nicht existieren. In diesen Klassen werden beispielsweise Methoden ausgelagert und die Klassen werden als Erfindung bezeichnet, da die nichts reales aus der Domänenschicht repräsentieren. Dieses Pattern wird zur Unterstützung von high cohesion und low coupling eingesetzt. In diesem Projekt wird Pure Fabrication durch die Data Transfer Objects (DTO) in der Adapter Schicht umgesetzt. Durch diese Klassen wird beispielsweise das Frontend von der Domäne entkoppelt. Eine Anpassung der Domäne für nicht zwingend zu einer Anpassung des Frontends.
+    Das Pure Fabrication Pattern stellt Klassen dar, die in der Domäne nicht existieren. In diesen Klassen werden beispielsweise Methoden ausgelagert und die Klassen werden als Erfindung bezeichnet, da sie nichts Reales aus der Domänenschicht repräsentieren. Dieses Pattern wird zur Unterstützung von high cohesion und low coupling eingesetzt. In diesem Projekt wird Pure Fabrication durch die Data Transfer Objects (DTO) in der Adapter Schicht umgesetzt. Durch diese Klassen wird beispielsweise das Frontend von der Domäne entkoppelt. Eine Anpassung der Domäne für nicht zwingend zu einer Anpassung des Frontends.
 
 \section{DRY}
 Das Prinzip DRY bedeutet \hk{Don't Repeat yourself}. Hierbei handelt es sich um ein Prinzip des Clean Code, damit Codeabschnitte nicht wiederholt, sondern stattdessen ausgelagert und wiederverwendet werden.

@@ -7,12 +7,12 @@
 
 \chapter{Clean Architecture}
 \label{cleanArchitecture}
-    Die Clean Architecture beschreibt eine bestimmte Art und Weise, wie Software aufgebaut werden kann. Hierbei werden im weiteren 5 Schichten analysiert, welche im Projekt umgesetzt wurden.
+    Die Clean Architecture beschreibt eine bestimmte Art und Weise, wie Software aufgebaut werden kann. Hierbei werden im Weiteren 5 Schichten analysiert, welche im Projekt umgesetzt wurden.
     
     \includegraphics[width=0.95\textwidth]{zfiles/Bilder/schichten.png}
 
     \section{Schichtenarchitektur}
-     Das Projekt soll sich an der Schichtenarchitektur orientieren. Hierbei sollen die einzelnen Module die einzelnen Schichten darstellen. Der Grund für die Benutzung einzelner Schichten ist die fachliche Unabhängigkeit der Anwendung von der sonstigen Infrastruktur. Dadurch können die einzelnen Teile leichter wiederverwendet, getestet und weiterentwickelt werden. Es ist auch leichter, einzelne Komponenten der Infrastruktur auszutauschen.
+     Das Projekt soll sich an der Schichtenarchitektur orientieren. Hierbei sollen die einzelnen Module die einzelnen Schichten darstellen. Der Grund für die Benutzung einzelner Schichten ist die fachliche Unabhängigkeit der Anwendung von der sonstigen Infrastruktur. Dadurch können die einzelnen Teile leichter wiederverwendet, getestet und weiterentwickelt werden. Es ist auch leichter, einzelne Komponenten der Infrastruktur auszutauschen. Je weiter außenliegend, desto leichter austauschbar.
     
         \subsection{Abstraction - Schicht}
     	Diese Schicht stellt den Kern der Applikation dar. Hier werden Fundamente, oft durch die verwendete Programmiersprache geschaffen. Ein Beispiel hierfür ist die Implementierung des \hk{Strings} in Java, welche in der Spring Boot Anwendung verwendet wird.
@@ -30,12 +30,12 @@
     		Die Use-Cases wurden in dieser Schicht implementiert, da sie über die Verantwortlichkeit einer einzelnen Entität hinausgehen. Diese Logiken und Prozesse wurden in sogenannte Services ausgelagert.
     	
     	\subsection{Adapters - Schicht}
-    	In der Adapterschicht erfolgt die Umwandlung von Business-Objekten (interne Objekte) in Transferobjekten (externe Objekte).
+    	In der Adapterschicht erfolgt die Umwandlung von Business-Objekten (interne Objekte) in Transferobjekte (externe Objekte).
     		\subsubsection{Implementierung im Projekt}
-    		Hierzu werden Mapper verwendet, welche eine einfache Konvertierung von DTOs zu Entitäten und umgekehrt zulassen.
+    		Hierzu werden Mapper verwendet, welche eine einfache Konvertierung von DTOs zu Entitäten und umgekehrt zulassen. Diese Schicht ist für die Serialisierung der Objekte, damit diese ans Frontend transferiert werden können.
     		
     	\subsection{Plugins - Schicht}
-    	In der Plugin-Schicht werden Frameworks verwendet. Diese unterstützen bestimmte Programmfunktionen, ohne diese selbst zu entwickeln und somit den selbst geschriebenen Code zu minimieren.
+    	In der Plugin-Schicht werden externe Frameworks verwendet. Diese unterstützen bestimmte Programmfunktionen, ohne diese selbst zu entwickeln und somit den selbst geschriebenen Code zu minimieren.
     	    \subsubsection{Implementierung im Projekt}
     	    In diesem Projekt sind mehrere Frameworks im Einsatz. \\
     	    \begin{itemize}

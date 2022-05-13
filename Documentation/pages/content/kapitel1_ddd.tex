@@ -6,10 +6,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \chapter{Domain Driven Design}
-\ac{DDD} ist eine Philosophie zur Modellierung komplexer Software. Der Fokus liegt hierbei auf dem präzisen und tiefgreifenden Verständnis der Problemdömane. Desweiteren bietet es Muster, um ein konsistentes, erweiterbares, funktionierendes Modell der Problemdomäne zu entwickeln.
+\ac{DDD} ist eine Philosophie zur Modellierung komplexer Software. Der Fokus liegt hierbei auf dem präzisen und tiefgreifenden Verständnis der Problemdömane. Des Weiteren bietet es Muster, um ein konsistentes, erweiterbares, funktionierendes Modell der Problemdomäne zu entwickeln.
 
 \section{Ubiquitous Language}
-Die \ac{UL} ist das wichtigste Konzept des \ac{DDD}. Es bezeichnet die von Domänenexperten und Entwicklern gemeinsam im Projekt verwendete Sprache. Dadurch sollen gleiche Begriffe in der Domäne, sowie in dem Sourcecode, verwendet werden. Durch die \ac{UL} sollen Verständnisschwierigkeiten zwischen Domänenexperten und Entwicklern minimiert werden. Durch \ac{UL} ist der Code näher an der Sprache der Domäne. Als \ac{UL} bezichnet man den Teil des Projektes, der sich von den Entwicklern und den Domänenexperten überschneiden (siehe \cref{a.1.pic}).
+Die \ac{UL} ist das wichtigste Konzept des \ac{DDD}. Es bezeichnet die von Domänenexperten und Entwicklern gemeinsam im Projekt verwendete Sprache. Dadurch sollen gleiche Begriffe in der Domäne, sowie in dem Sourcecode, verwendet werden. Durch die \ac{UL} sollen Verständnisschwierigkeiten zwischen Domänenexperten und Entwicklern minimiert werden. Durch \ac{UL} ist der Code näher an der Sprache der Domäne. Als \ac{UL} bezichnet man den Teil des Projektes, der sich von den Entwicklern und den Domänenexperten überschneidet.
 
 \subsection{Analyse}
 Die Fachdomäne ist in diesem Projekt sehr überschaubar. Damit in dem Projekt keine Sprachprobleme aufkommen, wurde als Sprache Englisch gewählt, da diese international verständlich ist. Die Fachbegriffe der einzelnen Objekte und deren Bedeutung sowie Attribute wurde im Voraus wie folgt festgelegt:
@@ -21,29 +21,29 @@ Unter einem Actor versteht man einen Schauspieler. Dies ist eine Person, die in 
 \subsubsection{Serie}
 Eine Serie ist eine Fernsehshow, bei der regelmäßig Folgen von Sendungen ausgestrahlt werden.
 \subsubsection{Season}
-Eine Season stellt eine Staffel von einer Serie dar. Hierbei werden Episoden thematisch gegliedert in Handlungsabschnitte, und alle Folgen werden in zeitlicher Nähe ausgestrahlt.
+Eine Season stellt eine Staffel von einer Serie dar. Hierbei werden Episoden thematisch in Handlungsabschnitte gegliedert und alle Folgen werden in zeitlicher Nähe ausgestrahlt.
 \subsubsection{Episode}
-Eine Episode stellt eine einzelne Folge da, die einer Staffel und somit auch einer Serie zugeordnet ist. Eine Episode kann Schauspieler, die in ihr mitspielen, speichern sowie Nutzer, die die Episode angeschaut haben, und deren Ratings.
+Eine Episode stellt eine einzelne Folge dar, die einer Staffel und somit auch einer Serie zugeordnet ist. Eine Episode kann Schauspieler, die in ihr mitspielen, speichern sowie Nutzer, die die Episode angeschaut haben, und deren Ratings.
 \subsubsection{User}
-Ein User stellt Personen da, die Episoden anschauen und bewerten können. Außerdem können Nutzer auch neue Serien, Seasons und Episodes erstellen.
+Ein User stellt eine Person da, die Episoden anschauen und bewerten können. Außerdem können User auch neue Serien, Seasons und Episodes erstellen.
 \subsubsection{Rating}
 Ratings sind Bewertungen von Nutzern zu einzelnen Episoden.
 
 \section{Analyse und Begründung der verwendeten Muster}
 
     \subsection{Value Objects} \label{1.vo}
-    Value Objects sind sogenannte Wertobjekte, die unveränderbar sind, da sie einen bestimmten Wert bzw. eine bestimmte Kombination aus Werten repräsentieren. Um Werte eines Value Objects zu ändern, muss ein neues erstellt werden.
+    Value Objects sind sogenannte Wertobjekte, die unveränderbar sind, da sie einen bestimmten Wert bzw. eine bestimmte Kombination aus Werten repräsentieren. Value Objects sind also nur durch ihre Werte definiert. Um Werte eines Value Objects zu ändern, muss ein neues erstellt werden.
 
         \subsubsection{Analyse}
-        In diesem Projekt werden Value Objects dafür benutzt, Daten vom Frontend zum Backend und wieder zurück zu schicken. Bei dem Aufruf eines Create oder Update Endpunkts wird vom Frontend ein value object mitgeschickt. Auch vom Backend bekommt man ein Value Object zurück. In diesem Projekt werden Value Objects von den \hk{DTO}-Klassen repräsentiert und sind im Modul \hk{1 - Adapters} zu finden.
+        In diesem Projekt werden Value Objects dafür benutzt, Daten vom Frontend zum Backend und wieder zurück zu schicken. Bei dem Aufruf eines Create oder Update Endpunkts wird vom Frontend ein Value Object mitgeschickt. Auch vom Backend bekommt man ein Value Object zurück. In diesem Projekt werden Value Objects von den \hk{DTO}-Klassen repräsentiert und sind im Modul \hk{1 - Adapters} zu finden.
         Ein weiteres Beispiel für ein Value Object in dem Projekt ist der Key des Ratings, der als Embeddable umgesetzt wurde. Dieser Key setzt sich aus der Id des Users und aus der Id der Episode zusammen und ist der Primary Key für das Rating. Dieser Key kann nicht verändert werden.
 
         \subsubsection{Begründung}
-        Der Grund für die Benutzung von Value Objects ist, dass so viele Daten vom Frontend zum Backend geschickt werden können, ohne dass sie verändert werden können. Die Serialisierbarkeit wird durch das Verwenden von Value Objects sichergestellt. Da es bei der Create oder Update Methode eine Vielzahl von Parametern gibt, ist eine Kapselung in einem Value Object übersichtlicher.
+        Der Grund für die Benutzung von Value Objects ist, dass dadurch viele Daten vom Frontend zum Backend geschickt werden können, ohne dass sie verändert werden können. Die Serialisierbarkeit wird durch das Verwenden von Value Objects sichergestellt. Da es bei der Create oder Update Methode eine Vielzahl von Parametern gibt, ist eine Kapselung in einem Value Object übersichtlicher.
         Der Key ist ein Value Object, das nicht verändert werden darf, weil die Entität Rating an den Primary Key gekoppelt ist. Könnte man den Key ändern, würde das Rating Objekt nicht mehr richtig sein.
 
     \subsection{Entities} \label{1.entities}
-    Entitäten stellen die Basis eines Modells dar. Sie sind Objekte, die durch ihre Identität definiert werden und Attribute besitzen. Verschiedene Instanzen einer Entität können die gleichen Eigenschaften haben. Attribute könne geupdatet werden, hierbei verändert dich die Instanz nicht. 
+    Entitäten stellen die Basis eines Modells dar. Sie sind Objekte, die durch ihre Identität definiert werden und Attribute besitzen. Verschiedene Instanzen einer Entität können die gleichen Eigenschaften haben. Attribute könne geupdatet werden, hierbei verändert sich die Identität der Instanz nicht. 
 
         \subsubsection{Analyse}
         In diesem Projekt gibt es sieben Entitäten (Attribute):
@@ -59,31 +59,31 @@ Ratings sind Bewertungen von Nutzern zu einzelnen Episoden.
         Jede Entität wird mit einer Id identifiziert. Die Entitäten haben Eigenschaften, die sich ändern können. In diesem Projekt sind die Entitäten im Modul \hk{3 - Domain} zu finden.
 
         \subsubsection{Begründung}
-         Während der Laufzeit ändern sich die Attribute dieser Objekte regelmäßig. Daher ist es sinnvoll, diese Objekte als Entitäten umzusetzen, zu persistieren, bei Bedarf Attribute zu updaten und anschließend erneut zu persistieren.
+         Während der Laufzeit ändern sich die Attribute dieser Objekte regelmäßig. Daher ist es sinnvoll, diese Objekte als Entitäten umzusetzen, sie zu persistieren, bei Bedarf Attribute zu updaten und anschließend erneut zu persistieren.
 
     \subsection{Aggregates} \label{1.aggregate}
     Aggregates umfassen mindestens eine Entität, im sogenannten Aggregatstamm. An diesem können weitere (Unter-)Entitäten oder Objekte angehängt werden, um sogenannte Aggregates zu bilden.
 
         \subsubsection{Analyse}
-        Aggregates finden in diesem Projekt Anwendung bei der Klasse RatingAverage. Hierbei werden Ratings und Episoden zusammengefasst um einen Durchschnitt oder die Anzahl der Bewertungen anzeigen zu lassen.
+        Aggregates finden in diesem Projekt Anwendung bei der Klasse RatingAverage. Hierbei wird eine Episode und ihre Bewertungen zusammengefasst, um einen Durchschnitt oder die Anzahl der Bewertungen anzeigen zu lassen.
         
         \subsubsection{Begründung}
-        Grund für die Benutzung des Aggregate ist, dass die verschiedenen Entitäten zusammengefasst werden können. So kann mit den Daten besser interagiert werden, der Durchschnitt und die Anzahl an Bewertungen kann im Aggregate Objekt gespeichert werden und ans Frontend weitergegeben werden.
+        Grund für die Benutzung des Aggregate ist, dass die verschiedenen Entitäten oder Teile von Entitäten zusammengefasst werden können. So kann mit den Daten besser interagiert werden, der Durchschnitt und die Anzahl an Bewertungen kann im Aggregate Objekt gespeichert werden und ans Frontend weitergegeben werden.
 
     \subsection{Repositories} \label{1.repo}
     Repositories sind Klassen, die eine Schnittstelle zwischen Domäne und der Datenzuordnungsebene bilden. Diese dienen meist dazu die Basisoperationen CRUD zu implementieren. Hier lassen sich Entitäten erstellen, lesen, updaten oder löschen.
     
         \subsubsection{Analyse}
-        Repositorys sind im Backend, im Modul \hk{0 - Plugins} zu finden. Diese werden mit Hilfe der JPA-Repository Schnittstelle implementiert, um auf die von Hibernate ORM geschaffenen Strukturn zuzugreifen. Hier wird das Objekt sowie die Id festegelegt. Mit Hilfe der Repository-Interfaces in der Domänenschicht und Implementierung in der Pluginsschicht kann zwischen den Schichten kommuniziert werden.
+        Repositories sind im Backend, im Modul \hk{0 - Plugins} zu finden. Diese werden mit Hilfe der JPA-Repository Schnittstelle implementiert, um auf die von Hibernate ORM geschaffenen Strukturen zuzugreifen. Hier wird das Objekt sowie die Id festegelegt. Mit Hilfe der Repository-Interfaces in der Domänenschicht und Implementierung in der Pluginsschicht kann zwischen den Schichten kommuniziert werden.
 
         \subsubsection{Begründung}
-        Hierbei wird das ORM-Framework Hibernate verwendet, um die definierten Operationen von Repositories zu implementieren. Diese Implementierung implementiert automatisch die grundlegenden Funktionen und kann um weitere, eigene, Funktionen erweitert werden. Dadurch können Fehler vermieden werden, und man hat eine klare Trennung der Logik zu den Operationen mit den Daten.
+        Hierbei wird das ORM-Framework Hibernate verwendet, um die definierten Operationen von Repositories zu implementieren. Diese Implementierung implementiert automatisch die grundlegenden Funktionen und kann um weitere, eigene, Funktionen erweitert werden. Dadurch können Fehler vermieden werden und man hat eine klare Trennung der Logik zu den Operationen mit den Daten.
         
     \subsection{Domain Services}
     Domain Services bilden die Prozesse ab, welche über den Verantwortungsbereich einer Domäne hinaus gehen. Diese werden als eigenständige Services ausgelagert.
 
         \subsubsection{Analyse}
-        Die Services in diesem Projekt sind im Backend zu finden. Hierbei ist für jede Entität ein entsprechender Service vorhanden, der die Operationen implementiert. Konkret liegen diese Services im Modul \hk{2 - Application} im Package \package{de.dhbw.ase.seriephant}
+        Die Services in diesem Projekt sind im Backend zu finden. Hierbei ist für jede Entität ein entsprechender Service vorhanden, der die Operationen implementiert. Konkret liegen diese Services im Modul \hk{2 - Application} im \package{de.dhbw.ase.seriephant}
 
         \subsubsection{Begründung}
         Da es viele Operationen gibt, die über den Zuständigkeitsbereich einer Entität oder eines Value Objects hinausgehen, müssen diese Prozesse in einer eigenen Klasse implementiert werden. Diese steht hierbei zwischen dem eigentlichen Modell, der Domäne, und den Controllern in der Plugins-Schicht.

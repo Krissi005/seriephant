@@ -12,7 +12,7 @@ Das Objektmuster \hk{Bridge Pattern} kam in diesem Projekt zum Einsatz.
 Dieses Entwurfsmuster wurde eingesetzt, da so eine Entkopplung von Domänenmodell und Persistierungslogik gelingt. Die Trennung von Domänenmodell und Persistierungslogik ist Teil von Clean Architecture, da so die Persistierung leicht ausgetauscht werden kann. Hierbei erfolgt die Implementierung in Form eines Interfaces im Domänenmodell, welches von einer Bridge mit Hilfe eines ORM-Plugins in der Plugins-Schicht umgesetzt wird.
 
 \section{\ac{UML} Vorher}
-Im Folgenden sieht man das \ac{UML} Diagramm vor der Verwendung des Bridge Patterns. Hierbei hat das Repository als Child von einem JPA Repository direkt auf die Datenbank zugegriffen. Die Persistierungslogik war so nicht getrennt und konnte nur mit einigen Anpassungen ausgetauscht werden.
+Im Folgenden sieht man das \ac{UML} Diagramm vor der Verwendung des Bridge Patterns. Hierbei hat das Repository als Child von einem JPA Repository direkt auf die Datenbank zugegriffen. Die Persistierungslogik war so nicht getrennt und konnte nur mit mehreren Anpassungen ausgetauscht werden.
 
         \begin{figure}[H]
 	        \centering

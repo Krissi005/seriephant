@@ -18,7 +18,6 @@
         \shadowimage[width=0.95\textwidth]{zfiles/Bilder/long_method_old.png}
 	    %\shadowimage[height=250px]{./zfiles/Bilder/cleanArchitecture.png}
 	    \caption{Code Smell \hk{Long method} before fix}
-	    \label{a.2.cleanArchitecture}
     \end{figure}
     
     
@@ -26,14 +25,13 @@
         Die Methode ist 20 Zeilen lang und sehr verschachtelt. Dadurch ist es schwer, auf den ersten Blick zu erkennen, was die Methode macht. Auch ist die Methode nicht übersichtlich.
 
         \subsubsection{Fix}
-        Durch das Auslagern von einzelnen Teilen der Methode wird klarer, was wo passiert und warum. In meinem Projekt gab es einige weitere lange Methoden, die sehr unübersichtlich waren. Durch die Umstrukturierung von einer langen Methode in mehrere kurze werden die einzelnen Teile der Methode übersichtlicher und sind leichter verständlich.
+        Durch das Auslagern von einzelnen Teilen der Methode wird klarer, was wo passiert und warum. In meinem Projekt gab es einige weitere lange Methoden, die sehr unübersichtlich waren. Durch die Umstrukturierung von einer langen Methode in mehrere kurze werden die einzelnen Teile der Methode übersichtlicher und sind leichter verständlich. Das Refactoring ist im Commit mit dem Hash \href{https://github.com/Krissi005/seriephant/commit/a52a15ac835bf9372e91dc5e29ec73b2e10bc595}{a52a15ac835bf9372e91dc5e29ec73b2e10bc595}.
     
         \begin{figure}[h]
 	        \centering
             \shadowimage[width=0.8\textwidth]{zfiles/Bilder/long_method_fix.png}
 	        %\shadowimage[height=250px]{./zfiles/Bilder/cleanArchitecture.png}
 	        \caption{Code Smell \hk{Long method} after fix}
-	        \label{a.2.cleanArchitecture}
         \end{figure}
     
     
@@ -45,18 +43,16 @@
         \shadowimage[width=0.95\textwidth]{zfiles/Bilder/unused_variable_old.png}
 	    %\shadowimage[height=250px]{./zfiles/Bilder/cleanArchitecture.png}
 	    \caption{Code Smell \hk{Unused private variable} before fix}
-	    \label{a.2.cleanArchitecture}
     \end{figure}
 
         \subsubsection{Begründung}
         Wenn eine private Variable oder ein Import in der Klasse nicht benutzt werden, sind diese unnötig und verschlechtern nur die Übersichtlichkeit und Fehleranfälligkeit des Codes. 
 
         \subsubsection{Fix}
-        Für den Fix wurden hierbei einfach die unbenutze private Variablendeklaration entfernt und auch die Zuweisung aus dem Konstruktor wurde entfernt.
+        Für den Fix wurden hierbei wurde die unbenutze private Variablendeklaration entfernt und auch die Zuweisung aus dem Konstruktor wurde entfernt. So wird keine Variable unnötigerweise initialisiert. Das Refactoring ist im Commit mit dem Hash \href{https://github.com/Krissi005/seriephant/commit/6c15aa8bee85883db7e86e8601ed1c0ddda33ab4}{6c15aa8bee85883db7e86e8601ed1c0ddda33ab4}.
         \begin{figure}[h]
 	        \centering
             \shadowimage[width=0.8\textwidth]{zfiles/Bilder/unused_variable_fix.png}
 	        %\shadowimage[height=250px]{./zfiles/Bilder/cleanArchitecture.png}
-	        \caption{Code Smell \hk{Unused private variable} before fix}
-	        \label{a.2.cleanArchitecture}
+	        \caption{Code Smell \hk{Unused private variable} after fix}
         \end{figure}
