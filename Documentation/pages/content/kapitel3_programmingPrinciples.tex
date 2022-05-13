@@ -65,7 +65,7 @@ GRASP steht für General Responsibility Assignment Software Patterns. Darunter w
 			Der Grund für die Umsetzung des Prinzips ist, dass man so die Übersichtlichkeit der Klasse deutlich verbessert und die Komplexität minimiert.
 			
 		\subsubsection{Zusammenhang Low Coupling und High Cohesion}
-		Diese zwei Prinzipien stehen hier in Korrelation zueinander. Desto höher die Cohesion wird und desto mehr man Verantwortlichkeiten in andere Klassen auslagert, desto höher wird auch die Abhängigkeit. High Cohesion geht also mit High Coupling einher, beides voll umzusetzen ist schwierig, man sollte ein Mittel finden, bei dem das Coupling möglichst low und die Cohasion möglichst high ist.
+		Diese zwei Prinzipien stehen bei den Service und Controller Klassen in negativer Korrelation zueinander. Je mehr Verantwortlichkeiten man in andere Klassen auslagert, desto höher wird die Cohesion zwischen den Klassen und desto höher wird auch die Abhängigkeit. High Cohesion geht also mit High Coupling einher, Low Coupling und High Cohesion voll umzusetzen ist schwierig, man sollte ein Mittel finden, bei dem das Coupling möglichst low und die Cohasion möglichst high ist.
 	
 	\subsection{Loose Coupling und High Cohesion (Domain)}
 	Im Bereich der Domäne verhält sich die Verbindung zwischen Low Coupling und High Cohesion synchron.
@@ -87,10 +87,10 @@ GRASP steht für General Responsibility Assignment Software Patterns. Darunter w
 		Auch hierfür ist der Grund Verbesserung der Übersichtlichkeit der Klasse sowie die Minimierung der Komplexität.
 		
 		\subsubsection{Zusammenhang Loose Coupling und High Cohesion}
-		Normalerweise stehen Loose Coupling und High Cohesion  hier synchron in Beziehung, da bei einer geringen Anzahl von Abhängikeit auch eine hohe Kohäsion umgesetzt wird. Allerdings ist durch Spring und die Verwendung von Hibernate hier Tight Coupling umgesetzt, und trotzdem ist noch eine hohe Kohäsion vorhanden.
+		Normalerweise stehen Loose Coupling und High Cohesion in der Domäne synchron in Beziehung, da bei einer geringen Anzahl von Abhängikeit auch eine hohe Kohäsion umgesetzt wird. Allerdings ist durch Spring und die Verwendung von Hibernate hier Tight Coupling umgesetzt, und trotzdem ist noch eine hohe Kohäsion vorhanden.
 
     \subsection{Creator}
-    Unter dem Erzeuger-Prinzip versteht man das Prinzip, dass eine Instanz einer Klasse nur von einem Experten A erzeugt wird. In diesem Projekt findet das Creator-Pattern keinen Einsatz. 
+    Unter dem Erzeuger-Prinzip versteht man das Prinzip, dass eine Instanz einer Klasse nur von einem Experten A erzeugt wird. In diesem Projekt findet das Creator-Pattern den Einsatz beispielweise im RatingApplicationService. Dieser sammelt die benötigten Initialisierungsdaten und instanziiert dann ein RatingAverage. Man könnte sagen, der RatingApplicationService ist der Experte A für die Erzeugung eines Rating Average.
     
     \subsection{Controller}
     Das Controller-Pattern findet in dem Projekt in den Controllern in der Plugins-Schicht Anwendung. Sie sind dafür zuständig, um die Benutzereingaben zu empfangen und zu verarbeiten. Ein Request wird mit Parametern von einem Controller entgegengenommen und von diesem wird die entsprechende Methode aufgerufen.
@@ -108,7 +108,7 @@ GRASP steht für General Responsibility Assignment Software Patterns. Darunter w
     Das Protected Variations Pattern wird in diesem Projekt durch die Repository Interfaces in der Domänenschicht, die in der Plugins Schicht implementiert werden, umgesetzt. Dadurch wird die eigentliche Implementierung in der Plugins Schicht über die Interfaces verschleiert. So hat eine Veränderung an der Implementierung keine Auswirkung auf das restliche System.
     
     \subsection{Pure Fabrication}
-    Das Pure Fabrication Pattern stellt Klassen dar, die in der Domäne nicht existieren. In diesen Klassen werden beispielsweise Methoden ausgelagert und die Klassen werden als Erfindung bezeichnet, da sie nichts Reales aus der Domänenschicht repräsentieren. Dieses Pattern wird zur Unterstützung von high cohesion und low coupling eingesetzt. In diesem Projekt wird Pure Fabrication durch die Data Transfer Objects (DTO) in der Adapter Schicht umgesetzt. Durch diese Klassen wird beispielsweise das Frontend von der Domäne entkoppelt. Eine Anpassung der Domäne für nicht zwingend zu einer Anpassung des Frontends.
+    Das Pure Fabrication Pattern stellt Klassen dar, die in der Domäne nicht existieren. In diesen Klassen werden beispielsweise Methoden ausgelagert und die Klassen werden als Erfindung bezeichnet, da sie nichts Reales aus der Domänenschicht repräsentieren. Dieses Pattern wird zur Unterstützung von high cohesion und low coupling eingesetzt. In diesem Projekt wird Pure Fabrication durch die Data Transfer Objects (DTO) in der Adapter Schicht umgesetzt. Durch diese Klassen wird beispielsweise das Frontend von der Domäne entkoppelt. Eine Anpassung der Domäne führt nicht zwingend zu einer Anpassung des Frontends und umgekehrt.
 
 \section{DRY}
 Das Prinzip DRY bedeutet \hk{Don't Repeat yourself}. Hierbei handelt es sich um ein Prinzip des Clean Code, damit Codeabschnitte nicht wiederholt, sondern stattdessen ausgelagert und wiederverwendet werden.
