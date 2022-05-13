@@ -37,8 +37,12 @@ export const EpisodeTable = ({userProfile, onClick, my}) => {
             accessor: "releaseDate"
         },
         {
-            Header: 'Rating',
-            accessor: "rating"
+            Header: 'Rating Average',
+            accessor: "ratingAverage"
+        },
+        {
+            Header: 'Rated by',
+            accessor: "numberOfRatings"
         }
     ];
 

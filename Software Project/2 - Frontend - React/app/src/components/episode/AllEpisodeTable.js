@@ -33,13 +33,17 @@ export const AllEpisodeTable = () => {
             accessor: "episode.releaseDate"
         },
         {
-            Header: 'Rating',
-            accessor: "rating"
+            Header: 'Rating Average',
+            accessor: "ratingAverage"
+        },
+        {
+            Header: 'Rated by',
+            accessor: "numberOfRatings"
         }
     ];
 
     useEffect(() => {
-        axios.get("http://localhost:8080/rating/readAllEpisodes").then(
+        axios.get("http://localhost:8080/rating/readAllEpisodesWithRatings").then(
             (res) => {
                 setRowData(res.data);
             }

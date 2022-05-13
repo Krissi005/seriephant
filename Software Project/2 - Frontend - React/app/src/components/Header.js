@@ -11,7 +11,10 @@ const Header = ({chosenUser, reset}) => {
                     <Image src={logo1} height="80px"/>
                 </a>
                 {chosenUser == null ?
-                    "" : (<Button onClick={(event) => reset(event, null)}
+                    "" : (<Button onClick={(event) => {
+                        reset(event, null);
+                        window.open("/users", "_self");
+                    }}
                                   text={chosenUser.firstName + " " + chosenUser.lastName} buttonType={"btn-danger"}/>)}
                 <ul className="navbar-nav">
                     <li id={"userNav"} className="nav-item">

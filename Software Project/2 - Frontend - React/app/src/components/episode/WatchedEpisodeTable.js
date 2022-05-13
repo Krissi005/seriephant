@@ -34,8 +34,12 @@ export const WatchedEpisodeTable = ({userProfile, reload, state}) => {
             accessor: "episode.releaseDate"
         },
         {
-            Header: 'Rating',
-            accessor: "rating"
+            Header: 'Rating Average',
+            accessor: "ratingAverage"
+        },
+        {
+            Header: 'Rated by',
+            accessor: "numberOfRatings"
         }
     ];
 
