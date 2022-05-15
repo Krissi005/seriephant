@@ -42,7 +42,7 @@ class GenreApplicationServiceTest {
 
     @Test
     void saveGenreFromDTO() throws ValidationException {
-        Genre genre = new Genre(GENRE_TITLE, GENRE_DESCRIPTION);
+        Genre genre = new Genre(GENRE_ID, GENRE_TITLE, GENRE_DESCRIPTION);
 
         doReturn(genre).when(this.genreRepository).save(genre);
         Genre createdGenre = this.genreApplicationService.saveGenre(genre);
